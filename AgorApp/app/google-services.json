@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "520013966475",
+    "project_id": "firebase-agorapp"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:520013966475:android:eda9e1db54593471",
+        "android_client_info": {
+          "package_name": "pes.agorapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "520013966475-q4jje8qeoggqf2116k73qqa75q762977.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pes.agorapp",
+            "certificate_hash": "989738aea92862c6ba1b16969d93bdbf53008e3c"
+          }
+        },
+        {
+          "client_id": "520013966475-g00ttj6kv37dtih801q9kt54jm662ti1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkle3C86ubvAZpYEoUcnqWG3ZgXDrU3Lg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
