@@ -287,7 +287,6 @@ public class MainActivity extends AppCompatActivity
     private void handleSignInResult(GoogleSignInResult result) {
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
-            // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
             String gmail = acct.getEmail();
             String gname = acct.getDisplayName();
@@ -295,8 +294,6 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(getApplicationContext(), "Loguejat amb GOOGLE:\nmail: "+
                     gmail+"\nnom: "+gname+"\nphotourl: "+gphoto, Toast.LENGTH_LONG).show();
         } else {
-            // Signed out, show unauthenticated UI.
-            TextView myAwesomeTextView = (TextView)findViewById(R.id.text_prova);
             Toast.makeText(getApplicationContext(), "FAIL! =(", Toast.LENGTH_LONG).show();
         }
     }
