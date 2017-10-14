@@ -25,7 +25,6 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.FacebookCallback;
@@ -96,7 +95,10 @@ public class MainActivity extends AppCompatActivity
 
         initGoogleComponents();
         initTwitterComponents();
-        //facebook
+        initFacebookComponents();
+    }
+
+    private void initFacebookComponents() {
         callbackManagerFacebook = CallbackManager.Factory.create();
         LoginManager.getInstance().registerCallback(callbackManagerFacebook,
                 new FacebookCallback<LoginResult>() {
