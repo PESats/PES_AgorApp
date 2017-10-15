@@ -53,6 +53,7 @@ import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
+import com.twitter.sdk.android.core.models.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -61,6 +62,7 @@ import java.util.Arrays;
 
 import pes.agorapp.JSONObjects.UserFacebook;
 import pes.agorapp.R;
+import retrofit2.Call;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
@@ -165,22 +167,10 @@ public class MainActivity extends AppCompatActivity
             public void success(Result<TwitterSession> result) {
                 TwitterSession session = TwitterCore.getInstance().getSessionManager().getActiveSession();
                 TwitterAuthToken authToken = session.getAuthToken();
-                String token = authToken.token;
-                String secret = authToken.secret;
-                final String[] tmail = new String[1];
-                TwitterAuthClient authClient = new TwitterAuthClient();
-                authClient.requestEmail(session, new Callback<String>() {
-                    @Override
-                    public void success(Result<String> result) {
-                        tmail[0] = String.valueOf(result);
-                    }
-
-                    @Override
-                    public void failure(TwitterException exception) {
-                        tmail[0] = "fail twitter";
-                    }
-                });
-                Toast.makeText(getApplicationContext(), "Loguejat amb TWITTER\nmail: "+tmail[0], Toast.LENGTH_LONG).show();
+                if (authToken != null) {
+                    requestDataUser(null);
+                }
+                //Toast.makeText(getApplicationContext(), "Loguejat amb TWITTER", Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -303,7 +293,6 @@ public class MainActivity extends AppCompatActivity
             default:
                 loginWith = "facebook";
                 callbackManagerFacebook.onActivityResult(requestCode, resultCode, data);
-                //requestDataUser(null);
                 break;
         }
     }
@@ -335,7 +324,30 @@ public class MainActivity extends AppCompatActivity
                         }
                 ).executeAsync();
                 break;
-            case "uoc":
+            case "twitter":
+                Call<User> userResult = TwitterCore.getInstance()
+                        .getApiClient()
+                        .getAccountService()
+                        .verifyCredentials(true, false, true);
+                userResult.enqueue(new Callback<User>() {
+                    @Override
+                    public void failure(TwitterException e) {
+                        Toast.makeText(getApplicationContext(), "FAIL! =(", Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void success(Result<User> userResult) {
+                        email = "twitternodeixaagafarelmail@twitter.com";
+
+                        User user = userResult.data;
+
+                        Log.d("UserName Google:",user.name);
+                        Log.d("Image Google: ",user.profileImageUrl);
+
+                        createUserDB(user.name, user.profileImageUrl, "Twitter");
+                    }
+
+                });
                 break;
             case "google":
                 if (result_google.isSuccess()) {
@@ -353,7 +365,6 @@ public class MainActivity extends AppCompatActivity
 
                     Log.d("UserName Google:",acct.getDisplayName());
                     Log.d("Image Google: ",url_image_profile);
-                    Log.d("ID Google: ", acct.getId());
 
                     createUserDB(acct.getDisplayName(), url_image_profile, "Google");
                     signOutGoogle();
