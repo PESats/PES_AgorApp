@@ -32,6 +32,7 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.FacebookCallback;
 
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
@@ -41,6 +42,7 @@ import com.google.android.gms.auth.api.Auth;
 
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.gson.Gson;
 import com.twitter.sdk.android.core.Twitter;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
@@ -55,6 +57,9 @@ import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Arrays;
+
+import pes.agorapp.JSONObjects.UserFacebook;
 import pes.agorapp.R;
 
 public class MainActivity extends AppCompatActivity
@@ -70,6 +75,7 @@ public class MainActivity extends AppCompatActivity
     private static final int RC_SIGN_IN_TWITTER = TwitterAuthConfig.DEFAULT_AUTH_REQUEST_CODE;
     private static GoogleApiClient mGoogleApiClient;
     private TwitterLoginButton loginButtonTwitter;
+    private LoginButton loginButtonFacebook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,15 +112,19 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initFacebookComponents() {
+
+        loginButtonFacebook = (LoginButton) findViewById(R.id.sign_in_button_facebook);
+        loginButtonFacebook.setReadPermissions(Arrays.asList("public_profile", "email", "user_birthday", "user_friends"));
         callbackManagerFacebook = CallbackManager.Factory.create();
         LoginManager.getInstance().registerCallback(callbackManagerFacebook,
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
                         if (AccessToken.getCurrentAccessToken() != null) {
-                            requestDataFacebook();
+                            requestEmailFacebook();
+                            requestDataUser(null);
                         }
-                        Toast.makeText(getApplicationContext(), "Loguejat amb FACEBOOK\nemail: "+email, Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), "Loguejat amb FACEBOOK\nemail: "+email, Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -129,16 +139,12 @@ public class MainActivity extends AppCompatActivity
                 });
     }
 
-    private void requestDataFacebook() {
+    private void requestEmailFacebook() {
         GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
             @Override
             public void onCompleted(JSONObject object, GraphResponse response) {
-                final JSONObject json = response.getJSONObject();
-
                 try {
-                    if(json != null){
-                        email = json.getString("email");
-                    }
+                    email = object.getString("email");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -287,7 +293,6 @@ public class MainActivity extends AppCompatActivity
             case RC_SIGN_IN_GOOGLE:
                 loginWith = "google";
                 GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-                email = result.getSignInAccount().getEmail();
                 requestDataUser(result);
                 break;
             case RC_SIGN_IN_TWITTER:
@@ -309,12 +314,33 @@ public class MainActivity extends AppCompatActivity
     private void requestDataUser(GoogleSignInResult result_google) {
         switch(loginWith){
             case "facebook":
+                new GraphRequest(
+                        AccessToken.getCurrentAccessToken(),
+                        "/me",
+                        null,
+                        HttpMethod.GET,
+                        new GraphRequest.Callback() {
+                            public void onCompleted(GraphResponse response) {
+                                UserFacebook usr_fb = getUserFacebook(response.getJSONObject().toString());
+                                Log.i("Username Facebook: ", usr_fb.getName());
+                                String url_img_facebook = "https://graph.facebook.com/" + usr_fb.getId() + "/picture?width=100&height=100";
+
+                                createUserDB(usr_fb.getName(), url_img_facebook, "Facebook");
+
+                                //Logout Facebook
+                                if(LoginManager.getInstance() != null){
+                                    LoginManager.getInstance().logOut();
+                                }
+                            }
+                        }
+                ).executeAsync();
                 break;
             case "uoc":
                 break;
             case "google":
                 if (result_google.isSuccess()) {
 
+                    email = result_google.getSignInAccount().getEmail();
                     GoogleSignInAccount acct = result_google.getSignInAccount();
 
                     String url_image_profile;
@@ -339,6 +365,15 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
+     * Get user Facebook from request response
+     * @param strResponse   Request response
+     * @return UserFacebook Object
+     */
+    private UserFacebook getUserFacebook(String strResponse){
+        return new Gson().fromJson(strResponse, UserFacebook.class);
+    }
+
+    /**
      * Send user data to server
      * @param userName  Username platform
      * @param url_image URL user image platform
@@ -346,7 +381,7 @@ public class MainActivity extends AppCompatActivity
      */
     private void createUserDB(final String userName, final String url_image, final String platform_name) {
         //aquí es munta el json 'user' i s'envia mitjançant la petició a l'api de crear usuari
-        Toast.makeText(getApplicationContext(), "login OK\nusername: "+userName+"\nurl_image: "+
+        Toast.makeText(getApplicationContext(), "login OK\nmail: "+email+"\nusername: "+userName+"\nurl_image: "+
                 url_image+"\nplatform_name: "+platform_name, Toast.LENGTH_LONG).show();
         //si tot es correcte, entrem a l'app mitjançant loginok()
         loginok();
