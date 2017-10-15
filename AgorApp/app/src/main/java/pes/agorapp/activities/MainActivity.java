@@ -15,11 +15,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import pes.agorapp.R;
-import pes.agorapp.globals.Constants;
 import pes.agorapp.globals.PreferencesAgorApp;
 
 
@@ -36,8 +38,16 @@ public class MainActivity extends AppCompatActivity
 
         prefs = new PreferencesAgorApp(MainActivity.this);
 
+        //informació d'usuari
         setTextProva();
 
+        //imatge
+        Picasso.with(getApplicationContext())
+                .load(prefs.getImageUrl())
+                .resize(180,180)
+                .into((ImageView) findViewById(R.id.img_profile_user));
+
+        //botó logout
         findViewById(R.id.btn_logout).setOnClickListener(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -147,8 +157,7 @@ public class MainActivity extends AppCompatActivity
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //Al fer logout, s'elimina la informació interna de l'app
-                        prefs.deleteSession();
+                        prefs.deleteSession(); //Al fer logout, s'elimina la informació interna de l'app
 
                         Intent i = new Intent(MainActivity.this, LoginActivity.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //Elimina totes less activities obertes

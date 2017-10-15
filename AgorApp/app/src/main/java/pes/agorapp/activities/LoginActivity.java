@@ -50,7 +50,6 @@ import java.util.Arrays;
 import pes.agorapp.JSONObjects.UserFacebook;
 import pes.agorapp.R;
 
-import pes.agorapp.globals.Constants;
 import pes.agorapp.globals.PreferencesAgorApp;
 import retrofit2.Call;
 
@@ -340,13 +339,7 @@ public class LoginActivity extends AppCompatActivity
     }
 
     private void loginok() {
-        //"entrem" a l'app:
         Intent i = new Intent(LoginActivity.this, MainActivity.class);
-        /*en comptes de passar-ho per l'intent ho guardo a preferències internes directament*/
-        //i.putExtra(Constants.EXTRA_INTENT_TAG.EMAIL, email);
-        //i.putExtra(Constants.EXTRA_INTENT_TAG.USERNAME, userName);
-        //i.putExtra(Constants.EXTRA_INTENT_TAG.IMAGE_URL, url_image);
-        //i.putExtra(Constants.EXTRA_INTENT_TAG.PLATFORM, platform_name);
         LoginActivity.this.startActivity(i);
         finish();
     }
