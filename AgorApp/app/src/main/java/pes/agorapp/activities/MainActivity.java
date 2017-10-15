@@ -1,5 +1,8 @@
 package pes.agorapp.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,13 +16,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import pes.agorapp.R;
 import pes.agorapp.globals.Constants;
+import pes.agorapp.globals.PreferencesAgorApp;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+
+    private PreferencesAgorApp prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,15 +34,11 @@ public class MainActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_main);
 
-        String userName = getIntent().getExtras().getString(Constants.EXTRA_INTENT_TAG.USERNAME);
-        String email = getIntent().getExtras().getString(Constants.EXTRA_INTENT_TAG.EMAIL);
-        String image_url = getIntent().getExtras().getString(Constants.EXTRA_INTENT_TAG.IMAGE_URL);
-        String platform = getIntent().getExtras().getString(Constants.EXTRA_INTENT_TAG.PLATFORM);
-        TextView myAwesomeTextView = (TextView)findViewById(R.id.text_prova);
-        myAwesomeTextView.setText("LOGUEJAT CORRECTAMENT\n\nuserName: "+userName+
-                                    "\nemail: "+ email+
-                                    "\nimage_url: "+image_url+
-                                    "\nplatform: "+platform);
+        prefs = new PreferencesAgorApp(MainActivity.this);
+
+        setTextProva();
+
+        findViewById(R.id.btn_logout).setOnClickListener(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -57,6 +60,18 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void setTextProva() {
+        String userName = prefs.getUserName();
+        String email = prefs.getEmail();
+        String image_url = prefs.getImageUrl();
+        String platform = prefs.getPlatform();
+        TextView myAwesomeTextView = (TextView) findViewById(R.id.text_prova);
+        myAwesomeTextView.setText("LOGUEJAT CORRECTAMENT\n\nuserName: " + userName +
+                "\nemail: " + email +
+                "\nimage_url: " + image_url +
+                "\nplatform: " + platform);
     }
 
     @Override
@@ -114,5 +129,34 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onClick (View v){
+        switch (v.getId()) {
+            case R.id.btn_logout:
+                close_session();
+                break;
+        }
+    }
+
+    private void close_session() {
+        new AlertDialog.Builder(MainActivity.this)
+                .setTitle("Tancar sessió")
+                .setMessage("N'estàs segur?")
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Al fer logout, s'elimina la informació interna de l'app
+                        prefs.deleteSession();
+
+                        Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //Elimina totes less activities obertes
+                        startActivity(i);
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show();
+        Toast.makeText(getApplicationContext(), "LOGOUT correcte", Toast.LENGTH_LONG).show();
     }
 }

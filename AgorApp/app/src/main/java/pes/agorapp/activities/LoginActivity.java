@@ -51,6 +51,7 @@ import pes.agorapp.JSONObjects.UserFacebook;
 import pes.agorapp.R;
 
 import pes.agorapp.globals.Constants;
+import pes.agorapp.globals.PreferencesAgorApp;
 import retrofit2.Call;
 
 /**
@@ -73,19 +74,30 @@ public class LoginActivity extends AppCompatActivity
     private static GoogleApiClient mGoogleApiClient;
     private TwitterLoginButton loginButtonTwitter;
     private LoginButton loginButtonFacebook;
+    private PreferencesAgorApp prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Twitter.initialize(this);
-        FacebookSdk.sdkInitialize(getApplicationContext());
+        prefs = new PreferencesAgorApp(LoginActivity.this);
 
-        setContentView(R.layout.activity_login);
+        //si ja estem loguejats...
+        if (!prefs.getUserName().equals("")) {
+            Intent i = new Intent(LoginActivity.this, MainActivity.class);
+            LoginActivity.this.startActivity(i);
+            finish();
+        }
+        else {
+            Twitter.initialize(this);
+            FacebookSdk.sdkInitialize(getApplicationContext());
 
-        initGoogleComponents();
-        initTwitterComponents();
-        initFacebookComponents();
+            setContentView(R.layout.activity_login);
+
+            initGoogleComponents();
+            initTwitterComponents();
+            initFacebookComponents();
+        }
     }
 
 
@@ -309,19 +321,32 @@ public class LoginActivity extends AppCompatActivity
         this.url_image = url_image;
         this.platform_name = platform_name;
         //aquí es munta el json 'user' i s'envia mitjançant la petició a l'api de crear usuari
+
+        /*suposem que la crida es fa aquí. en cas de succés, desem les variables internes d'usuari*/
+        saveUserInPreferences(String.valueOf(123) /*aquest número és una ID que hauria de retornar l'API al crear usuari*/);
+
         Toast.makeText(getApplicationContext(), "login OK\nmail: "+email+"\nusername: "+userName+"\nurl_image: "+
                 url_image+"\nplatform_name: "+platform_name, Toast.LENGTH_LONG).show();
         //si tot es correcte, entrem a l'app mitjançant loginok()
         loginok();
     }
 
+    private void saveUserInPreferences(String uuid) {
+        prefs.setUuid(uuid);
+        prefs.setPlatform(platform_name);
+        prefs.setUserName(userName);
+        prefs.setEmail(email);
+        prefs.setImageUrl(url_image);
+    }
+
     private void loginok() {
         //"entrem" a l'app:
         Intent i = new Intent(LoginActivity.this, MainActivity.class);
-        i.putExtra(Constants.EXTRA_INTENT_TAG.EMAIL, email);
-        i.putExtra(Constants.EXTRA_INTENT_TAG.USERNAME, userName);
-        i.putExtra(Constants.EXTRA_INTENT_TAG.IMAGE_URL, url_image);
-        i.putExtra(Constants.EXTRA_INTENT_TAG.PLATFORM, platform_name);
+        /*en comptes de passar-ho per l'intent ho guardo a preferències internes directament*/
+        //i.putExtra(Constants.EXTRA_INTENT_TAG.EMAIL, email);
+        //i.putExtra(Constants.EXTRA_INTENT_TAG.USERNAME, userName);
+        //i.putExtra(Constants.EXTRA_INTENT_TAG.IMAGE_URL, url_image);
+        //i.putExtra(Constants.EXTRA_INTENT_TAG.PLATFORM, platform_name);
         LoginActivity.this.startActivity(i);
         finish();
     }

@@ -15,6 +15,8 @@ public class PreferencesAgorApp {
     private static String SCREEN_SIZE = "screen_size";
     private static String UUID = "uuid";
     private static String USER_NAME = "userName";
+    private static String EMAIL = "email";
+    private static String IMAGE_URL = "image_url";
     private static String LEVEL = "user_level";
     private static String VERSION_APP = "versionApp";
     private static String PLATFORM_LOGIN = "platform_login";
@@ -45,6 +47,22 @@ public class PreferencesAgorApp {
 
     public void setUserName(String userName){
         prefs.edit().putString(USER_NAME, userName).apply();
+    }
+
+    public String getEmail() {
+        return prefs.getString(EMAIL, "");
+    }
+
+    public void setEmail(String email){
+        prefs.edit().putString(EMAIL, email).apply();
+    }
+
+    public String getImageUrl() {
+        return prefs.getString(IMAGE_URL, "");
+    }
+
+    public void setImageUrl(String imageUrl) {
+        prefs.edit().putString(IMAGE_URL, imageUrl).apply();
     }
 
     public int getLevel(){
