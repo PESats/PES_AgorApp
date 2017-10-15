@@ -106,25 +106,10 @@ public class MainActivity extends AppCompatActivity
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
-                        GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-                            @Override
-                            public void onCompleted(JSONObject object, GraphResponse response) {
-                                final JSONObject json = response.getJSONObject();
-
-                                try {
-                                    if(json != null){
-                                        email = json.getString("email");
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
-                        Bundle parameters = new Bundle();
-                        parameters.putString("fields", "id,name,link,email,picture");
-                        request.setParameters(parameters);
-                        request.executeAsync();
-                        Toast.makeText(getApplicationContext(), "Loguejat amb FACEBOOK\nmail: "+email, Toast.LENGTH_LONG).show();
+                        if (AccessToken.getCurrentAccessToken() != null) {
+                            requestDataFacebook();
+                        }
+                        Toast.makeText(getApplicationContext(), "Loguejat amb FACEBOOK\nemail: "+email, Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -137,6 +122,29 @@ public class MainActivity extends AppCompatActivity
                         Toast.makeText(getApplicationContext(), "FAIL! =(", Toast.LENGTH_LONG).show();
                     }
                 });
+    }
+
+    private void requestDataFacebook() {
+        GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+            @Override
+            public void onCompleted(JSONObject object, GraphResponse response) {
+                final JSONObject json = response.getJSONObject();
+
+                try {
+                    if(json != null){
+                        email = json.getString("email");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id,name,link,email,picture");
+        request.setParameters(parameters);
+        request.executeAsync();
     }
 
     private void initTwitterComponents() {

@@ -19,4 +19,8 @@ public class Constants {
 
     public static String DOMAIN = "https://" + ip;
     public static String BASE_URL = DOMAIN + "/api/v1/";
+
+    //Languages
+    public static String LANG_ES = "es";
+    public static String LANG_CA = "ca";
 }
