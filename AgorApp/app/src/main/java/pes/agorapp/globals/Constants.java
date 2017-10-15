@@ -23,4 +23,12 @@ public class Constants {
     //Languages
     public static String LANG_ES = "es";
     public static String LANG_CA = "ca";
+
+    //Intent tags
+    public class EXTRA_INTENT_TAG {
+        public static final String EMAIL = "email";
+        public static final String USERNAME = "username";
+        public static final String IMAGE_URL = "image_url";
+        public static final String PLATFORM = "platform";
+    }
 }
