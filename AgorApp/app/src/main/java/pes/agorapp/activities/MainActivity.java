@@ -1,4 +1,4 @@
-package pes.agorapp;
+package pes.agorapp.activities;
 
 import android.content.Intent;
 import android.content.IntentSender;
@@ -49,6 +49,8 @@ import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import pes.agorapp.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
@@ -270,18 +272,18 @@ public class MainActivity extends AppCompatActivity
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-            switch (requestCode) {
-                case RC_SIGN_IN_GOOGLE:
-                    GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-                    handleSignInResult(result);
-                    break;
-                case RC_SIGN_IN_TWITTER:
-                    loginButtonTwitter.onActivityResult(requestCode, resultCode, data);
-                    break;
-                default:
-                    callbackManagerFacebook.onActivityResult(requestCode, resultCode, data);
-                    break;
-            }
+        switch (requestCode) {
+            case RC_SIGN_IN_GOOGLE:
+                GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+                handleSignInResult(result);
+                break;
+            case RC_SIGN_IN_TWITTER:
+                loginButtonTwitter.onActivityResult(requestCode, resultCode, data);
+                break;
+            default:
+                callbackManagerFacebook.onActivityResult(requestCode, resultCode, data);
+                break;
+        }
     }
 
     private void handleSignInResult(GoogleSignInResult result) {

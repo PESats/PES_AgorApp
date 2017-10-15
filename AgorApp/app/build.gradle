@@ -40,6 +40,11 @@ dependencies {
     compile 'com.twitter.sdk.android:twitter-core:3.1.1'
     //FACEBOOK
     compile 'com.facebook.android:facebook-android-sdk:4.0.0'
+    //REST
+    compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
 
     testCompile 'junit:junit:4.12'
 }
