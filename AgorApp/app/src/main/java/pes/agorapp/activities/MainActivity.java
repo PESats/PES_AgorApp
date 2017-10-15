@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.text.Html;
+import android.text.SpannableString;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -25,6 +27,7 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.FacebookCallback;
@@ -36,6 +39,8 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.auth.api.Auth;
 
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.twitter.sdk.android.core.Twitter;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
@@ -267,7 +272,6 @@ public class MainActivity extends AppCompatActivity
             case R.id.sign_in_button_google:
                 signInGoogle();
                 break;
-            // ... (altres mètodes de login)
         }
     }
 
@@ -279,32 +283,85 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         switch (requestCode) {
             case RC_SIGN_IN_GOOGLE:
+                loginWith = "google";
                 GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-                handleSignInResult(result);
+                email = result.getSignInAccount().getEmail();
+                requestDataUser(result);
                 break;
             case RC_SIGN_IN_TWITTER:
+                loginWith = "twitter";
                 loginButtonTwitter.onActivityResult(requestCode, resultCode, data);
+                //requestDataUser(null);
                 break;
             default:
+                loginWith = "facebook";
                 callbackManagerFacebook.onActivityResult(requestCode, resultCode, data);
+                //requestDataUser(null);
                 break;
         }
     }
 
-    private void handleSignInResult(GoogleSignInResult result) {
-        Log.d(TAG, "handleSignInResult:" + result.isSuccess());
-        if (result.isSuccess()) {
-            GoogleSignInAccount acct = result.getSignInAccount();
-            String gmail = acct.getEmail();
-            String gname = acct.getDisplayName();
-            String gphoto = String.valueOf(acct.getPhotoUrl());
-            Toast.makeText(getApplicationContext(), "Loguejat amb GOOGLE:\nmail: "+
-                    gmail+"\nnom: "+gname+"\nphotourl: "+gphoto, Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(getApplicationContext(), "FAIL! =(", Toast.LENGTH_LONG).show();
+    /**
+     * Request REST for get data user Facebook/Twitter/Google
+     */
+    private void requestDataUser(GoogleSignInResult result_google) {
+        switch(loginWith){
+            case "facebook":
+                break;
+            case "uoc":
+                break;
+            case "google":
+                if (result_google.isSuccess()) {
+
+                    GoogleSignInAccount acct = result_google.getSignInAccount();
+
+                    String url_image_profile;
+
+                    if(acct.getPhotoUrl() != null){
+                        url_image_profile = acct.getPhotoUrl().toString();
+                    }else{
+                        url_image_profile = "www.imatgedummy.com";
+                    }
+
+                    Log.d("UserName Google:",acct.getDisplayName());
+                    Log.d("Image Google: ",url_image_profile);
+                    Log.d("ID Google: ", acct.getId());
+
+                    createUserDB(acct.getDisplayName(), url_image_profile, "Google");
+                    signOutGoogle();
+                } else {
+                    signOutGoogle();
+                }
+                break;
         }
+    }
+
+    /**
+     * Send user data to server
+     * @param userName  Username platform
+     * @param url_image URL user image platform
+     * @param platform_name Login platform name
+     */
+    private void createUserDB(final String userName, final String url_image, final String platform_name) {
+        //aquí es munta el json 'user' i s'envia mitjançant la petició a l'api de crear usuari
+        Toast.makeText(getApplicationContext(), "login OK\nusername: "+userName+"\nurl_image: "+
+                url_image+"\nplatform_name: "+platform_name, Toast.LENGTH_LONG).show();
+        //si tot es correcte, entrem a l'app mitjançant loginok()
+        loginok();
+    }
+
+    private void loginok() {
+        //"entrem" a l'app
+        Toast.makeText(getApplicationContext(), "Tot correcte", Toast.LENGTH_LONG).show();
+    }
+
+    private void signOutGoogle() {
+        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(Status status) {}
+                });
     }
 }
