@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  
   def index
   end
 
@@ -19,4 +20,12 @@ class UsersController < ApplicationController
 
   def destroy
   end
+  
+  private
+################################################################################
+  
+  def user_params
+    params.permit(:name, :image_url, :platform_name, :active_token)
+  end
+  
 end
