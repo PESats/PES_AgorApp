@@ -42,10 +42,17 @@ public class MainActivity extends AppCompatActivity
         setTextProva();
 
         //imatge
-        Picasso.with(getApplicationContext())
-                .load(prefs.getImageUrl())
-                .resize(180,180)
-                .into((ImageView) findViewById(R.id.img_profile_user));
+        if (!prefs.getImageUrl().equals("www.imatgedummy.com")) {
+            Picasso.with(getApplicationContext())
+                    .load(prefs.getImageUrl())
+                    .resize(180, 180)
+                    .into((ImageView) findViewById(R.id.img_profile_user));
+        } else {
+            Picasso.with(getApplicationContext())
+                    .load(R.drawable.avatar_face_1_)
+                    .resize(180, 180)
+                    .into((ImageView) findViewById(R.id.img_profile_user));
+        }
 
         //botó logout
         findViewById(R.id.btn_logout).setOnClickListener(this);
@@ -78,8 +85,8 @@ public class MainActivity extends AppCompatActivity
         String image_url = prefs.getImageUrl();
         String platform = prefs.getPlatform();
         TextView myAwesomeTextView = (TextView) findViewById(R.id.text_prova);
-        myAwesomeTextView.setText("LOGUEJAT CORRECTAMENT\n\nuserName: " + userName +
-                "\nemail: " + email +
+        myAwesomeTextView.setText("LOGUEJAT CORRECTAMENT\n\nNom real: " + userName +
+                "\nemail/usuaritwitter: " + email +
                 "\nimage_url: " + image_url +
                 "\nplatform: " + platform);
     }
@@ -162,10 +169,11 @@ public class MainActivity extends AppCompatActivity
                         Intent i = new Intent(MainActivity.this, LoginActivity.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //Elimina totes less activities obertes
                         startActivity(i);
+
+                        Toast.makeText(getApplicationContext(), "LOGOUT correcte", Toast.LENGTH_LONG).show();
                     }
                 })
                 .setNegativeButton(android.R.string.cancel, null)
                 .show();
-        Toast.makeText(getApplicationContext(), "LOGOUT correcte", Toast.LENGTH_LONG).show();
     }
 }

@@ -4,13 +4,13 @@ package pes.agorapp.JSONObjects;
  * Created by marc on 15/10/17.
  */
 
-public class User {
+public class UserAgorApp {
 
     private String name;
     private String image_url;
     private String uuid;
 
-    public User(String name, String image_url, String uuid) {
+    public UserAgorApp(String name, String image_url, String uuid) {
         this.name = name;
         this.image_url = image_url;
         this.uuid = uuid;
