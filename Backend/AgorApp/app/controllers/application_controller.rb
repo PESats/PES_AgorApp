@@ -1,8 +1,6 @@
 class ApplicationController < ActionController::API
 
-  protect_from_forgery with: :exception , unless: -> { valid_active_token  }
-
-
+  #protect_from_forgery with: :exception , unless: -> { valid_active_token  }
 
   def valid_active_token
     p "Validating Token"
