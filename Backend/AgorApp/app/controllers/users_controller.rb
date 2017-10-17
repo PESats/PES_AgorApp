@@ -35,26 +35,26 @@ class UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  
+  # TODO:
+  def login
+  end
+  
+  def logout
+  end
 
   private
 ################################################################################
 
   def user_params
-    params.permit(:name, :image_url, :platform_name)
+    params.permit(:id, :name, :image_url, :platform_name)
   end
 
   #TODO escollir un dels metodes per la instancia d'usuari actual
 
-  #OPCIO-1: active_token
   def set_user
-      @user = User.find(params[:active_token])
+      @user = User.find(params[:id])
   end
-
-  #OPCIO-2: id
-
-  #def set_user
-  #    @user = User.find(params[:id])
-  #end
-
 
 end
