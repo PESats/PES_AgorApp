@@ -31,6 +31,7 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.gson.Gson;
 
+import com.google.gson.JsonObject;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.Twitter;
@@ -47,11 +48,15 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 
+import pes.agorapp.JSONObjects.UserAgorApp;
 import pes.agorapp.JSONObjects.UserFacebook;
 import pes.agorapp.R;
 
+import pes.agorapp.customComponents.DialogServerKO;
 import pes.agorapp.globals.PreferencesAgorApp;
+import pes.agorapp.network.AgorAppApiManager;
 import retrofit2.Call;
+import retrofit2.Response;
 
 /**
  * Created by marc on 15/10/17.
@@ -101,7 +106,6 @@ public class LoginActivity extends AppCompatActivity
 
 
     private void initFacebookComponents() {
-
         loginButtonFacebook = (LoginButton) findViewById(R.id.sign_in_button_facebook);
         loginButtonFacebook.setReadPermissions(Arrays.asList("public_profile", "email", "user_birthday", "user_friends"));
         callbackManagerFacebook = CallbackManager.Factory.create();
@@ -265,9 +269,9 @@ public class LoginActivity extends AppCompatActivity
 
                     @Override
                     public void success(Result<User> userResult) {
-                        email = "twitternodeixaagafarelmail@twitter.com";
-
                         User user = userResult.data;
+
+                        email = user.screenName;
 
                         Log.d("UserName Google:",user.name);
                         Log.d("Image Google: ",user.profileImageUrl);
@@ -319,14 +323,29 @@ public class LoginActivity extends AppCompatActivity
         this.userName = userName;
         this.url_image = url_image;
         this.platform_name = platform_name;
+
         //aquí es munta el json 'user' i s'envia mitjançant la petició a l'api de crear usuari
+        /*JsonObject jsonUser = new JsonObject();
+        //...creació del jsonUser...
+        AgorAppApiManager
+                .getService()
+                .createUser(jsonUser)
+                .enqueue(new retrofit2.Callback<UserAgorApp>() {
+                    @Override
+                    public void onResponse(Call<UserAgorApp> call, Response<UserAgorApp> response) {
+                        //a la response hi tenim l'usuari amb el token
+                    }
 
-        /*suposem que la crida es fa aquí. en cas de succés, desem les variables internes d'usuari*/
-        saveUserInPreferences(String.valueOf(123) /*aquest número és una ID que hauria de retornar l'API al crear usuari*/);
+                    @Override
+                    public void onFailure(Call<UserAgorApp> call, Throwable t) {
+                        //new DialogServerKO(LoginActivity.this).show();
+                        Toast.makeText(getApplicationContext(), "l'API encara no està desplegada", Toast.LENGTH_LONG).show();
+                    }
+                });*/
 
-        Toast.makeText(getApplicationContext(), "login OK\nmail: "+email+"\nusername: "+userName+"\nurl_image: "+
-                url_image+"\nplatform_name: "+platform_name, Toast.LENGTH_LONG).show();
-        //si tot es correcte, entrem a l'app mitjançant loginok()
+        //aquest número és una ID que hauria de retornar l'API al crear usuari);
+        saveUserInPreferences(String.valueOf(123));
+
         loginok();
     }
 
