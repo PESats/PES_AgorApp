@@ -84,11 +84,13 @@ public class MainActivity extends AppCompatActivity
         String email = prefs.getEmail();
         String image_url = prefs.getImageUrl();
         String platform = prefs.getPlatform();
+        String token = prefs.getActiveToken();
         TextView myAwesomeTextView = (TextView) findViewById(R.id.text_prova);
         myAwesomeTextView.setText("LOGUEJAT CORRECTAMENT\n\nNom real: " + userName +
                 "\nemail/usuaritwitter: " + email +
                 "\nimage_url: " + image_url +
-                "\nplatform: " + platform);
+                "\nplatform: " + platform +
+                "\ntoken: " + token);
     }
 
     @Override

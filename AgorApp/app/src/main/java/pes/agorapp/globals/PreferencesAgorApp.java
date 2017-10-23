@@ -20,6 +20,7 @@ public class PreferencesAgorApp {
     private static String LEVEL = "user_level";
     private static String VERSION_APP = "versionApp";
     private static String PLATFORM_LOGIN = "platform_login";
+    private static String ACTIVE_TOKEN = "active_token";
 
     public PreferencesAgorApp(Context activity) {
         prefs = activity.getSharedPreferences(NAME_PREFERENCES, Context.MODE_PRIVATE);
@@ -89,6 +90,14 @@ public class PreferencesAgorApp {
 
     public void setPlatform(String platform){
         prefs.edit().putString(PLATFORM_LOGIN, platform).apply();
+    }
+
+    public String getActiveToken(){
+        return prefs.getString(ACTIVE_TOKEN,"");
+    }
+
+    public void setActiveToken(String active_token) {
+        prefs.edit().putString(ACTIVE_TOKEN, active_token).apply();
     }
 
     public void deleteSession(){
