@@ -11,14 +11,14 @@ public class Constants {
     private static String IP_dev = "192.168.1.1";
 
     /*inventat, s'han de posar les adreces del servidor de la FIB*/
-    private static String DNS_PRO = "pes.agorapp.org";
-    private static String DNS_DEV = "dev.pes.agorapp.com";
+    private static String DNS_PRO = "10.4.41.145:3000";
+    private static String DNS_DEV = "10.4.41.145:3000";
 
     //indiquem si apuntem a PRO (definitiu) o a DEV (per fer proves)
     private static String ip = DNS_DEV;
 
-    public static String DOMAIN = "https://" + ip;
-    public static String BASE_URL = DOMAIN + "/api/v1/";
+    public static String DOMAIN = "http://" + ip;
+    public static String BASE_URL = DOMAIN + "/";
 
     //Languages
     public static String LANG_ES = "es";
