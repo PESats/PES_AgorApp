@@ -6,21 +6,17 @@ package pes.agorapp.globals;
 
 public class Constants {
 
-    /*inventades, s'han de posar les bones */
-    private static String IP_pro = "192.168.1.1";
-    private static String IP_dev = "192.168.1.1";
-
-    /*inventat, s'han de posar les adreces del servidor de la FIB*/
+    /*de moment no distingim DEV/PRO*/
     private static String DNS_PRO = "10.4.41.145:3000";
     private static String DNS_DEV = "10.4.41.145:3000";
 
-    //indiquem si apuntem a PRO (definitiu) o a DEV (per fer proves)
+    //indiquem si apuntem a PRO o a DEV
     private static String ip = DNS_DEV;
 
     public static String DOMAIN = "http://" + ip;
     public static String BASE_URL = DOMAIN + "/";
 
-    //Languages
+    //Languages (per més endavant)
     public static String LANG_ES = "es";
     public static String LANG_CA = "ca";
 

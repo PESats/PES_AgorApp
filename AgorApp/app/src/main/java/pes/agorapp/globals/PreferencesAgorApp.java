@@ -54,7 +54,7 @@ public class PreferencesAgorApp {
         return prefs.getString(EMAIL, "");
     }
 
-    public void setEmail(String email){
+    public void setEmail(String email) {
         prefs.edit().putString(EMAIL, email).apply();
     }
 
