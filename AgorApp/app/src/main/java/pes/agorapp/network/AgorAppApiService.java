@@ -18,4 +18,8 @@ public interface AgorAppApiService {
     Call<UserAgorApp> createUser(
             @Body JsonObject user);
 
+    @POST("users/logout")
+    Call<UserAgorApp> logoutUser(
+            @Body JsonObject user);
+
 }

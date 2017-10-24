@@ -19,10 +19,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 
+import pes.agorapp.JSONObjects.UserAgorApp;
 import pes.agorapp.R;
+import pes.agorapp.customComponents.DialogServerKO;
 import pes.agorapp.globals.PreferencesAgorApp;
+import pes.agorapp.network.AgorAppApiManager;
+import retrofit2.Call;
+import retrofit2.Response;
 
 
 public class MainActivity extends AppCompatActivity
@@ -174,13 +180,34 @@ public class MainActivity extends AppCompatActivity
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        prefs.deleteSession(); //Al fer logout, s'elimina la informació interna de l'app
 
-                        Intent i = new Intent(MainActivity.this, LoginActivity.class);
-                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //Elimina totes less activities obertes
-                        startActivity(i);
+                        JsonObject jsonUser = new JsonObject();
+                        jsonUser.addProperty("id", prefs.getId());
+                        jsonUser.addProperty("active_token", prefs.getEmail());
 
-                        Toast.makeText(getApplicationContext(), "LOGOUT correcte", Toast.LENGTH_LONG).show();
+                        AgorAppApiManager
+                                .getService()
+                                .logoutUser(jsonUser)
+                                .enqueue(new retrofit2.Callback<UserAgorApp>() {
+                                             @Override
+                                             public void onResponse(Call<UserAgorApp> call, Response<UserAgorApp> response) {
+                                                 Toast.makeText(getApplicationContext(), "codi resposta: "+response.code(), Toast.LENGTH_LONG).show();
+
+                                                 prefs.deleteSession(); //Al fer logout, s'elimina la informació interna de l'app
+
+                                                 Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                                                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //Elimina totes less activities obertes
+                                                 startActivity(i);
+
+                                                 Toast.makeText(getApplicationContext(), "LOGOUT correcte", Toast.LENGTH_LONG).show();
+                                             }
+
+                                             @Override
+                                             public void onFailure(Call<UserAgorApp> call, Throwable t) {
+                                                 System.out.println("Something went wrong!");
+                                                 new DialogServerKO(MainActivity.this).show();
+                                             }
+                                         });
                     }
                 })
                 .setNegativeButton(android.R.string.cancel, null)
