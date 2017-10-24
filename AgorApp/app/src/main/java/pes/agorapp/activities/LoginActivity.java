@@ -325,36 +325,46 @@ public class LoginActivity extends AppCompatActivity
         this.platform_name = platform_name;
 
         //aquí es munta el json 'user' i s'envia mitjançant la petició a l'api de crear usuari
-        /*JsonObject jsonUser = new JsonObject();
-        //...creació del jsonUser...
+        JsonObject jsonUser = new JsonObject();
+        jsonUser.addProperty("name", userName);
+        jsonUser.addProperty("email", email);
+        jsonUser.addProperty("image_url", url_image);
+        jsonUser.addProperty("platform_name", platform_name);
+
         AgorAppApiManager
                 .getService()
                 .createUser(jsonUser)
                 .enqueue(new retrofit2.Callback<UserAgorApp>() {
                     @Override
                     public void onResponse(Call<UserAgorApp> call, Response<UserAgorApp> response) {
-                        //a la response hi tenim l'usuari amb el token
+
+                        System.out.println(response.code());
+
+                        String id = response.body().getId();
+                        String token = response.body().getActiveToken();
+                        saveUserInPreferences(id, token);
+
+                        Toast.makeText(getApplicationContext(), token, Toast.LENGTH_LONG).show();
+
+                        loginok();
                     }
 
                     @Override
                     public void onFailure(Call<UserAgorApp> call, Throwable t) {
-                        //new DialogServerKO(LoginActivity.this).show();
-                        Toast.makeText(getApplicationContext(), "l'API encara no està desplegada", Toast.LENGTH_LONG).show();
+                        System.out.println("Something went wrong!");
+                        new DialogServerKO(LoginActivity.this).show();
+                        //Toast.makeText(getApplicationContext(), "l'API encara no està desplegada", Toast.LENGTH_LONG).show();
                     }
-                });*/
-
-        //aquest número és una ID que hauria de retornar l'API al crear usuari);
-        saveUserInPreferences(String.valueOf(123));
-
-        loginok();
+                });
     }
 
-    private void saveUserInPreferences(String uuid) {
-        prefs.setUuid(uuid);
+    private void saveUserInPreferences(String id, String active_token) {
+        prefs.setId(id);
         prefs.setPlatform(platform_name);
-        prefs.setUserName(userName);
+        prefs.setName(userName);
         prefs.setEmail(email);
         prefs.setImageUrl(url_image);
+        prefs.setActiveToken(active_token);
     }
 
     private void loginok() {
