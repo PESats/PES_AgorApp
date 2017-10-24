@@ -289,9 +289,9 @@ public class LoginActivity extends AppCompatActivity
 
                     String url_image_profile;
 
-                    if(acct.getPhotoUrl() != null){
+                    if (acct.getPhotoUrl() != null) {
                         url_image_profile = acct.getPhotoUrl().toString();
-                    }else{
+                    } else {
                         url_image_profile = "www.imatgedummy.com";
                     }
 
@@ -338,13 +338,13 @@ public class LoginActivity extends AppCompatActivity
                     @Override
                     public void onResponse(Call<UserAgorApp> call, Response<UserAgorApp> response) {
 
-                        System.out.println(response.code());
+                        Toast.makeText(getApplicationContext(), "response code: "+response.code(), Toast.LENGTH_LONG).show();
 
                         String id = response.body().getId();
                         String token = response.body().getActiveToken();
                         saveUserInPreferences(id, token);
 
-                        Toast.makeText(getApplicationContext(), token, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "token: "+token, Toast.LENGTH_LONG).show();
 
                         loginok();
                     }
@@ -379,5 +379,13 @@ public class LoginActivity extends AppCompatActivity
                     @Override
                     public void onResult(Status status) {}
                 });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
     }
 }

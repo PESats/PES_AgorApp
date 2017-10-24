@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="pes.agorapp.activities.LoginActivity">
+    tools:context="pes.agorapp.activities.LoginActivity"
+    android:background="@drawable/gradient">
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_button_google"

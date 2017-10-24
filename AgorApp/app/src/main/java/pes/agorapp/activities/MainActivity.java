@@ -159,6 +159,14 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
+    }
+
     private void close_session() {
         new AlertDialog.Builder(MainActivity.this)
                 .setTitle("Tancar sessió")
