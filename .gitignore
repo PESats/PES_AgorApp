@@ -56,3 +56,6 @@ AgorApp/google-services.json
 AgorApp/freeline.py
 AgorApp/freeline/
 AgorApp/freeline_project_description.json
+
+# OSX
+.DS_STORE
