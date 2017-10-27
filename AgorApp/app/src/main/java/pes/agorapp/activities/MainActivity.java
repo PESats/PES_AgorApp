@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity
         prefs = new PreferencesAgorApp(MainActivity.this);
 
         /*informació d'usuari*/
-        //printProfile();
+        printProfile();
 
         //botó logout
         findViewById(R.id.btn_logout).setOnClickListener(this);
@@ -99,15 +99,10 @@ public class MainActivity extends AppCompatActivity
     private void setTextProva() {
         String userName = prefs.getUserName();
         String email = prefs.getEmail();
-        String image_url = prefs.getImageUrl();
-        String platform = prefs.getPlatform();
-        String token = prefs.getActiveToken();
         TextView myAwesomeTextView = (TextView) findViewById(R.id.text_prova);
-        myAwesomeTextView.setText("LOGUEJAT CORRECTAMENT\n\nNom real: " + userName +
-                "\nuserName: " + email +
-                "\nimage_url: " + image_url +
-                "\nplatform: " + platform +
-                "\nactive_token: " + token);
+        myAwesomeTextView.setText("LOGUEJAT CORRECTAMENT\n\n" +
+                "\nNom públic: " + userName +
+                "\nusername: " + email);
     }
 
     @Override
