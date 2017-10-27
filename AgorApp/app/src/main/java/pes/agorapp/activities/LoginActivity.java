@@ -121,12 +121,12 @@ public class LoginActivity extends AppCompatActivity
 
                     @Override
                     public void onCancel() {
-                        Toast.makeText(getApplicationContext(), "Login cancelat! =(", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Login cancelat! (facebook) =(", Toast.LENGTH_LONG).show();
                     }
 
                     @Override
                     public void onError(FacebookException exception) {
-                        Toast.makeText(getApplicationContext(), "FAIL! =(", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "FAIL! (facebook) =(", Toast.LENGTH_LONG).show();
                     }
                 });
     }
@@ -164,7 +164,7 @@ public class LoginActivity extends AppCompatActivity
 
             @Override
             public void failure(TwitterException exception) {
-                Toast.makeText(getApplicationContext(), "FAIL! =(", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "FAIL! (twitter) =(", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -264,7 +264,7 @@ public class LoginActivity extends AppCompatActivity
                 userResult.enqueue(new Callback<User>() {
                     @Override
                     public void failure(TwitterException e) {
-                        Toast.makeText(getApplicationContext(), "FAIL! =(", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "FAIL! (twitter) =(", Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -338,13 +338,13 @@ public class LoginActivity extends AppCompatActivity
                     @Override
                     public void onResponse(Call<UserAgorApp> call, Response<UserAgorApp> response) {
 
-                        Toast.makeText(getApplicationContext(), "response code: "+response.code(), Toast.LENGTH_LONG).show();
+                        Log.i("response code", String.valueOf(response.code()));
 
                         String id = response.body().getId();
                         String token = response.body().getActiveToken();
                         saveUserInPreferences(id, token);
 
-                        Toast.makeText(getApplicationContext(), "token: "+token, Toast.LENGTH_LONG).show();
+                        Log.i("token", token);
 
                         loginok();
                     }

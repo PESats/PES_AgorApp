@@ -3,9 +3,12 @@ package pes.agorapp.activities;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -44,27 +47,15 @@ public class MainActivity extends AppCompatActivity
 
         prefs = new PreferencesAgorApp(MainActivity.this);
 
-        //informació d'usuari
-        setTextProva();
-
-        //imatge
-        if (!prefs.getImageUrl().equals("www.imatgedummy.com")) {
-            Picasso.with(getApplicationContext())
-                    .load(prefs.getImageUrl())
-                    .resize(180, 180)
-                    .into((ImageView) findViewById(R.id.img_profile_user));
-        } else {
-            Picasso.with(getApplicationContext())
-                    .load(R.drawable.avatar_face_1_)
-                    .resize(180, 180)
-                    .into((ImageView) findViewById(R.id.img_profile_user));
-        }
+        /*informació d'usuari*/
+        //printProfile();
 
         //botó logout
         findViewById(R.id.btn_logout).setOnClickListener(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(null);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +76,26 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    private void printProfile() {
+        setTextProva();
+        setImageProva();
+    }
+
+    private void setImageProva() {
+        /*imatge*/
+        if (!prefs.getImageUrl().equals("www.imatgedummy.com")) {
+            Picasso.with(getApplicationContext())
+                    .load(prefs.getImageUrl())
+                    .resize(180, 180)
+                    .into((ImageView) findViewById(R.id.img_profile_user));
+        } else {
+            Picasso.with(getApplicationContext())
+                    .load(R.drawable.avatar_face_1_)
+                    .resize(180, 180)
+                    .into((ImageView) findViewById(R.id.img_profile_user));
+        }
+    }
+
     private void setTextProva() {
         String userName = prefs.getUserName();
         String email = prefs.getEmail();
@@ -93,10 +104,10 @@ public class MainActivity extends AppCompatActivity
         String token = prefs.getActiveToken();
         TextView myAwesomeTextView = (TextView) findViewById(R.id.text_prova);
         myAwesomeTextView.setText("LOGUEJAT CORRECTAMENT\n\nNom real: " + userName +
-                "\nemail/usuaritwitter: " + email +
+                "\nuserName: " + email +
                 "\nimage_url: " + image_url +
                 "\nplatform: " + platform +
-                "\ntoken: " + token);
+                "\nactive_token: " + token);
     }
 
     @Override
@@ -138,17 +149,18 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
+            printProfile();
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
-
+            printProfile();
         } else if (id == R.id.nav_slideshow) {
-
+            printProfile();
         } else if (id == R.id.nav_manage) {
-
+            printProfile();
         } else if (id == R.id.nav_share) {
-
+            printProfile();
         } else if (id == R.id.nav_send) {
-
+            printProfile();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -183,7 +195,7 @@ public class MainActivity extends AppCompatActivity
 
                         JsonObject jsonUser = new JsonObject();
                         jsonUser.addProperty("id", prefs.getId());
-                        jsonUser.addProperty("active_token", prefs.getEmail());
+                        jsonUser.addProperty("active_token", prefs.getActiveToken());
 
                         AgorAppApiManager
                                 .getService()
@@ -191,7 +203,7 @@ public class MainActivity extends AppCompatActivity
                                 .enqueue(new retrofit2.Callback<UserAgorApp>() {
                                              @Override
                                              public void onResponse(Call<UserAgorApp> call, Response<UserAgorApp> response) {
-                                                 Toast.makeText(getApplicationContext(), "codi resposta: "+response.code(), Toast.LENGTH_LONG).show();
+                                                 Log.i("codi resposta", String.valueOf(response.code()));
 
                                                  prefs.deleteSession(); //Al fer logout, s'elimina la informació interna de l'app
 
@@ -199,12 +211,12 @@ public class MainActivity extends AppCompatActivity
                                                  i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //Elimina totes less activities obertes
                                                  startActivity(i);
 
-                                                 Toast.makeText(getApplicationContext(), "LOGOUT correcte", Toast.LENGTH_LONG).show();
+                                                 Toast.makeText(getApplicationContext(), "LOGOUT correcte, token refrescat", Toast.LENGTH_LONG).show();
                                              }
 
                                              @Override
                                              public void onFailure(Call<UserAgorApp> call, Throwable t) {
-                                                 System.out.println("Something went wrong!");
+                                                 Toast.makeText(getApplicationContext(), "FAIL al logout", Toast.LENGTH_LONG).show();
                                                  new DialogServerKO(MainActivity.this).show();
                                              }
                                          });

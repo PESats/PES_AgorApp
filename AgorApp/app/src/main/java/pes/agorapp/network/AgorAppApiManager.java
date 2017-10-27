@@ -23,10 +23,10 @@ public class AgorAppApiManager {
     static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
 
-    private AgorAppApiManager(){}
+    private AgorAppApiManager() {}
 
     //Singleton for Retrofit
-    public static Retrofit getAdapter(){
+    public static Retrofit getAdapter() {
 
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         httpClient.addInterceptor(logging);
