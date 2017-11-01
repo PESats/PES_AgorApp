@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity
 
     private void printProfile() {
         setTextProva();
-        setImageProva();
+        //setImageProva();
     }
 
     private void setImageProva() {
