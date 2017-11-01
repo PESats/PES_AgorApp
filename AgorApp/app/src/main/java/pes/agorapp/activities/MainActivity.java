@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -25,17 +26,22 @@ import android.widget.Toast;
 import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 
+import pes.agorapp.JSONObjects.Announcement;
 import pes.agorapp.JSONObjects.UserAgorApp;
 import pes.agorapp.R;
 import pes.agorapp.customComponents.DialogServerKO;
+import pes.agorapp.fragments.AnnouncementFragment;
+import pes.agorapp.fragments.AnnouncementListFragment;
 import pes.agorapp.globals.PreferencesAgorApp;
+import pes.agorapp.helpers.ObjectsHelper;
 import pes.agorapp.network.AgorAppApiManager;
 import retrofit2.Call;
 import retrofit2.Response;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,
+                    AnnouncementFragment.OnFragmentInteractionListener, AnnouncementListFragment.OnFragmentInteractionListener {
 
     private PreferencesAgorApp prefs;
 
@@ -74,6 +80,12 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // Add list fragment
+        AnnouncementListFragment listFragment = new AnnouncementListFragment();
+        listFragment.setArguments(getIntent().getExtras());
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_container, listFragment).commit();
     }
 
     private void printProfile() {
@@ -145,7 +157,6 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             printProfile();
-            // Handle the camera action
         } else if (id == R.id.nav_gallery) {
             printProfile();
         } else if (id == R.id.nav_slideshow) {
@@ -219,5 +230,16 @@ public class MainActivity extends AppCompatActivity
                 })
                 .setNegativeButton(android.R.string.cancel, null)
                 .show();
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void onAnnouncementSelected(Announcement announcement) {
+        // Call the other fragment
+        System.out.println("heey");
     }
 }
