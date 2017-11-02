@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -41,7 +42,7 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,
-                    AnnouncementFragment.OnFragmentInteractionListener, AnnouncementListFragment.OnFragmentInteractionListener {
+        AnnouncementFragment.OnFragmentInteractionListener, AnnouncementListFragment.OnFragmentInteractionListener {
 
     private PreferencesAgorApp prefs;
 
@@ -175,7 +176,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onClick (View v){
+    public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_logout:
                 close_session();
@@ -207,25 +208,25 @@ public class MainActivity extends AppCompatActivity
                                 .getService()
                                 .logoutUser(jsonUser)
                                 .enqueue(new retrofit2.Callback<UserAgorApp>() {
-                                             @Override
-                                             public void onResponse(Call<UserAgorApp> call, Response<UserAgorApp> response) {
-                                                 Log.i("codi resposta", String.valueOf(response.code()));
+                                    @Override
+                                    public void onResponse(Call<UserAgorApp> call, Response<UserAgorApp> response) {
+                                        Log.i("codi resposta", String.valueOf(response.code()));
 
-                                                 prefs.deleteSession(); //Al fer logout, s'elimina la informació interna de l'app
+                                        prefs.deleteSession(); //Al fer logout, s'elimina la informació interna de l'app
 
-                                                 Intent i = new Intent(MainActivity.this, LoginActivity.class);
-                                                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //Elimina totes less activities obertes
-                                                 startActivity(i);
+                                        Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //Elimina totes less activities obertes
+                                        startActivity(i);
 
-                                                 Toast.makeText(getApplicationContext(), "LOGOUT correcte, token refrescat", Toast.LENGTH_LONG).show();
-                                             }
+                                        Toast.makeText(getApplicationContext(), "LOGOUT correcte, token refrescat", Toast.LENGTH_LONG).show();
+                                    }
 
-                                             @Override
-                                             public void onFailure(Call<UserAgorApp> call, Throwable t) {
-                                                 Toast.makeText(getApplicationContext(), "FAIL al logout", Toast.LENGTH_LONG).show();
-                                                 new DialogServerKO(MainActivity.this).show();
-                                             }
-                                         });
+                                    @Override
+                                    public void onFailure(Call<UserAgorApp> call, Throwable t) {
+                                        Toast.makeText(getApplicationContext(), "FAIL al logout", Toast.LENGTH_LONG).show();
+                                        new DialogServerKO(MainActivity.this).show();
+                                    }
+                                });
                     }
                 })
                 .setNegativeButton(android.R.string.cancel, null)
@@ -240,6 +241,19 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onAnnouncementSelected(Announcement announcement) {
         // Call the other fragment
-        System.out.println("heey");
+        // Create fragment and give it an argument specifying the article it should show
+        AnnouncementFragment newFragment = new AnnouncementFragment();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment_container, newFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+
+        newFragment.setAnnouncement(announcement);
     }
 }

@@ -17,14 +17,16 @@ public class Announcement {
     private Location location;
     private int rewardPoints;
     private Date date;
+    private String author;
 
 
-    public Announcement(String title, String text, Location location, int rewardPoints, Date date) {
+    public Announcement(String title, String text, Location location, int rewardPoints, Date date, String author) {
         this.title = title;
         this.text = text;
         this.location = location;
         this.rewardPoints = rewardPoints;
         this.date = date;
+        this.author = author;
     }
 
     @Override
@@ -36,6 +38,7 @@ public class Announcement {
             announcement.put("location", location.toString());
             announcement.put("rewardPoints", rewardPoints);
             announcement.put("date", date);
+            announcement.put("author", author);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -80,5 +83,13 @@ public class Announcement {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }

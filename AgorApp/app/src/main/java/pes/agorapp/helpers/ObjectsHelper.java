@@ -18,7 +18,8 @@ public class ObjectsHelper {
                 "Necessito ajuda per pintar la meva habitacio, es la meva primera vegada!!!",
                 new Location(41.390368, 2.114508),
                 50,
-                new Date());
+                new Date(),
+                "Mariano Rajoy");
         return anAnnouncement;
     }
 
@@ -29,19 +30,22 @@ public class ObjectsHelper {
                 "Necessito ajuda per pintar la meva habitacio, es la meva primera vegada!!!",
                 new Location(41.390368, 2.114508),
                 50,
-                new Date()));
+                new Date(),
+                "Carles Puigdemont"));
 
         announcements.add(new Announcement("Regar les plantes",
                 "No se regar!!!",
                 new Location(41.390368, 2.114508),
                 100,
-                new Date()));
+                new Date(),
+                "Mariano Rajoy"));
 
         announcements.add(new Announcement("Rentar els plats",
                 "Sempre me\'ls ha rentat la dona!!!",
                 new Location(41.390368, 2.114508),
                 150,
-                new Date()));
+                new Date(),
+                "Xavier Garcia Albiol"));
         return announcements;
     }
 }

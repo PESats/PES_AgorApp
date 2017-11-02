@@ -3,10 +3,12 @@ package pes.agorapp.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import pes.agorapp.JSONObjects.Announcement;
 import pes.agorapp.R;
@@ -24,6 +26,7 @@ public class AnnouncementFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
     private OnFragmentInteractionListener mListener;
+    private Announcement announcement;
 
     public AnnouncementFragment() {
         // Required empty public constructor
@@ -94,7 +97,17 @@ public class AnnouncementFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Attach the adapter to a ListView
+        final TextView title = (TextView) view.findViewById(R.id.announcement_title);
+        title.setText(this.announcement.getText());
+
+    }
+
     public void setAnnouncement(Announcement anAnnouncement) {
-        System.out.print("I'm here!");
+        this.announcement = anAnnouncement;
     }
 }
