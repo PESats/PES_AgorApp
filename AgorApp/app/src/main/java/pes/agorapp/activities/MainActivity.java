@@ -1,5 +1,6 @@
 package pes.agorapp.activities;
 
+
 import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,8 +29,6 @@ public class MainActivity extends AppCompatActivity
         AnnouncementFragment.OnFragmentInteractionListener,
         AnnouncementListFragment.OnFragmentInteractionListener {
 
-    private Fragment current_fragment;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,8 +56,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        current_fragment = null;
     }
 
     @Override
