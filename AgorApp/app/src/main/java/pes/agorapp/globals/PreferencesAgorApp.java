@@ -21,6 +21,7 @@ public class PreferencesAgorApp {
     private static String VERSION_APP = "versionApp";
     private static String PLATFORM_LOGIN = "platform_login";
     private static String ACTIVE_TOKEN = "active_token";
+    private static String COINS = "coins";
 
     public PreferencesAgorApp(Context activity) {
         prefs = activity.getSharedPreferences(NAME_PREFERENCES, Context.MODE_PRIVATE);
@@ -98,6 +99,12 @@ public class PreferencesAgorApp {
         prefs.edit().putInt(LEVEL, user_level).apply();
     }
 
+    public int getCoins() { return prefs.getInt(COINS, 1); }
+
+    public void setCoins(int coins) {
+        prefs.edit().putInt(COINS, coins).apply();
+    }
+
     public void deleteSession(){
         prefs.edit().remove(NAME).apply();
         prefs.edit().remove(ID).apply();
@@ -106,6 +113,7 @@ public class PreferencesAgorApp {
         prefs.edit().remove(PLATFORM_LOGIN).apply();
         prefs.edit().remove(LEVEL).apply();
         prefs.edit().remove(ACTIVE_TOKEN).apply();
+        prefs.edit().remove(COINS).apply();
     }
 
     public void checkPreferences(){
@@ -116,5 +124,6 @@ public class PreferencesAgorApp {
         Log.i("version", getAppVersion());
         Log.i("platform", getPlatform());
         Log.i("Token", getActiveToken());
+        Log.i("Coins", String.valueOf(getCoins()));
     }
 }
