@@ -60,8 +60,6 @@ public class UserAgorApp {
         return updated_at;
     }
 
-    public Integer getCoins() {
-        return coins;
-    }
+    public Integer getCoins() { return coins; }
 
 }

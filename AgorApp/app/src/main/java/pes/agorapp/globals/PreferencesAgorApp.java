@@ -99,7 +99,9 @@ public class PreferencesAgorApp {
         prefs.edit().putInt(LEVEL, user_level).apply();
     }
 
-    public int getCoins() { return prefs.getInt(COINS, 1); }
+    public int getCoins() {
+        return prefs.getInt(COINS, 1);
+    }
 
     public void setCoins(int coins) {
         prefs.edit().putInt(COINS, coins).apply();
