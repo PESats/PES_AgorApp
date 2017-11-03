@@ -217,6 +217,8 @@ public class LoginActivity extends AppCompatActivity
                 platform_name = "google";
                 GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
                 requestDataUser(result);
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
                 break;
             case RC_SIGN_IN_TWITTER:
                 platform_name = "twitter";

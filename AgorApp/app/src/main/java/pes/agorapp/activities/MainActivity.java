@@ -1,8 +1,14 @@
 package pes.agorapp.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,12 +19,25 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.gson.JsonObject;
+import com.squareup.picasso.Picasso;
+
+import pes.agorapp.JSONObjects.Announcement;
+import pes.agorapp.JSONObjects.UserAgorApp;
 import pes.agorapp.R;
 import pes.agorapp.fragments.ProfileFragment;
+import pes.agorapp.customComponents.DialogServerKO;
+import pes.agorapp.fragments.AnnouncementFragment;
+import pes.agorapp.fragments.AnnouncementListFragment;
+import pes.agorapp.globals.PreferencesAgorApp;
+import pes.agorapp.network.AgorAppApiManager;
+import retrofit2.Call;
+import retrofit2.Response;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,
+        AnnouncementFragment.OnFragmentInteractionListener, AnnouncementListFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +66,12 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // Add list fragment
+        AnnouncementListFragment listFragment = new AnnouncementListFragment();
+        listFragment.setArguments(getIntent().getExtras());
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_container, listFragment).commit();
     }
 
     @Override
@@ -116,5 +141,29 @@ public class MainActivity extends AppCompatActivity
 
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void onAnnouncementSelected(Announcement announcement) {
+        // Call the other fragment
+        // Create fragment and give it an argument specifying the article it should show
+        AnnouncementFragment newFragment = new AnnouncementFragment();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment_container, newFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+
+        newFragment.setAnnouncement(announcement);
     }
 }
