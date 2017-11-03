@@ -34,9 +34,11 @@ public class AnnouncementsAdapter extends ArrayAdapter<Announcement> {
         // Lookup view for data population
         TextView title = (TextView) convertView.findViewById(R.id.item_title);
         TextView text = (TextView) convertView.findViewById(R.id.item_text);
+        TextView date = (TextView) convertView.findViewById(R.id.item_date);
         // Populate the data into the template view using the data object
         title.setText(announcement.getTitle());
         text.setText(announcement.getText());
+        date.setText(announcement.getDate().toString());
         // Return the completed view to render on screen
         return convertView;
     }

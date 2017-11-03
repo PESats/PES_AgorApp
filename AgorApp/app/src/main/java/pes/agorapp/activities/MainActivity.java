@@ -3,8 +3,6 @@ package pes.agorapp.activities;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -34,7 +32,6 @@ import pes.agorapp.customComponents.DialogServerKO;
 import pes.agorapp.fragments.AnnouncementFragment;
 import pes.agorapp.fragments.AnnouncementListFragment;
 import pes.agorapp.globals.PreferencesAgorApp;
-import pes.agorapp.helpers.ObjectsHelper;
 import pes.agorapp.network.AgorAppApiManager;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -55,7 +52,7 @@ public class MainActivity extends AppCompatActivity
         prefs = new PreferencesAgorApp(MainActivity.this);
 
         /*informació d'usuari*/
-        printProfile();
+        //printProfile();
 
         //botó logout
         findViewById(R.id.btn_logout).setOnClickListener(this);
