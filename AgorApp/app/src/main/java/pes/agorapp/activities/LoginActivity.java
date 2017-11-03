@@ -298,6 +298,8 @@ public class LoginActivity extends AppCompatActivity
                     Log.d("UserName Google:",acct.getDisplayName());
                     Log.d("Image Google: ",url_image_profile);
 
+                    Toast.makeText(getApplicationContext(), url_image_profile, Toast.LENGTH_LONG).show();
+
                     createUserDB(acct.getDisplayName(), url_image_profile, "Google");
                     signOutGoogle();
                 } else {
@@ -353,7 +355,6 @@ public class LoginActivity extends AppCompatActivity
                     public void onFailure(Call<UserAgorApp> call, Throwable t) {
                         System.out.println("Something went wrong!");
                         new DialogServerKO(LoginActivity.this).show();
-                        //Toast.makeText(getApplicationContext(), "l'API encara no està desplegada", Toast.LENGTH_LONG).show();
                     }
                 });
     }

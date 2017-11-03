@@ -1,14 +1,8 @@
 package pes.agorapp.activities;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,40 +12,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.gson.JsonObject;
-import com.squareup.picasso.Picasso;
-
-import pes.agorapp.JSONObjects.UserAgorApp;
 import pes.agorapp.R;
-import pes.agorapp.customComponents.DialogServerKO;
-import pes.agorapp.globals.PreferencesAgorApp;
-import pes.agorapp.network.AgorAppApiManager;
-import retrofit2.Call;
-import retrofit2.Response;
+import pes.agorapp.fragments.ProfileFragment;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
-
-    private PreferencesAgorApp prefs;
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
-        prefs = new PreferencesAgorApp(MainActivity.this);
-
-        /*informació d'usuari*/
-        printProfile();
-
-        //botó logout
-        findViewById(R.id.btn_logout).setOnClickListener(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -74,35 +47,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-    }
-
-    private void printProfile() {
-        setTextProva();
-        setImageProva();
-    }
-
-    private void setImageProva() {
-        /*imatge*/
-        if (!prefs.getImageUrl().equals("www.imatgedummy.com")) {
-            Picasso.with(getApplicationContext())
-                    .load(prefs.getImageUrl())
-                    .resize(180, 180)
-                    .into((ImageView) findViewById(R.id.img_profile_user));
-        } else {
-            Picasso.with(getApplicationContext())
-                    .load(R.drawable.avatar_face_1_)
-                    .resize(180, 180)
-                    .into((ImageView) findViewById(R.id.img_profile_user));
-        }
-    }
-
-    private void setTextProva() {
-        String userName = prefs.getUserName();
-        String email = prefs.getEmail();
-        TextView myAwesomeTextView = (TextView) findViewById(R.id.text_prova);
-        myAwesomeTextView.setText("LOGUEJAT CORRECTAMENT\n\n" +
-                "\nNom públic: " + userName +
-                "\nusername: " + email);
     }
 
     @Override
@@ -143,19 +87,22 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            printProfile();
-            // Handle the camera action
+        if (id == R.id.profile) {
+            android.app.FragmentManager fm = getFragmentManager();
+            android.app.FragmentTransaction ft = fm.beginTransaction();
+            ProfileFragment pf = new ProfileFragment();
+            ft.add(R.id.fragment_profile, pf);
+            ft.commit();
         } else if (id == R.id.nav_gallery) {
-            printProfile();
+            //printProfile();
         } else if (id == R.id.nav_slideshow) {
-            printProfile();
+            //printProfile();
         } else if (id == R.id.nav_manage) {
-            printProfile();
+            //printProfile();
         } else if (id == R.id.nav_share) {
-            printProfile();
+            //printProfile();
         } else if (id == R.id.nav_send) {
-            printProfile();
+            //printProfile();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -164,60 +111,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onClick (View v){
-        switch (v.getId()) {
-            case R.id.btn_logout:
-                close_session();
-                break;
-        }
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
 
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
-    }
-
-    private void close_session() {
-        new AlertDialog.Builder(MainActivity.this)
-                .setTitle("Tancar sessió")
-                .setMessage("N'estàs segur?")
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        JsonObject jsonUser = new JsonObject();
-                        jsonUser.addProperty("id", prefs.getId());
-                        jsonUser.addProperty("active_token", prefs.getActiveToken());
-
-                        AgorAppApiManager
-                                .getService()
-                                .logoutUser(jsonUser)
-                                .enqueue(new retrofit2.Callback<UserAgorApp>() {
-                                             @Override
-                                             public void onResponse(Call<UserAgorApp> call, Response<UserAgorApp> response) {
-                                                 Log.i("codi resposta", String.valueOf(response.code()));
-
-                                                 prefs.deleteSession(); //Al fer logout, s'elimina la informació interna de l'app
-
-                                                 Intent i = new Intent(MainActivity.this, LoginActivity.class);
-                                                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //Elimina totes less activities obertes
-                                                 startActivity(i);
-
-                                                 Toast.makeText(getApplicationContext(), "LOGOUT correcte, token refrescat", Toast.LENGTH_LONG).show();
-                                             }
-
-                                             @Override
-                                             public void onFailure(Call<UserAgorApp> call, Throwable t) {
-                                                 Toast.makeText(getApplicationContext(), "FAIL al logout", Toast.LENGTH_LONG).show();
-                                                 new DialogServerKO(MainActivity.this).show();
-                                             }
-                                         });
-                    }
-                })
-                .setNegativeButton(android.R.string.cancel, null)
-                .show();
     }
 }
