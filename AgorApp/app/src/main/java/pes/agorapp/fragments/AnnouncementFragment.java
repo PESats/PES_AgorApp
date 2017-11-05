@@ -22,8 +22,6 @@ import pes.agorapp.R;
  * create an instance of this fragment.
  */
 public class AnnouncementFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
     private OnFragmentInteractionListener mListener;
     private Announcement announcement;
@@ -37,7 +35,6 @@ public class AnnouncementFragment extends Fragment {
      * this fragment using the provided parameters.
      * @return A new instance of fragment AnnouncementFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static AnnouncementFragment newInstance() {
         AnnouncementFragment fragment = new AnnouncementFragment();
         Bundle args = new Bundle();

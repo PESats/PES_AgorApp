@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import pes.agorapp.JSONObjects.Announcement;
@@ -38,7 +37,7 @@ public class AnnouncementsAdapter extends ArrayAdapter<Announcement> {
         // Populate the data into the template view using the data object
         title.setText(announcement.getTitle());
         text.setText(announcement.getText());
-        date.setText(announcement.getDate().toString());
+        date.setText(announcement.getDateString());
         // Return the completed view to render on screen
         return convertView;
     }
