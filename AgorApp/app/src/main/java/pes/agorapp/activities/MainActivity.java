@@ -17,6 +17,7 @@ import android.view.MenuItem;
 
 import pes.agorapp.JSONObjects.Announcement;
 import pes.agorapp.R;
+import pes.agorapp.fragments.FormAnnouncementFragment;
 import pes.agorapp.fragments.ProfileFragment;
 import pes.agorapp.fragments.AnnouncementFragment;
 import pes.agorapp.fragments.AnnouncementListFragment;
@@ -41,8 +42,15 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                findViewById(R.id.fab).setVisibility(View.INVISIBLE);
+                FormAnnouncementFragment formAnnouncementFragment = new FormAnnouncementFragment();
+                //CAL REFACTORING!!!
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, formAnnouncementFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
             }
         });
 
@@ -97,7 +105,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.profile) {
             ProfileFragment profileFragment = new ProfileFragment();
-
+            //CAL REFACTORING!!!
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, profileFragment);
             fragmentTransaction.addToBackStack(null);
@@ -105,7 +113,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.announcement_list) {
             AnnouncementListFragment listFragment = new AnnouncementListFragment();
             listFragment.setArguments(getIntent().getExtras());
-
+            //CAL REFACTORING!!!
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, listFragment);
             fragmentTransaction.addToBackStack(null);
