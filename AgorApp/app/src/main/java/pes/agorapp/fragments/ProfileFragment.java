@@ -47,7 +47,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //botó logout
-        view.findViewById(R.id.btn_logout).setOnClickListener((View.OnClickListener) this);
+        view.findViewById(R.id.btn_logout).setOnClickListener(this);
         //info d'usuari i imatge
         printProfile(view);
     }
@@ -59,7 +59,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private void printImageProfile(View view) {
         /*imatge*/
-        if (!prefs.getImageUrl().equals("www.imatgedummy.com")) {
+        if (!prefs.getImageUrl().equals("www.imatgedummy.com") && !prefs.getImageUrl().equals("")) {
             Picasso.with(getActivity().getApplicationContext())
                     .load(prefs.getImageUrl())
                     .resize(180, 180)

@@ -336,6 +336,9 @@ public class LoginActivity extends AppCompatActivity
         jsonUser.addProperty("image_url", url_image);
         jsonUser.addProperty("platform_name", platform_name);
 
+        //JsonObject json = new JsonObject();
+        //json.add("user", jsonUser);
+
         AgorAppApiManager
                 .getService()
                 .createUser(jsonUser)
