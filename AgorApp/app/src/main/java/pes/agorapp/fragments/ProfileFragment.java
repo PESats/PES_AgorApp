@@ -76,10 +76,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         /*info d'usuari*/
         String userName = prefs.getUserName();
         String email = prefs.getEmail();
+        String imageUrl = prefs.getImageUrl();
         TextView myAwesomeTextView = (TextView) view.findViewById(R.id.text_prova);
         myAwesomeTextView.setText("LOGUEJAT CORRECTAMENT\n\n" +
                 "\nNom públic: " + userName +
-                "\nusername: " + email);
+                "\nusername: " + email +
+                "\nimageURL: " + imageUrl);
     }
 
     @Override
