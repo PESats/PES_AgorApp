@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import pes.agorapp.JSONObjects.Announcement;
+import pes.agorapp.JSONObjects.Comment;
 import pes.agorapp.JSONObjects.Location;
 
 /**
@@ -19,7 +20,7 @@ public class ObjectsHelper {
                 new Location(41.390368, 2.114508),
                 50,
                 new Date(),
-                "Mariano Rajoy");
+                "Mariano Rajoy", getFakeComments());
         return anAnnouncement;
     }
 
@@ -31,21 +32,30 @@ public class ObjectsHelper {
                 new Location(41.390368, 2.114508),
                 50,
                 new Date(),
-                "Carles Puigdemont"));
+                "Carles Puigdemont", getFakeComments()));
 
         announcements.add(new Announcement("Regar les plantes",
                 "No se regar!!!",
                 new Location(41.390368, 2.114508),
                 100,
                 new Date(),
-                "Mariano Rajoy"));
+                "Mariano Rajoy", getFakeComments()));
 
         announcements.add(new Announcement("Rentar els plats",
                 "Sempre me\'ls ha rentat la dona!!!",
                 new Location(41.390368, 2.114508),
                 150,
                 new Date(),
-                "Xavier Garcia Albiol"));
+                "Xavier Garcia Albiol", getFakeComments())
+                );
         return announcements;
+    }
+
+    private static List<Comment> getFakeComments() {
+        List<Comment> comments = new ArrayList<>();
+        comments.add(new Comment("Zapatero", "Prometere!", new Date()));
+        comments.add(new Comment("M. Rajoy", "Y la europea?", new Date()));
+        comments.add(new Comment("Iceta", "Pedro, libranos de él!", new Date()));
+        return comments;
     }
 }

@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Alex on 01-Nov-17.
@@ -17,16 +18,20 @@ public class Announcement {
     private Location location;
     private int rewardPoints;
     private Date date;
+    private List<Comment> comments;
+
+    // TODO: update String to UserAgorApp class
     private String author;
 
 
-    public Announcement(String title, String text, Location location, int rewardPoints, Date date, String author) {
+    public Announcement(String title, String text, Location location, int rewardPoints, Date date, String author, List<Comment> comments) {
         this.title = title;
         this.text = text;
         this.location = location;
         this.rewardPoints = rewardPoints;
         this.date = date;
         this.author = author;
+        this.comments = comments;
     }
 
     @Override
@@ -81,6 +86,11 @@ public class Announcement {
         return date;
     }
 
+    public String getDateString() {
+        DateFormat df = new SimpleDateFormat("HH:mm dd/MM");
+        return df.format(date);
+    }
+
     public void setDate(Date date) {
         this.date = date;
     }
@@ -91,5 +101,13 @@ public class Announcement {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

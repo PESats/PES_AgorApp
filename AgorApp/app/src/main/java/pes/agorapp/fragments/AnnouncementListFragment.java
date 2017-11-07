@@ -28,8 +28,6 @@ import pes.agorapp.helpers.ObjectsHelper;
  * create an instance of this fragment.
  */
 public class AnnouncementListFragment extends Fragment {
-    private AnnouncementsAdapter adapter;
-    private List<Announcement> announcements;
 
     private OnFragmentInteractionListener mListener;
 
@@ -45,7 +43,6 @@ public class AnnouncementListFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment AnnouncementListFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static AnnouncementListFragment newInstance(String param1, String param2) {
         AnnouncementListFragment fragment = new AnnouncementListFragment();
         Bundle args = new Bundle();
@@ -65,13 +62,6 @@ public class AnnouncementListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_announcement_list, container, false);
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override
@@ -102,8 +92,6 @@ public class AnnouncementListFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
         void onAnnouncementSelected(Announcement announcement);
     }
 
@@ -112,9 +100,9 @@ public class AnnouncementListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Construct the data source
-        announcements = new ArrayList<>();
+        List<Announcement> announcements = new ArrayList<>();
         // Create the adapter to convert the array to views
-        adapter = new AnnouncementsAdapter(getActivity(), announcements);
+        AnnouncementsAdapter adapter = new AnnouncementsAdapter(getActivity(), announcements);
         // Attach the adapter to a ListView
         final ListView listView = (ListView) view.findViewById(R.id.listViewAnnouncement);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

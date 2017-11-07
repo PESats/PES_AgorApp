@@ -8,10 +8,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import pes.agorapp.JSONObjects.Announcement;
+import pes.agorapp.JSONObjects.Comment;
 import pes.agorapp.R;
+import pes.agorapp.helpers.CommentsAdapter;
+import pes.agorapp.helpers.ObjectsHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,8 +30,6 @@ import pes.agorapp.R;
  * create an instance of this fragment.
  */
 public class AnnouncementFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
     private OnFragmentInteractionListener mListener;
     private Announcement announcement;
@@ -37,7 +43,6 @@ public class AnnouncementFragment extends Fragment {
      * this fragment using the provided parameters.
      * @return A new instance of fragment AnnouncementFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static AnnouncementFragment newInstance() {
         AnnouncementFragment fragment = new AnnouncementFragment();
         Bundle args = new Bundle();
@@ -101,9 +106,24 @@ public class AnnouncementFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Attach the adapter to a ListView
         final TextView title = (TextView) view.findViewById(R.id.announcement_title);
-        title.setText(this.announcement.getText());
+        title.setText(this.announcement.getTitle());
+
+        final TextView text = (TextView) view.findViewById(R.id.announcement_text);
+        text.setText(this.announcement.getText());
+
+        final TextView author = (TextView) view.findViewById(R.id.announcement_author);
+        author.setText(this.announcement.getAuthor());
+
+        // Construct the data source
+        List<Comment> comments = new ArrayList<>();
+        // Create the adapter to convert the array to views
+        CommentsAdapter adapter = new CommentsAdapter(getActivity(), comments);
+        // Attach the adapter to a ListView
+        final ListView listView = (ListView) view.findViewById(R.id.comments_list);
+        listView.setAdapter(adapter);
+        comments = announcement.getComments();
+        adapter.addAll(comments);
 
     }
 
