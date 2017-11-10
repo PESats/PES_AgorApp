@@ -3,8 +3,6 @@ package pes.agorapp.JSONObjects;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -13,25 +11,26 @@ import java.util.List;
  */
 
 public class Announcement {
+    private int id;
     private String title;
-    private String text;
-    private Location location;
-    private int rewardPoints;
-    private Date date;
-    private List<Comment> comments;
-
-    // TODO: update String to UserAgorApp class
-    private String author;
+    private String description;
+    private float latitude;
+    private float longitude;
+    private int reward;
+    private int user_id;
+    private Date created_at;
 
 
-    public Announcement(String title, String text, Location location, int rewardPoints, Date date, String author, List<Comment> comments) {
+    public Announcement() {}
+    public Announcement(String title, String text, float latitude, float longitude, int reward,
+                        int user_id, Date created_at) {
         this.title = title;
-        this.text = text;
-        this.location = location;
-        this.rewardPoints = rewardPoints;
-        this.date = date;
-        this.author = author;
-        this.comments = comments;
+        this.description = text;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.reward = reward;
+        this.user_id = user_id;
+        this.created_at = created_at;
     }
 
     @Override
@@ -39,15 +38,24 @@ public class Announcement {
         JSONObject announcement = new JSONObject();
         try {
             announcement.put("title", title);
-            announcement.put("text", text);
-            announcement.put("location", location.toString());
-            announcement.put("rewardPoints", rewardPoints);
-            announcement.put("date", date);
-            announcement.put("author", author);
+            announcement.put("text", description);
+            announcement.put("latitude", latitude);
+            announcement.put("longitude", longitude);
+            announcement.put("reward", reward);
+            announcement.put("user_id", user_id);
+            announcement.put("created_at", created_at);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return announcement.toString();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -58,56 +66,51 @@ public class Announcement {
         this.title = title;
     }
 
-    public String getText() {
-        return text;
+    public String getDescription() {
+        return description;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public Location getLocation() {
-        return location;
+    public float getLatitude() {
+        return latitude;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setLatitude(float latitude) {
+        this.latitude = latitude;
     }
 
-    public int getRewardPoints() {
-        return rewardPoints;
+    public float getLongitude() {
+        return longitude;
     }
 
-    public void setRewardPoints(int rewardPoints) {
-        this.rewardPoints = rewardPoints;
+    public void setLongitude(float longitude) {
+        this.longitude = longitude;
     }
 
-    public Date getDate() {
-        return date;
+    public int getReward() {
+        return reward;
     }
 
-    public String getDateString() {
-        DateFormat df = new SimpleDateFormat("HH:mm dd/MM");
-        return df.format(date);
+    public void setReward(int reward) {
+        this.reward = reward;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public int getUser_id() {
+        return user_id;
     }
 
-    public String getAuthor() {
-        return author;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public Date getCreated_at() {
+        return created_at;
     }
 
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
+    public void setCreated_at(Date created_at) {
+        this.created_at = created_at;
     }
 }
