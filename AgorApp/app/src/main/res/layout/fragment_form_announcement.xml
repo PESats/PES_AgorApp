@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <TextView
+        android:id="@+id/form_announcement_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/com_facebook_blue"
+        android:text="Títol"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.17000002" />
+
+    <EditText
+        android:id="@+id/form_announcement_titleEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Títol"
+        android:inputType="textPersonName" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="192dp" />
+
+    <TextView
+        android:id="@+id/form_announcement_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Descripció"
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/form_announcement_descriptionEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.26"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+
+    <TextView
+        android:id="@+id/form_announcement_reward"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Recompensa oferta"
+        android:textAlignment="center" />
+
+    <SeekBar
+        android:id="@+id/form_announcement_rewardEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btn_form_announcement_publish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Publicar" />
+
+</LinearLayout>

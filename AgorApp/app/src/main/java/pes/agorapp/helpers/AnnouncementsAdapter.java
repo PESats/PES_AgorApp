@@ -18,8 +18,8 @@ import pes.agorapp.R;
 
 public class AnnouncementsAdapter extends ArrayAdapter<Announcement> {
 
-    public AnnouncementsAdapter(Context context, List<Announcement> users) {
-        super(context, 0, users);
+    public AnnouncementsAdapter(Context context, List<Announcement> announcements) {
+        super(context, 0, announcements);
     }
 
     @Override

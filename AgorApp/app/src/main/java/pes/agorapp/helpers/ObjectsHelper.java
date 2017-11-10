@@ -36,4 +36,12 @@ public class ObjectsHelper {
                 (float) 41.890368, (float) 2.114508, 50, 1, new Date()));
         return announcements;
     }
+
+    private static List<Comment> getFakeComments() {
+        List<Comment> comments = new ArrayList<>();
+        comments.add(new Comment("Zapatero", "Prometere!", new Date()));
+        comments.add(new Comment("M. Rajoy", "Y la europea?", new Date()));
+        comments.add(new Comment("Iceta", "Pedro, libranos de él!", new Date()));
+        return comments;
+    }
 }

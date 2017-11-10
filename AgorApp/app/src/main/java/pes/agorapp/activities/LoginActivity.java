@@ -55,6 +55,7 @@ import pes.agorapp.R;
 import pes.agorapp.customComponents.DialogServerKO;
 import pes.agorapp.globals.PreferencesAgorApp;
 import pes.agorapp.network.AgorAppApiManager;
+
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -291,14 +292,14 @@ public class LoginActivity extends AppCompatActivity
 
                     String url_image_profile;
 
-                    if (acct.getPhotoUrl() != null) {
-                        url_image_profile = acct.getPhotoUrl().toString();
+                    if (acct.getPhotoUrl() != null && !acct.getPhotoUrl().toString().equals("")) {
+                        url_image_profile = String.valueOf(acct.getPhotoUrl());
                     } else {
                         url_image_profile = "www.imatgedummy.com";
                     }
 
-                    Log.d("UserName Google:",acct.getDisplayName());
-                    Log.d("Image Google: ",url_image_profile);
+                    Log.d("UserName Google:", acct.getDisplayName());
+                    Log.d("Image Google: ", url_image_profile);
 
                     Toast.makeText(getApplicationContext(), url_image_profile, Toast.LENGTH_LONG).show();
 
@@ -334,6 +335,9 @@ public class LoginActivity extends AppCompatActivity
         jsonUser.addProperty("email", email);
         jsonUser.addProperty("image_url", url_image);
         jsonUser.addProperty("platform_name", platform_name);
+
+        //JsonObject json = new JsonObject();
+        //json.add("user", jsonUser);
 
         AgorAppApiManager
                 .getService()
