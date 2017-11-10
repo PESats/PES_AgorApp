@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import pes.agorapp.JSONObjects.Announcement;
-import pes.agorapp.JSONObjects.Location;
 
 /**
  * Created by Alex on 01-Nov-17.
@@ -14,12 +13,10 @@ import pes.agorapp.JSONObjects.Location;
 public class ObjectsHelper {
 
     public static Announcement getFakeAnnouncement() {
+        //(String title, String text, float latitude, float longitude, int reward, int user_id, Date created_at)
         Announcement anAnnouncement = new Announcement("Pintar habitacio",
                 "Necessito ajuda per pintar la meva habitacio, es la meva primera vegada!!!",
-                new Location(41.390368, 2.114508),
-                50,
-                new Date(),
-                "Mariano Rajoy");
+                (float) 41.190368, (float) 2.814508, 50, 1, new Date());
         return anAnnouncement;
     }
 
@@ -27,25 +24,16 @@ public class ObjectsHelper {
         List<Announcement> announcements = new ArrayList<>();
 
         announcements.add(new Announcement("Pintar habitacio",
-                "Necessito ajuda per pintar la meva habitacio, es la meva primera vegada!!!",
-                new Location(41.390368, 2.114508),
-                50,
-                new Date(),
-                "Carles Puigdemont"));
+                "No se pintar una habitació, soc lerdo",
+                (float) 41.490368, (float) 2.314508, 50, 1, new Date()));
 
-        announcements.add(new Announcement("Regar les plantes",
-                "No se regar!!!",
-                new Location(41.390368, 2.114508),
-                100,
-                new Date(),
-                "Mariano Rajoy"));
+        announcements.add(new Announcement("Regar plantes",
+                "La meva mare m'ha deixat unes plantes i s'estan martxitan :'(",
+                (float) 41.590368, (float) 2.614508, 50, 1, new Date()));
 
-        announcements.add(new Announcement("Rentar els plats",
-                "Sempre me\'ls ha rentat la dona!!!",
-                new Location(41.390368, 2.114508),
-                150,
-                new Date(),
-                "Xavier Garcia Albiol"));
+        announcements.add(new Announcement("Rentar plats",
+                "Se m'ha trencat el rentaplats",
+                (float) 41.890368, (float) 2.114508, 50, 1, new Date()));
         return announcements;
     }
 }

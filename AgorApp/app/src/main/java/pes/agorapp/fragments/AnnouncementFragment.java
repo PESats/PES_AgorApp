@@ -103,7 +103,7 @@ public class AnnouncementFragment extends Fragment {
 
         // Attach the adapter to a ListView
         final TextView title = (TextView) view.findViewById(R.id.announcement_title);
-        title.setText(this.announcement.getText());
+        title.setText(this.announcement.getDescription());
 
     }
 
