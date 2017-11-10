@@ -36,8 +36,8 @@ public class AnnouncementsAdapter extends ArrayAdapter<Announcement> {
         TextView date = (TextView) convertView.findViewById(R.id.item_date);
         // Populate the data into the template view using the data object
         title.setText(announcement.getTitle());
-        text.setText(announcement.getText());
-        date.setText(announcement.getDateString());
+        text.setText(announcement.getDescription());
+        date.setText(announcement.getCreated_at().toString());
         // Return the completed view to render on screen
         return convertView;
     }

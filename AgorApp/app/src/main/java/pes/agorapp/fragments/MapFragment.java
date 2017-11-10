@@ -26,6 +26,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import pes.agorapp.R;
+import pes.agorapp.globals.PreferencesAgorApp;
 
 
 public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
@@ -37,7 +38,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
     private SupportMapFragment mapFragment;
     private double lat;
     private double lng;
-    private Marker mMarker;
+    private PreferencesAgorApp prefs;
 
     public MapFragment() {
         // Required empty public constructor
@@ -47,6 +48,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_map, container, false);
+        prefs = new PreferencesAgorApp(getActivity());
 
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
@@ -97,7 +99,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
         //TODO: Fer cirda api i pintar marker per cada un
         LatLng coords = new LatLng(41.390205, 2.154007);
 
-        mMarker = mMap.addMarker(new MarkerOptions()
+        mMap.addMarker(new MarkerOptions()
                 .position(coords)
                 .title("BARNA"));
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener()
