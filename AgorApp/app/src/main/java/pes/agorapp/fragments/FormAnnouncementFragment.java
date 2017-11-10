@@ -15,7 +15,9 @@ import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.gson.JsonObject;
 
+import pes.agorapp.JSONObjects.Location;
 import pes.agorapp.R;
 import pes.agorapp.globals.PreferencesAgorApp;
 
@@ -27,7 +29,7 @@ public class FormAnnouncementFragment extends Fragment implements View.OnClickLi
     private EditText etTitle;
     private EditText etDesc;
     private SeekBar sbReward;
-
+    private Location locAnn;
     public FormAnnouncementFragment() {}
 
     public View onCreateView(LayoutInflater inflater,
@@ -56,6 +58,8 @@ public class FormAnnouncementFragment extends Fragment implements View.OnClickLi
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
                 //Log.i(TAG, "Place: " + place.getName());//get place details here
+                locAnn = new Location(place.getLatLng().latitude,place.getLatLng().longitude);
+
             }
 
             @Override
@@ -81,6 +85,14 @@ public class FormAnnouncementFragment extends Fragment implements View.OnClickLi
         String desc = etDesc.getText().toString();
         String reward = String.valueOf(sbReward.getProgress());
 
+        JsonObject jsonAnn = new JsonObject();
+        jsonAnn.addProperty("title",title);
+        jsonAnn.addProperty("text",desc);
+        jsonAnn.addProperty("latitude",locAnn.getLatitude());
+        jsonAnn.addProperty("longitude", locAnn.getLongitude());
+        //jsonAnn.addProperty("reward",title);
+        //jsonAnn.addProperty("date",title);
+        //jsonAnn.addProperty("author",title);
 
         //TextView myAwesomeTextView = (TextView) view.findViewById(R.id.form_announcement_title);
         //myAwesomeTextView.setText("hola");
