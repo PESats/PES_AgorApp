@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import pes.agorapp.JSONObjects.Announcement;
+import pes.agorapp.JSONObjects.Comment;
 
 /**
  * Created by Alex on 01-Nov-17.

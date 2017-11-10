@@ -110,10 +110,10 @@ public class AnnouncementFragment extends Fragment {
         title.setText(this.announcement.getDescription());
 
         final TextView text = (TextView) view.findViewById(R.id.announcement_text);
-        text.setText(this.announcement.getText());
+        text.setText(this.announcement.getDescription());
 
         final TextView author = (TextView) view.findViewById(R.id.announcement_author);
-        author.setText(this.announcement.getAuthor());
+        author.setText(String.valueOf(this.announcement.getUser_id()));
 
         // Construct the data source
         List<Comment> comments = new ArrayList<>();
@@ -122,7 +122,7 @@ public class AnnouncementFragment extends Fragment {
         // Attach the adapter to a ListView
         final ListView listView = (ListView) view.findViewById(R.id.comments_list);
         listView.setAdapter(adapter);
-        comments = announcement.getComments();
+        //comments = announcement.getComments();
         adapter.addAll(comments);
 
     }
