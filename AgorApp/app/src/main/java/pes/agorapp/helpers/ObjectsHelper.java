@@ -38,7 +38,7 @@ public class ObjectsHelper {
         return announcements;
     }
 
-    private static List<Comment> getFakeComments() {
+    public static List<Comment> getFakeComments() {
         List<Comment> comments = new ArrayList<>();
         comments.add(new Comment("Zapatero", "Prometere!", new Date()));
         comments.add(new Comment("M. Rajoy", "Y la europea?", new Date()));
