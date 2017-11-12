@@ -40,16 +40,16 @@ public class ObjectsHelper {
 
     public static List<Comment> getFakeOwnComments() {
         List<Comment> comments = new ArrayList<>();
-        comments.add(new Comment(1, "Zapatero", "Prometere!", new Date()));
+        comments.add(new Comment(1, "Zapatero", "Prometere!", new Date(), 200));
         return comments;
     }
 
     public static List<Comment> getFakeComments() {
         List<Comment> comments = new ArrayList<>();
-        comments.add(new Comment(1, "Zapatero", "Prometere!", new Date()));
-        comments.add(new Comment(2, "M. Rajoy", "Y la europea?", new Date()));
-        comments.add(new Comment(3, "Iceta", "Pedro, libranos de él!", new Date()));
-        comments.add(new Comment(4, "Iceta2", "Pedro, libranos de él!", new Date()));
+        comments.add(new Comment(1, "Zapatero", "Prometere!", new Date(), 1000));
+        comments.add(new Comment(2, "M. Rajoy", "Y la europea?", new Date(), 750));
+        comments.add(new Comment(3, "Iceta", "Pedro, libranos de él!", new Date(), 250));
+        comments.add(new Comment(4, "Iceta2", "Pedro, libranos de él!", new Date(), 3000));
         return comments;
     }
 }

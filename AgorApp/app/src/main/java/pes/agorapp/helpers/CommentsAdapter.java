@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 
+import org.w3c.dom.Text;
+
 import okhttp3.Request;
 import pes.agorapp.JSONObjects.UserAgorApp;
 import pes.agorapp.activities.LoginActivity;
@@ -52,11 +54,13 @@ public class CommentsAdapter extends ArrayAdapter<Comment> {
         TextView title = (TextView) convertView.findViewById(R.id.comment_title);
         TextView text = (TextView) convertView.findViewById(R.id.comment_text);
         TextView date = (TextView) convertView.findViewById(R.id.comment_date);
+        TextView reward = (TextView) convertView.findViewById(R.id.comment_reward);
         //ImageView imgView = (ImageView) convertView.findViewById(R.id.icon_comment);
         // Populate the data into the template view using the data object
         title.setText(comment.getAuthor());
         text.setText(comment.getContent());
         date.setText(comment.getDateString());
+        reward.setText("Demana " + comment.getReward() + " AgoraCoins");
         //buttons
         Button buttonEdit = (Button) convertView.findViewById(R.id.comment_edit);
         buttonEdit.setOnClickListener(new View.OnClickListener() {
