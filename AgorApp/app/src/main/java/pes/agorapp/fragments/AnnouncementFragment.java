@@ -118,6 +118,7 @@ public class AnnouncementFragment extends Fragment {
         //comments = announcement.getComments();
         comments = ObjectsHelper.getFakeComments();
         adapter.addAll(comments);
+
     }
 
     public void setAnnouncement(Announcement anAnnouncement) {

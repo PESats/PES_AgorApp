@@ -1,6 +1,7 @@
 package pes.agorapp.fragments;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 
+import pes.agorapp.JSONObjects.Announcement;
 import pes.agorapp.JSONObjects.UserAgorApp;
 import pes.agorapp.R;
 import pes.agorapp.activities.LoginActivity;
@@ -32,6 +34,7 @@ import retrofit2.Response;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 
+    private AnnouncementListFragment.OnFragmentInteractionListener mListener;
     private PreferencesAgorApp prefs;
 
     public ProfileFragment() {}
@@ -48,7 +51,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
         //botons
         view.findViewById(R.id.profile_btn_logout).setOnClickListener(this);
-        view.findViewById(R.id.profile_btn_marketplace).setOnClickListener(this);
+        view.findViewById(R.id.profile_btn_marketplace).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onMarketplaceOpen();
+            }
+        });
         //info d'usuari i imatge
         printProfile(view);
     }
@@ -81,19 +89,29 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof AnnouncementListFragment.OnFragmentInteractionListener) {
+            mListener = (AnnouncementListFragment.OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    @Override
     public void onClick (View v){
         switch (v.getId()) {
             case R.id.profile_btn_logout:
                 close_session();
                 break;
-            case R.id.profile_btn_marketplace:
-                open_marketplace();
-                break;
         }
-    }
-
-    private void open_marketplace() {
-        Toast.makeText(getActivity().getApplicationContext(), "To be continued...", Toast.LENGTH_LONG).show();
     }
 
     private void close_session() {

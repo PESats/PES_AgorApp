@@ -25,6 +25,7 @@ import pes.agorapp.JSONObjects.Announcement;
 import pes.agorapp.JSONObjects.Comment;
 import pes.agorapp.R;
 import pes.agorapp.fragments.FormAnnouncementFragment;
+import pes.agorapp.fragments.MarketplaceFragment;
 import pes.agorapp.fragments.ProfileFragment;
 import pes.agorapp.fragments.AnnouncementFragment;
 import pes.agorapp.fragments.AnnouncementListFragment;
@@ -158,6 +159,12 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         } else if (id == R.id.nav_slideshow) {
+            MarketplaceFragment marketplaceFragment = new MarketplaceFragment();
+            //CAL REFACTORING!!!
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, marketplaceFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
             //printProfile();
         } else if (id == R.id.nav_manage) {
             //printProfile();
@@ -202,5 +209,22 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onCommentSelected(Comment comment) {
         Toast.makeText(getApplicationContext(), "comment", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onMarketplaceOpen() {
+        // Call the other fragment
+        // Create fragment and give it an argument specifying the article it should show
+        MarketplaceFragment newFragment = new MarketplaceFragment();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment_container, newFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
     }
 }
