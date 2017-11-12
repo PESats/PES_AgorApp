@@ -18,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import pes.agorapp.JSONObjects.Announcement;
@@ -67,6 +68,14 @@ public class MainActivity extends AppCompatActivity
                 fragmentTransaction.commit();
                 /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
+            }
+        });
+
+        ImageView logo = (ImageView) findViewById(R.id.logo_agorapp);
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "logo", Toast.LENGTH_LONG).show();
             }
         });
 
