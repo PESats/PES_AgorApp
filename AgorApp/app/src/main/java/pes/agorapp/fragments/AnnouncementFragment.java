@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -113,18 +114,10 @@ public class AnnouncementFragment extends Fragment {
         CommentsAdapter adapter = new CommentsAdapter(getActivity(), comments);
         // Attach the adapter to a ListView
         final ListView listView = (ListView) view.findViewById(R.id.comments_list);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Comment comment = (Comment) listView.getItemAtPosition(position);
-                mListener.onCommentSelected(comment);
-            }
-        });
         listView.setAdapter(adapter);
         //comments = announcement.getComments();
         comments = ObjectsHelper.getFakeComments();
         adapter.addAll(comments);
-
     }
 
     public void setAnnouncement(Announcement anAnnouncement) {

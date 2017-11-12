@@ -10,17 +10,24 @@ import java.util.Date;
 
 public class Comment {
 
+    private int id;
+
     // TODO: update String to UserAgorApp class
     private String author;
 
     private String content;
     private Date date;
 
-    public Comment(String author, String content, Date date) {
+    public Comment(int id, String author, String content, Date date) {
+        this.id = id;
         this.author = author;
         this.content = content;
         this.date = date;
     }
+
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
 
     public String getAuthor() {
         return author;
