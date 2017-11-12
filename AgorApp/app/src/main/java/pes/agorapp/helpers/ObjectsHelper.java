@@ -38,11 +38,18 @@ public class ObjectsHelper {
         return announcements;
     }
 
-    private static List<Comment> getFakeComments() {
+    public static List<Comment> getFakeOwnComments() {
         List<Comment> comments = new ArrayList<>();
-        comments.add(new Comment("Zapatero", "Prometere!", new Date()));
-        comments.add(new Comment("M. Rajoy", "Y la europea?", new Date()));
-        comments.add(new Comment("Iceta", "Pedro, libranos de él!", new Date()));
+        comments.add(new Comment(1, "Zapatero", "Prometere!", new Date()));
+        return comments;
+    }
+
+    public static List<Comment> getFakeComments() {
+        List<Comment> comments = new ArrayList<>();
+        comments.add(new Comment(1, "Zapatero", "Prometere!", new Date()));
+        comments.add(new Comment(2, "M. Rajoy", "Y la europea?", new Date()));
+        comments.add(new Comment(3, "Iceta", "Pedro, libranos de él!", new Date()));
+        comments.add(new Comment(4, "Iceta2", "Pedro, libranos de él!", new Date()));
         return comments;
     }
 }

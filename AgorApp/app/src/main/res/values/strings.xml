@@ -14,4 +14,14 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Custom strings -->
+    <string name="menu_profile">Perfil</string>
+    <string name="menu_announcements">Llista anuncis</string>
+
+    <string name="profile_wallet_title">La teva cartera</string>
+    <string name="profile_wallet_subtitle">Actualment tens</string>
+    <string name="profile_wallet_button">Bescanviar al MARKETPLACE</string>
+    <string name="profile_trophies">Premis desbloquejats</string>
+
 </resources>

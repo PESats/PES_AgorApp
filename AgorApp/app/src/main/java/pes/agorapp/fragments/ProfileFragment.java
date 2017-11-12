@@ -1,6 +1,7 @@
 package pes.agorapp.fragments;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 
+import pes.agorapp.JSONObjects.Announcement;
 import pes.agorapp.JSONObjects.UserAgorApp;
 import pes.agorapp.R;
 import pes.agorapp.activities.LoginActivity;
@@ -32,6 +34,7 @@ import retrofit2.Response;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 
+    private AnnouncementListFragment.OnFragmentInteractionListener mListener;
     private PreferencesAgorApp prefs;
 
     public ProfileFragment() {}
@@ -46,8 +49,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //botó logout
-        view.findViewById(R.id.btn_logout).setOnClickListener(this);
+        //botons
+        view.findViewById(R.id.profile_btn_logout).setOnClickListener(this);
+        view.findViewById(R.id.profile_btn_marketplace).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onMarketplaceOpen();
+            }
+        });
         //info d'usuari i imatge
         printProfile(view);
     }
@@ -59,35 +68,47 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private void printImageProfile(View view) {
         /*imatge*/
-        if (!prefs.getImageUrl().equals("www.imatgedummy.com") && !prefs.getImageUrl().equals("")) {
+        if (!prefs.getImageUrl().equals("www.imatgedummy.com") && !prefs.getImageUrl().equals("") && prefs.getImageUrl() != null) {
             Picasso.with(getActivity().getApplicationContext())
                     .load(prefs.getImageUrl())
-                    .resize(180, 180)
-                    .into((ImageView) view.findViewById(R.id.img_profile_user));
+                    .resize(250, 250)
+                    .into((ImageView) view.findViewById(R.id.profile_user_img));
         } else {
             Picasso.with(getActivity().getApplicationContext())
                     .load(R.drawable.avatar_face_1_)
-                    .resize(180, 180)
-                    .into((ImageView) view.findViewById(R.id.img_profile_user));
+                    .resize(250, 250)
+                    .into((ImageView) view.findViewById(R.id.profile_user_img));
         }
     }
 
     private void printTextProfile(View view) {
         /*info d'usuari*/
         String userName = prefs.getUserName();
-        String email = prefs.getEmail();
-        String imageUrl = prefs.getImageUrl();
-        TextView myAwesomeTextView = (TextView) view.findViewById(R.id.text_prova);
-        myAwesomeTextView.setText("LOGUEJAT CORRECTAMENT\n\n" +
-                "\nNom públic: " + userName +
-                "\nusername: " + email +
-                "\nimageURL: " + imageUrl);
+        TextView myAwesomeTextView = (TextView) view.findViewById(R.id.profile_name);
+        myAwesomeTextView.setText(userName);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof AnnouncementListFragment.OnFragmentInteractionListener) {
+            mListener = (AnnouncementListFragment.OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 
     @Override
     public void onClick (View v){
         switch (v.getId()) {
-            case R.id.btn_logout:
+            case R.id.profile_btn_logout:
                 close_session();
                 break;
         }

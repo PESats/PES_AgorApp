@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -63,13 +64,6 @@ public class AnnouncementFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_announcement, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -98,8 +92,7 @@ public class AnnouncementFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onCommentSelected(Comment comment);
     }
 
     @Override
@@ -123,6 +116,7 @@ public class AnnouncementFragment extends Fragment {
         final ListView listView = (ListView) view.findViewById(R.id.comments_list);
         listView.setAdapter(adapter);
         //comments = announcement.getComments();
+        comments = ObjectsHelper.getFakeComments();
         adapter.addAll(comments);
 
     }

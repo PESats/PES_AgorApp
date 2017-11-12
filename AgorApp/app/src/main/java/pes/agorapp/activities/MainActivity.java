@@ -18,10 +18,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import pes.agorapp.JSONObjects.Announcement;
+import pes.agorapp.JSONObjects.Comment;
 import pes.agorapp.R;
 import pes.agorapp.fragments.FormAnnouncementFragment;
+import pes.agorapp.fragments.MarketplaceFragment;
 import pes.agorapp.fragments.ProfileFragment;
 import pes.agorapp.fragments.AnnouncementFragment;
 import pes.agorapp.fragments.AnnouncementListFragment;
@@ -65,6 +69,14 @@ public class MainActivity extends AppCompatActivity
                 fragmentTransaction.commit();
                 /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
+            }
+        });
+
+        ImageView logo = (ImageView) findViewById(R.id.logo_agorapp);
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "logo", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -147,6 +159,12 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         } else if (id == R.id.nav_slideshow) {
+            MarketplaceFragment marketplaceFragment = new MarketplaceFragment();
+            //CAL REFACTORING!!!
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, marketplaceFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
             //printProfile();
         } else if (id == R.id.nav_manage) {
             //printProfile();
@@ -170,9 +188,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {}
-
-    @Override
     public void onAnnouncementSelected(Announcement announcement) {
         // Call the other fragment
         // Create fragment and give it an argument specifying the article it should show
@@ -189,5 +204,27 @@ public class MainActivity extends AppCompatActivity
         transaction.commit();
 
         newFragment.setAnnouncement(announcement);
+    }
+
+    @Override
+    public void onCommentSelected(Comment comment) {
+        Toast.makeText(getApplicationContext(), "comment", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onMarketplaceOpen() {
+        // Call the other fragment
+        // Create fragment and give it an argument specifying the article it should show
+        MarketplaceFragment newFragment = new MarketplaceFragment();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment_container, newFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
     }
 }
