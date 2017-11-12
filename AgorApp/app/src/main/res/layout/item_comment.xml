@@ -23,6 +23,14 @@
         tools:text="Y la europea?" />
 
     <TextView
+        android:id="@+id/comment_reward"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comment_text"
+        android:textSize="15sp"
+        tools:text="Demana 1000 AgoraCoins" />
+
+    <TextView
         android:id="@+id/comment_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
