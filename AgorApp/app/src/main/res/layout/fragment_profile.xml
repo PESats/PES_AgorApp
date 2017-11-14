@@ -76,6 +76,7 @@
                         android:layout_gravity="center"/>
 
                     <TextView
+                        android:textStyle="bold"
                         android:id="@+id/profile_name"
                         fontPath="fonts/Lato-Regular.ttf"
                         android:layout_width="match_parent"
@@ -162,17 +163,13 @@
                         android:paddingTop="4dp"
                         fontPath="fonts/Montserrat-Regular.ttf"/>
 
-                    <TextView
+                    <GridView
+                        android:id="@+id/gridview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="to be done"
-                        android:id="@+id/profile_trophies_array"
-                        android:gravity="center_horizontal"
-                        android:layout_marginTop="10dp"
-                        android:paddingBottom="4dp"
-                        android:paddingTop="4dp"
-                        fontPath="fonts/Montserrat-Regular.ttf"/>
+                        android:numColumns="3"
+                        android:verticalSpacing="10dp"
+                        android:horizontalSpacing="10dp"/>
 
                     <Button
                         android:layout_height="50dp"

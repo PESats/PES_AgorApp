@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,13 +18,20 @@ import android.widget.Toast;
 import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import pes.agorapp.JSONObjects.Announcement;
+import pes.agorapp.JSONObjects.Trophy;
 import pes.agorapp.JSONObjects.UserAgorApp;
 import pes.agorapp.R;
 import pes.agorapp.activities.LoginActivity;
 import pes.agorapp.activities.MainActivity;
 import pes.agorapp.customComponents.DialogServerKO;
 import pes.agorapp.globals.PreferencesAgorApp;
+import pes.agorapp.helpers.AnnouncementsAdapter;
+import pes.agorapp.helpers.ObjectsHelper;
+import pes.agorapp.helpers.TrophiesAdapter;
 import pes.agorapp.network.AgorAppApiManager;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -59,6 +67,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         });
         //info d'usuari i imatge
         printProfile(view);
+
+        List<Trophy> trophies = new ArrayList<>();
+        TrophiesAdapter adapter = new TrophiesAdapter(getActivity(), trophies);
+        final GridView gridView = (GridView) view.findViewById(R.id.gridview);
+        gridView.setAdapter(adapter);
+        trophies = ObjectsHelper.getFakeTrophies();
+        adapter.addAll(trophies);
     }
 
     private void printProfile(View view) {
