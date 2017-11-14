@@ -159,12 +159,6 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         } else if (id == R.id.nav_slideshow) {
-            MarketplaceFragment marketplaceFragment = new MarketplaceFragment();
-            //CAL REFACTORING!!!
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, marketplaceFragment);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
             //printProfile();
         } else if (id == R.id.nav_manage) {
             //printProfile();
