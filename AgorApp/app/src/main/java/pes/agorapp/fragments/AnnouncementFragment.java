@@ -13,14 +13,21 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.JsonObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import pes.agorapp.JSONObjects.Announcement;
 import pes.agorapp.JSONObjects.Comment;
 import pes.agorapp.R;
+import pes.agorapp.globals.PreferencesAgorApp;
+import pes.agorapp.helpers.AnnouncementsAdapter;
 import pes.agorapp.helpers.CommentsAdapter;
 import pes.agorapp.helpers.ObjectsHelper;
+import pes.agorapp.network.AgorAppApiManager;
+import retrofit2.Call;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -107,6 +114,36 @@ public class AnnouncementFragment extends Fragment {
 
         final TextView author = (TextView) view.findViewById(R.id.announcement_author);
         author.setText(String.valueOf(this.announcement.getUser_id()));
+
+        //buttons
+        Button buttonDelete = (Button) view.findViewById(R.id.announcement_delete);
+        buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(AnnouncementsAdapter.super.getContext(), "Esborrar: " + announcement.getId(), Toast.LENGTH_LONG).show();
+                PreferencesAgorApp prefs = new PreferencesAgorApp(getActivity());
+
+                JsonObject jsonUser = new JsonObject();
+                jsonUser.addProperty("id",prefs.getId());
+                jsonUser.addProperty("active_token",prefs.getActiveToken());
+
+                JsonObject user = new JsonObject();
+                user.add("user",jsonUser);
+
+                AgorAppApiManager.getService().deleteAnnouncement(announcement.getId(), user).enqueue(new retrofit2.Callback<Announcement>() {
+                    @Override
+                    public void onResponse(Call<Announcement> call, Response<Announcement> response) {
+                        Integer code = response.code();
+                        //Falta implementar el que ve a continuacio
+                    }
+
+                    @Override
+                    public void onFailure(Call<Announcement> call, Throwable t) {
+
+                    }
+                });
+
+            }});
 
         // Construct the data source
         List<Comment> comments = new ArrayList<>();

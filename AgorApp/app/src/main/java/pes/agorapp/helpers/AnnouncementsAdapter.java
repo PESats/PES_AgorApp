@@ -47,37 +47,6 @@ public class AnnouncementsAdapter extends ArrayAdapter<Announcement> {
         text.setText(announcement.getDescription());
         date.setText(announcement.getCreated_at().toString());
 
-        //buttons
-        Button buttonDelete = (Button) convertView.findViewById(R.id.announcement_delete);
-        buttonDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Toast.makeText(AnnouncementsAdapter.super.getContext(), "Esborrar: " + announcement.getId(), Toast.LENGTH_LONG).show();
-                PreferencesAgorApp prefs = new PreferencesAgorApp(AnnouncementsAdapter.super.getContext());
-
-                JsonObject jsonUser = new JsonObject();
-                jsonUser.addProperty("id",prefs.getId());
-                jsonUser.addProperty("active_token",prefs.getActiveToken());
-
-                JsonObject user = new JsonObject();
-                user.add("user",jsonUser);
-
-                AgorAppApiManager.getService().deleteAnnouncement(announcement.getId(), user).enqueue(new retrofit2.Callback<Announcement>() {
-                    @Override
-                    public void onResponse(Call<Announcement> call, Response<Announcement> response) {
-                        Integer code = response.code();
-                        //Falta implementar el que ve a continuacio
-                    }
-
-                    @Override
-                    public void onFailure(Call<Announcement> call, Throwable t) {
-
-                    }
-                });
-
-            }});
-
-
         // Return the completed view to render on screen
         return convertView;
     }

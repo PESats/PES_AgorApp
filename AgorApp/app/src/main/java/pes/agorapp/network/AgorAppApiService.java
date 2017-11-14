@@ -34,30 +34,31 @@ public interface AgorAppApiService {
 
     /* ANUNCIS */
 
-    @GET("announcements")
+    @GET("anuncis")
     Call<ArrayList<Announcement>> getAnnouncements(
-            @Body JsonObject user
+            @Path("user_id") int id,
+            @Path("active_token") String token
     );
 
-    @GET("announcements/{id}")
+    @GET("anuncis/{id}")
     Call<Announcement> getAnnouncement(
-            @Path("id") int id,
-            @Body JsonObject user
+            @Path("user_id") int id,
+            @Path("active_token") String token
     );
 
-    @POST("announcements")
+    @POST("anuncis")
     Call<Announcement> createAnnouncement(
             @Body JsonObject announcement,
             @Body JsonObject user
     );
 
-    @PUT("announcements/{id}")
+    @PUT("anuncis/{id}")
     Call<Comment> editAnnouncement(
             @Path("id") int id,
             @Body JsonObject user
     );
 
-    @DELETE("announcements/{id}")
+    @DELETE("anuncis/{id}")
     Call<Announcement> deleteAnnouncement(
             @Path("id") int id,
             @Body JsonObject user
