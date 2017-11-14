@@ -17,9 +17,15 @@ import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.gson.JsonObject;
 
+
+import pes.agorapp.JSONObjects.Announcement;
 import pes.agorapp.JSONObjects.Location;
 import pes.agorapp.R;
+import pes.agorapp.customComponents.DialogServerKO;
 import pes.agorapp.globals.PreferencesAgorApp;
+import pes.agorapp.network.AgorAppApiManager;
+import retrofit2.Call;
+import retrofit2.Response;
 
 /**
  * Created by marc on 6/11/17.
@@ -30,11 +36,15 @@ public class FormAnnouncementFragment extends Fragment implements View.OnClickLi
     private EditText etDesc;
     private SeekBar sbReward;
     private Location locAnn;
+    private TextView rew;
+    private PreferencesAgorApp prefs;
+
     public FormAnnouncementFragment() {}
 
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
+        prefs = new PreferencesAgorApp(getActivity());
         return inflater.inflate(R.layout.fragment_form_announcement, container, false);
     }
 
@@ -47,6 +57,24 @@ public class FormAnnouncementFragment extends Fragment implements View.OnClickLi
         etTitle = (EditText) view.findViewById(R.id.form_announcement_titleEdit);
         etDesc = (EditText) view.findViewById(R.id.form_announcement_descriptionEdit);
         sbReward = (SeekBar) view.findViewById(R.id.form_announcement_rewardEdit); //Limited value of seekbar to be max=1000
+        rew = (TextView) view.findViewById(R.id.form_announcement_reward);
+
+        sbReward.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
+                rew.setText("Recompensa oferta: " + String.valueOf(progress) + " AgoraPoints");
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
 
         PlaceAutocompleteFragment autocompFrag = (PlaceAutocompleteFragment)getActivity().getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
         //We only want the addresses, so we declare a filter to make sure of it
@@ -88,11 +116,35 @@ public class FormAnnouncementFragment extends Fragment implements View.OnClickLi
         JsonObject jsonAnn = new JsonObject();
         jsonAnn.addProperty("title",title);
         jsonAnn.addProperty("text",desc);
+        jsonAnn.addProperty("reward",reward);
         jsonAnn.addProperty("latitude",locAnn.getLatitude());
         jsonAnn.addProperty("longitude", locAnn.getLongitude());
-        //jsonAnn.addProperty("reward",title);
-        //jsonAnn.addProperty("date",title);
-        //jsonAnn.addProperty("author",title);
+
+
+        JsonObject jsonUser = new JsonObject();
+        jsonUser.addProperty("id", prefs.getId());
+        jsonUser.addProperty("active_token", prefs.getActiveToken());
+
+
+        JsonObject ann = new JsonObject();
+        ann.add("announcement",jsonAnn);
+        JsonObject auth = new JsonObject();
+        auth.add("user",jsonUser);
+
+
+        AgorAppApiManager.getService().createAnnouncement(ann,auth).enqueue(new retrofit2.Callback<Announcement>(){
+            @Override
+            public void onResponse(Call<Announcement> call, Response<Announcement> response) {
+                Announcement announcement = response.body();
+                //Falta implementar el que ve a continuacio
+            }
+
+            @Override
+            public void onFailure(Call<Announcement> call, Throwable t) {
+                System.out.println("Unable to create the announcement!");
+                new DialogServerKO(getActivity()).show();
+            }
+        });
 
         //TextView myAwesomeTextView = (TextView) view.findViewById(R.id.form_announcement_title);
         //myAwesomeTextView.setText("hola");

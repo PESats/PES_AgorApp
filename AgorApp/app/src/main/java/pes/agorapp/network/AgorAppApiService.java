@@ -40,13 +40,13 @@ public interface AgorAppApiService {
     );
 
     @GET("announcements/{id}")
-    Call<ArrayList<Announcement>> getAnnouncement(
+    Call<Announcement> getAnnouncement(
             @Path("id") int id,
             @Body JsonObject user
     );
 
     @POST("announcements")
-    Call<ArrayList<Announcement>> createAnnouncement(
+    Call<Announcement> createAnnouncement(
             @Body JsonObject announcement,
             @Body JsonObject user
     );
@@ -58,7 +58,7 @@ public interface AgorAppApiService {
     );
 
     @DELETE("announcements/{id}")
-    Call<Comment> deleteAnnouncement(
+    Call<Announcement> deleteAnnouncement(
             @Path("id") int id,
             @Body JsonObject user
     );
