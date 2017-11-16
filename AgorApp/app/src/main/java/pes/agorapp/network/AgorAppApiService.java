@@ -48,8 +48,7 @@ public interface AgorAppApiService {
 
     @POST("anuncis")
     Call<Announcement> createAnnouncement(
-            @Body JsonObject announcement,
-            @Body JsonObject user
+            @Body JsonObject announcement
     );
 
     @PUT("anuncis/{id}")
