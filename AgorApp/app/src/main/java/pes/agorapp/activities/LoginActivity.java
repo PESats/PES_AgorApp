@@ -246,7 +246,7 @@ public class LoginActivity extends AppCompatActivity
                         new GraphRequest.Callback() {
                             public void onCompleted(GraphResponse response) {
                                 UserFacebook usr_fb = getUserFacebook(response.getJSONObject().toString());
-                                Log.i("Username Facebook: ", usr_fb.getName());
+                                //Log.i("Username Facebook: ", usr_fb.getName());
                                 String url_img_facebook = "https://graph.facebook.com/" + usr_fb.getId() + "/picture?width=100&height=100";
 
                                 createUserDB(usr_fb.getName(), url_img_facebook, "Facebook");
@@ -276,8 +276,8 @@ public class LoginActivity extends AppCompatActivity
 
                         email = user.screenName;
 
-                        Log.d("UserName Google:",user.name);
-                        Log.d("Image Google: ",user.profileImageUrl);
+                        //Log.d("UserName Google:",user.name);
+                        //Log.d("Image Google: ",user.profileImageUrl);
 
                         createUserDB(user.name, user.profileImageUrl, "Twitter");
                     }
@@ -298,8 +298,8 @@ public class LoginActivity extends AppCompatActivity
                         url_image_profile = "www.imatgedummy.com";
                     }
 
-                    Log.d("UserName Google:", acct.getDisplayName());
-                    Log.d("Image Google: ", url_image_profile);
+                    //Log.d("UserName Google:", acct.getDisplayName());
+                    //Log.d("Image Google: ", url_image_profile);
 
                     Toast.makeText(getApplicationContext(), url_image_profile, Toast.LENGTH_LONG).show();
 
@@ -336,23 +336,21 @@ public class LoginActivity extends AppCompatActivity
         jsonUser.addProperty("image_url", url_image);
         jsonUser.addProperty("platform_name", platform_name);
 
-        //JsonObject json = new JsonObject();
-        //json.add("user", jsonUser);
+        JsonObject json = new JsonObject();
+        json.add("user", jsonUser);
 
         AgorAppApiManager
                 .getService()
-                .createUser(jsonUser)
+                .createUser(json)
                 .enqueue(new retrofit2.Callback<UserAgorApp>() {
                     @Override
                     public void onResponse(Call<UserAgorApp> call, Response<UserAgorApp> response) {
 
-                        Log.i("response code", String.valueOf(response.code()));
+                        //Log.i("response code", String.valueOf(response.code()));
 
                         String id = response.body().getId();
                         String token = response.body().getActiveToken();
                         saveUserInPreferences(id, token);
-
-                        Log.i("token", token);
 
                         loginok();
                     }

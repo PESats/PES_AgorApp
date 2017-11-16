@@ -30,6 +30,4 @@
         android:layout_alignTop="@+id/item_title"
         android:textSize="15sp"
         android:text="date" />
-
-
 </RelativeLayout>

@@ -6,6 +6,7 @@ import java.util.List;
 
 import pes.agorapp.JSONObjects.Announcement;
 import pes.agorapp.JSONObjects.Comment;
+import pes.agorapp.JSONObjects.Trophy;
 
 /**
  * Created by Alex on 01-Nov-17.
@@ -38,11 +39,34 @@ public class ObjectsHelper {
         return announcements;
     }
 
-    private static List<Comment> getFakeComments() {
+    public static List<Comment> getFakeOwnComments() {
         List<Comment> comments = new ArrayList<>();
-        comments.add(new Comment("Zapatero", "Prometere!", new Date()));
-        comments.add(new Comment("M. Rajoy", "Y la europea?", new Date()));
-        comments.add(new Comment("Iceta", "Pedro, libranos de él!", new Date()));
+        comments.add(new Comment(1, "Zapatero", "Prometere!", new Date(), 200));
         return comments;
+    }
+
+    public static List<Comment> getFakeComments() {
+        List<Comment> comments = new ArrayList<>();
+        comments.add(new Comment(1, "Zapatero", "Prometere!", new Date(), 1000));
+        comments.add(new Comment(2, "M. Rajoy", "Y la europea?", new Date(), 750));
+        comments.add(new Comment(3, "Iceta", "Pedro, libranos de él!", new Date(), 250));
+        comments.add(new Comment(4, "Iceta2", "Pedro, libranos de él!", new Date(), 3000));
+        comments.add(new Comment(5, "Zapatero", "Prometere!", new Date(), 1000));
+        comments.add(new Comment(6, "M. Rajoy", "Y la europea?", new Date(), 750));
+        comments.add(new Comment(7, "Iceta", "Pedro, libranos de él!", new Date(), 250));
+        comments.add(new Comment(8, "Iceta2", "Pedro, libranos de él!", new Date(), 3000));
+        return comments;
+    }
+
+    public static List<Trophy> getFakeTrophies() {
+        List<Trophy> trophies = new ArrayList<>();
+        trophies.add(new Trophy(1, "Ajudant", "Ajuda per primer cop"));
+        trophies.add(new Trophy(2, "Sol·licitant", "Publica el teu primer anunci"));
+        trophies.add(new Trophy(3, "Sol·licitant expert", "Publica 10 anuncis"));
+        trophies.add(new Trophy(4, "Ajudant expert", "Ajuda 10 persones diferents"));
+        trophies.add(new Trophy(5, "Altruista", "Ofereix-te a ajudar per menys AgoraCoins que la recompensa d'un anunci"));
+        trophies.add(new Trophy(6, "AgoraExpert", "Bescanvia AgoraCoins per algun val de descompte"));
+        trophies.add(new Trophy(7, "Modernet de merda", "Comparteix un anunci a alguna xarxa social"));
+        return trophies;
     }
 }

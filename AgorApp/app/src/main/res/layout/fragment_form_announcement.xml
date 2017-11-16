@@ -58,7 +58,7 @@
         android:id="@+id/form_announcement_reward"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Recompensa oferta (max. 1000)"
+        android:text="Recompensa oferta: 0 AgoraPoints"
         android:textAlignment="center" />
 
     <SeekBar

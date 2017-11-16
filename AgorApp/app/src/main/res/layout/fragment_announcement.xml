@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,9 +9,7 @@
         android:id="@+id/layout_single_announcement"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="250dp">
+        android:layout_alignParentStart="true">
 
         <TextView
             android:id="@+id/announcement_title"
@@ -38,15 +37,29 @@
             android:layout_below="@+id/announcement_author"
             android:gravity="center"
             tools:text="Ayuudame con la casa" />
+        <Button
+            android:textColor="@color/tw__solid_white"
+            android:text="Esborrar Anunci"
+            android:background="@color/tw__composer_red"
+            android:id="@+id/announcement_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginTop="30dp"
+            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
 
-
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <ListView
+        android:listSelector="@android:color/transparent"
         android:id="@+id/comments_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="150dp"
+        app:layout_widthPercent="100%"
         />
+    </android.support.percent.PercentRelativeLayout>
 
 </RelativeLayout>

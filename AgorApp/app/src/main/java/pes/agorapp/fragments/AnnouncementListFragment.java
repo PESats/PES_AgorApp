@@ -93,6 +93,8 @@ public class AnnouncementListFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         void onAnnouncementSelected(Announcement announcement);
+
+        void onMarketplaceOpen();
     }
 
     @Override

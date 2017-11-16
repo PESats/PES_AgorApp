@@ -23,6 +23,14 @@
         tools:text="Y la europea?" />
 
     <TextView
+        android:id="@+id/comment_reward"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comment_text"
+        android:textSize="15sp"
+        tools:text="Demana 1000 AgoraCoins" />
+
+    <TextView
         android:id="@+id/comment_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -31,5 +39,25 @@
         android:textSize="15sp"
         android:text="date" />
 
+    <Button
+        android:textColor="@color/tw__solid_white"
+        android:text="Editar"
+        android:background="@color/com_facebook_blue"
+        android:id="@+id/comment_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_below="@id/comment_date"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:textColor="@color/tw__solid_white"
+        android:text="Esborrar"
+        android:background="@color/tw__composer_red"
+        android:id="@+id/comment_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_below="@id/comment_edit"
+        android:layout_marginTop="5dp"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

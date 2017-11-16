@@ -9,8 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +21,13 @@ import java.util.List;
 import pes.agorapp.JSONObjects.Announcement;
 import pes.agorapp.JSONObjects.Comment;
 import pes.agorapp.R;
+import pes.agorapp.globals.PreferencesAgorApp;
+import pes.agorapp.helpers.AnnouncementsAdapter;
 import pes.agorapp.helpers.CommentsAdapter;
 import pes.agorapp.helpers.ObjectsHelper;
+import pes.agorapp.network.AgorAppApiManager;
+import retrofit2.Call;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,13 +71,6 @@ public class AnnouncementFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_announcement, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -98,8 +99,7 @@ public class AnnouncementFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onCommentSelected(Comment comment);
     }
 
     @Override
@@ -115,6 +115,36 @@ public class AnnouncementFragment extends Fragment {
         final TextView author = (TextView) view.findViewById(R.id.announcement_author);
         author.setText(String.valueOf(this.announcement.getUser_id()));
 
+        //buttons
+        Button buttonDelete = (Button) view.findViewById(R.id.announcement_delete);
+        buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(AnnouncementsAdapter.super.getContext(), "Esborrar: " + announcement.getId(), Toast.LENGTH_LONG).show();
+                PreferencesAgorApp prefs = new PreferencesAgorApp(getActivity());
+
+                JsonObject jsonUser = new JsonObject();
+                jsonUser.addProperty("id",prefs.getId());
+                jsonUser.addProperty("active_token",prefs.getActiveToken());
+
+                JsonObject user = new JsonObject();
+                user.add("user",jsonUser);
+
+                AgorAppApiManager.getService().deleteAnnouncement(announcement.getId(), user).enqueue(new retrofit2.Callback<Announcement>() {
+                    @Override
+                    public void onResponse(Call<Announcement> call, Response<Announcement> response) {
+                        Integer code = response.code();
+                        //Falta implementar el que ve a continuacio
+                    }
+
+                    @Override
+                    public void onFailure(Call<Announcement> call, Throwable t) {
+
+                    }
+                });
+
+            }});
+
         // Construct the data source
         List<Comment> comments = new ArrayList<>();
         // Create the adapter to convert the array to views
@@ -123,6 +153,7 @@ public class AnnouncementFragment extends Fragment {
         final ListView listView = (ListView) view.findViewById(R.id.comments_list);
         listView.setAdapter(adapter);
         //comments = announcement.getComments();
+        comments = ObjectsHelper.getFakeComments();
         adapter.addAll(comments);
 
     }

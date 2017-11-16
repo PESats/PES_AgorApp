@@ -1,45 +1,193 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    tools:ignore="MissingPrefix"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.MainActivity">
 
-    <TextView
-        android:id="@+id/text_prova"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Obre el menú lateral per veure el teu perfil"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.17000002" />
 
-    <ImageView
-        android:id="@+id/img_profile_user"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3.6"
-        android:padding="5dp"
-        android:scaleType="fitXY"
-        tools:layout_editor_absoluteX="102dp"
-        tools:layout_editor_absoluteY="212dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.68" />
+        android:layout_height="match_parent"
+        android:weightSum="10"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_logout"
-        android:text="LOGOUT"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.904" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/scrollSettings"
+            android:layout_weight="10">
 
-</LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="9"
+                    android:weightSum="10"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="15dp"
+                        android:id="@+id/relativeUserImage">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:weightSum="10"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentStart="true">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1.4" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="6."
+                                android:orientation="horizontal"
+                                android:weightSum="10">
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+
+                    <ImageButton
+                        android:id="@+id/profile_user_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:background="@android:color/transparent"
+                        android:padding="5dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/avatar_face_1_"
+                        android:layout_gravity="center"/>
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:id="@+id/profile_name"
+                        fontPath="fonts/Lato-Regular.ttf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center_horizontal"
+                        android:paddingTop="10dp"
+                        android:text="Marc"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <RatingBar
+                        android:scaleX=".8"
+                        android:scaleY=".8"
+                        android:numStars="5"
+                        android:id="@+id/profile_ratingBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"/>
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:textSize="17dp"
+                        android:background="@color/colorPrimary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/profile_wallet_title"
+                        android:id="@+id/profile_wallet_title"
+                        android:gravity="center_horizontal"
+                        android:paddingBottom="4dp"
+                        android:paddingTop="4dp"
+                        fontPath="fonts/Montserrat-Regular.ttf"/>
+
+                    <TextView
+                        android:textSize="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/profile_wallet_subtitle"
+                        android:id="@+id/profile_wallet_subtitle"
+                        android:gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        fontPath="fonts/Montserrat-Regular.ttf"/>
+
+                    <TextView
+                        android:textColor="@color/colorAgoraCoins"
+                        android:textStyle="bold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="35.000 AgoraCoins"
+                        android:id="@+id/profile_wallet_coins"
+                        android:gravity="center_horizontal"
+                        android:layout_margin="10dp"
+                        fontPath="fonts/Montserrat-Regular.ttf"/>
+
+                    <Button
+                        android:textStyle="bold"
+                        android:textAllCaps="false"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="70dp"
+                        android:layout_marginRight="70dp"
+                        android:id="@+id/profile_btn_marketplace"
+                        android:text="@string/profile_wallet_button"
+                        android:enabled="true"
+                        android:layout_weight="1.2"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/colorButtons"
+                        android:textColor="@color/tw__solid_white"/>
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:textSize="17dp"
+                        android:background="@color/colorPrimary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/profile_trophies"
+                        android:id="@+id/profile_trophies_title"
+                        android:gravity="center_horizontal"
+                        android:layout_marginTop="30dp"
+                        android:paddingBottom="4dp"
+                        android:paddingTop="4dp"
+                        fontPath="fonts/Montserrat-Regular.ttf"/>
+
+                    <GridView
+                        android:id="@+id/gridview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:numColumns="3"
+                        android:verticalSpacing="10dp"
+                        android:horizontalSpacing="10dp"/>
+
+                    <Button
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:id="@+id/profile_btn_logout"
+                        android:text="LOGOUT"
+                        android:enabled="true"
+                        android:layout_weight="1.2"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="1dp"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</RelativeLayout>

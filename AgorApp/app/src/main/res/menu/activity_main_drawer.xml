@@ -5,11 +5,11 @@
         <item
             android:id="@+id/profile"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Perfil" />
+            android:title="@string/menu_profile" />
         <item
             android:id="@+id/announcement_list"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Llista anuncis" />
+            android:title="@string/menu_announcements" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
