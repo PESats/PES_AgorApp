@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.AutocompleteFilter;
@@ -115,27 +116,24 @@ public class FormAnnouncementFragment extends Fragment implements View.OnClickLi
 
         JsonObject jsonAnn = new JsonObject();
         jsonAnn.addProperty("title",title);
-        jsonAnn.addProperty("text",desc);
+        jsonAnn.addProperty("description",desc);
         jsonAnn.addProperty("reward",reward);
         jsonAnn.addProperty("latitude",locAnn.getLatitude());
         jsonAnn.addProperty("longitude", locAnn.getLongitude());
 
-
-        JsonObject jsonUser = new JsonObject();
-        jsonUser.addProperty("id", prefs.getId());
-        jsonUser.addProperty("active_token", prefs.getActiveToken());
-
-
-        JsonObject ann = new JsonObject();
-        ann.add("announcement",jsonAnn);
-        JsonObject auth = new JsonObject();
-        auth.add("user",jsonUser);
+        final JsonObject ann = new JsonObject();
+        ann.addProperty("user_id",prefs.getId());
+        ann.addProperty("active_token",prefs.getActiveToken());
+        ann.add("anunci",jsonAnn);
 
 
-        AgorAppApiManager.getService().createAnnouncement(ann,auth).enqueue(new retrofit2.Callback<Announcement>(){
+
+        AgorAppApiManager.getService().createAnnouncement(ann).enqueue(new retrofit2.Callback<Announcement>(){
             @Override
             public void onResponse(Call<Announcement> call, Response<Announcement> response) {
                 Announcement announcement = response.body();
+                Toast.makeText(getActivity(), String.valueOf(locAnn.getLatitude()), Toast.LENGTH_LONG).show();
+                //Toast.makeText(getActivity(), announcement.getDescription(), Toast.LENGTH_LONG).show();
                 //Falta implementar el que ve a continuacio
             }
 
