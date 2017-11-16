@@ -30,15 +30,4 @@
         android:layout_alignTop="@+id/item_title"
         android:textSize="15sp"
         android:text="date" />
-    <Button
-        android:textColor="@color/tw__solid_white"
-        android:text="Esborrar Anunci"
-        android:background="@color/tw__composer_red"
-        android:id="@+id/announcement_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:layout_marginTop="30dp"
-        android:layout_alignParentEnd="true" />
-
-
 </RelativeLayout>
