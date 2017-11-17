@@ -48,7 +48,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                              ViewGroup container,
                              Bundle savedInstanceState) {
         prefs = new PreferencesAgorApp(getActivity());
+<<<<<<< HEAD
         Toast.makeText(getActivity(), prefs.getUserName(), Toast.LENGTH_LONG).show();
+=======
+        Toast.makeText(getActivity().getApplicationContext(), prefs.getUserName(), Toast.LENGTH_LONG);
+>>>>>>> f455d5d2b1183f6e668fd32b62efb951f94e6c0a
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
