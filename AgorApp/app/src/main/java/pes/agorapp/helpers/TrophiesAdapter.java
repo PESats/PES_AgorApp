@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -29,9 +31,13 @@ public class TrophiesAdapter extends ArrayAdapter<Trophy> {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_trophy, parent, false);
         }
-        // Lookup view for data population
 
-        // Populate the data into the template view using the data object
+        ImageView icon_trophie = (ImageView) convertView.findViewById(R.id.trophy_iconimage);
+        if (position <= 4) icon_trophie.setColorFilter(getContext().getResources().getColor(R.color.colorAccent));
+        // Lookup view for data population
+        TextView title = (TextView) convertView.findViewById(R.id.trophy_title);
+        // Populate the data into the template view using the data object1
+        title.setText(trophy.getTitle());
 
         return convertView;
     }

@@ -15,6 +15,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by marc on 15/10/17.
@@ -34,9 +35,10 @@ public interface AgorAppApiService {
 
     /* ANUNCIS */
 
-    @GET("announcements")
+    @GET("anuncis?")
     Call<ArrayList<Announcement>> getAnnouncements(
-            @Body JsonObject user
+            @Query("user_id") String user_id,
+            @Query("active_token") String active_token
     );
 
     @GET("announcements/{id}")
@@ -45,19 +47,19 @@ public interface AgorAppApiService {
             @Body JsonObject user
     );
 
-    @POST("announcements")
+    @POST("anuncis")
     Call<ArrayList<Announcement>> createAnnouncement(
             @Body JsonObject announcement,
             @Body JsonObject user
     );
 
-    @PUT("announcements/{id}")
+    @PUT("anuncis/{id}")
     Call<Comment> editAnnouncement(
             @Path("id") int id,
             @Body JsonObject user
     );
 
-    @DELETE("announcements/{id}")
+    @DELETE("anuncis/{id}")
     Call<Comment> deleteAnnouncement(
             @Path("id") int id,
             @Body JsonObject user
