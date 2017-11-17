@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity">
 
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -163,7 +162,7 @@
                         android:paddingTop="4dp"
                         fontPath="fonts/Montserrat-Regular.ttf"/>
 
-                    <GridView
+                    <pes.agorapp.customComponents.MyGridView
                         android:id="@+id/gridview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -180,14 +179,10 @@
                         android:enabled="true"
                         android:layout_weight="1.2"
                         android:layout_width="match_parent"
-                        android:layout_marginTop="1dp"/>
+                        android:layout_marginTop="20dp"/>
 
                 </LinearLayout>
-
             </RelativeLayout>
-
         </ScrollView>
-
     </LinearLayout>
-
 </RelativeLayout>
