@@ -2,11 +2,9 @@ package pes.agorapp.activities;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
@@ -24,19 +22,19 @@ import android.widget.Toast;
 import pes.agorapp.JSONObjects.Announcement;
 import pes.agorapp.JSONObjects.Comment;
 import pes.agorapp.R;
-import pes.agorapp.fragments.FormAnnouncementFragment;
-import pes.agorapp.fragments.MarketplaceFragment;
-import pes.agorapp.fragments.ProfileFragment;
 import pes.agorapp.fragments.AnnouncementFragment;
 import pes.agorapp.fragments.AnnouncementListFragment;
+import pes.agorapp.fragments.FormAnnouncementFragment;
 import pes.agorapp.fragments.MapFragment;
+import pes.agorapp.fragments.MarketplaceFragment;
 import pes.agorapp.fragments.ProfileFragment;
 
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         AnnouncementFragment.OnFragmentInteractionListener,
-        AnnouncementListFragment.OnFragmentInteractionListener {
+        AnnouncementListFragment.OnFragmentInteractionListener,
+        MapFragment.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
