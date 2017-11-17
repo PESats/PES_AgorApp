@@ -123,14 +123,11 @@ public class AnnouncementFragment extends Fragment {
                 //Toast.makeText(AnnouncementsAdapter.super.getContext(), "Esborrar: " + announcement.getId(), Toast.LENGTH_LONG).show();
                 PreferencesAgorApp prefs = new PreferencesAgorApp(getActivity());
 
-                JsonObject jsonUser = new JsonObject();
-                jsonUser.addProperty("id",prefs.getId());
-                jsonUser.addProperty("active_token",prefs.getActiveToken());
+                JsonObject ann = new JsonObject();
+                ann.addProperty("user_id",prefs.getId());
+                ann.addProperty("active_token",prefs.getActiveToken());
 
-                JsonObject user = new JsonObject();
-                user.add("user",jsonUser);
-
-                AgorAppApiManager.getService().deleteAnnouncement(announcement.getId(), user).enqueue(new retrofit2.Callback<Announcement>() {
+                AgorAppApiManager.getService().deleteAnnouncement(announcement.getId(),ann).enqueue(new retrofit2.Callback<Announcement>() {
                     @Override
                     public void onResponse(Call<Announcement> call, Response<Announcement> response) {
                         Integer code = response.code();

@@ -122,13 +122,14 @@ public class FormAnnouncementFragment extends Fragment implements View.OnClickLi
         jsonAnn.addProperty("longitude", locAnn.getLongitude());
 
         final JsonObject ann = new JsonObject();
-        ann.addProperty("user_id",prefs.getId());
-        ann.addProperty("active_token",prefs.getActiveToken());
         ann.add("anunci",jsonAnn);
 
+        int user_id = Integer.valueOf(prefs.getId());
+        String active_token = prefs.getActiveToken();
 
 
-        AgorAppApiManager.getService().createAnnouncement(ann).enqueue(new retrofit2.Callback<Announcement>(){
+
+        AgorAppApiManager.getService().createAnnouncement(user_id,active_token,ann).enqueue(new retrofit2.Callback<Announcement>(){
             @Override
             public void onResponse(Call<Announcement> call, Response<Announcement> response) {
                 Announcement announcement = response.body();
