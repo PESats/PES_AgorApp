@@ -366,7 +366,7 @@ public class LoginActivity extends AppCompatActivity
     private void saveUserInPreferences(String id, String active_token) {
         prefs.setId(id);
         prefs.setPlatform(platform_name);
-        prefs.setName(userName);
+        prefs.setUsername(userName);
         prefs.setEmail(email);
         prefs.setImageUrl(url_image);
         prefs.setActiveToken(active_token);
