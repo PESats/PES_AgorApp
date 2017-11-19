@@ -35,7 +35,7 @@ public interface AgorAppApiService {
 
     /* ANUNCIS */
 
-    /*@GET("anuncis")
+    @GET("anuncis")
     Call<ArrayList<Announcement>> getAnnouncements(
             @Query("user_id") int id,
             @Query("active_token") String token
