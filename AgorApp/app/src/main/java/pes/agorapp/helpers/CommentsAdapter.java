@@ -13,6 +13,7 @@ import java.util.List;
 
 import pes.agorapp.JSONObjects.Comment;
 import pes.agorapp.R;
+import pes.agorapp.globals.PreferencesAgorApp;
 
 /**
  * Created by Alex on 01-Nov-17.
@@ -23,11 +24,13 @@ public class CommentsAdapter extends ArrayAdapter<Comment> {
     public CommentsAdapter(Context context, List<Comment> comments) {
         super(context, 0, comments);
     }
+    private PreferencesAgorApp prefs;
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
         final Comment comment = getItem(position);
+        prefs = new PreferencesAgorApp(getContext());
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_comment, parent, false);
@@ -118,7 +121,7 @@ public class CommentsAdapter extends ArrayAdapter<Comment> {
                 */
             }
         });
-        if (comment.getId() != 1) {
+        if (!comment.getUser().getId().equals(prefs.getId())) {
             buttonEdit.setVisibility(View.INVISIBLE);
             buttonDelete.setVisibility(View.INVISIBLE);
         }

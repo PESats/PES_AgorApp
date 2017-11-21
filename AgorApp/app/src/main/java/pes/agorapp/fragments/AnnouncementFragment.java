@@ -119,7 +119,7 @@ public class AnnouncementFragment extends Fragment {
         text.setText(this.announcement.getDescription());
 
         final TextView author = (TextView) view.findViewById(R.id.announcement_author);
-        author.setText(String.valueOf(this.announcement.getUser_id()));
+        author.setText(String.valueOf(this.announcement.getUser().getId()));
 
         //buttons
         Button buttonDelete = (Button) view.findViewById(R.id.announcement_delete);

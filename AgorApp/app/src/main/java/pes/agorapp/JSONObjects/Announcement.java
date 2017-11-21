@@ -1,5 +1,7 @@
 package pes.agorapp.JSONObjects;
 
+import com.twitter.sdk.android.core.models.User;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,6 +21,7 @@ public class Announcement {
     private int reward;
     private int user_id;
     private Date created_at;
+    private UserAgorApp user;
 
 
     public Announcement() {}
@@ -112,5 +115,13 @@ public class Announcement {
 
     public void setCreated_at(Date created_at) {
         this.created_at = created_at;
+    }
+
+    public UserAgorApp getUser() {
+        return user;
+    }
+
+    public void setUser(UserAgorApp user) {
+        this.user = user;
     }
 }
