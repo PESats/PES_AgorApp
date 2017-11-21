@@ -132,7 +132,7 @@ public class AnnouncementFragment extends Fragment {
                 ann.addProperty("user_id",prefs.getId());
                 ann.addProperty("active_token",prefs.getActiveToken());
 
-                AgorAppApiManager.getService().deleteAnnouncement(announcement.getId(),ann).enqueue(new retrofit2.Callback<Announcement>() {
+                AgorAppApiManager.getService().deleteAnnouncement(announcement.getId(),Integer.valueOf(prefs.getId()), prefs.getActiveToken()).enqueue(new retrofit2.Callback<Announcement>() {
                     @Override
                     public void onResponse(Call<Announcement> call, Response<Announcement> response) {
                         Integer code = response.code();
