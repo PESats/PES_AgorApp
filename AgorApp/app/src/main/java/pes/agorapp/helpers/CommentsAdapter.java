@@ -39,7 +39,7 @@ public class CommentsAdapter extends ArrayAdapter<Comment> {
         TextView reward = (TextView) convertView.findViewById(R.id.comment_reward);
         //ImageView imgView = (ImageView) convertView.findViewById(R.id.icon_comment);
         // Populate the data into the template view using the data object
-        title.setText(comment.getUser_id());
+        title.setText(comment.getUser().getName());
         text.setText(comment.getText());
         date.setText(comment.getDateString());
         reward.setText("Demana " + comment.getReward() + " AgoraCoins");
