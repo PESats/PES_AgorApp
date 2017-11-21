@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import java.util.List;
 import pes.agorapp.JSONObjects.Announcement;
 import pes.agorapp.JSONObjects.Comment;
 import pes.agorapp.R;
+import pes.agorapp.customComponents.DialogServerKO;
 import pes.agorapp.globals.PreferencesAgorApp;
 import pes.agorapp.helpers.AnnouncementsAdapter;
 import pes.agorapp.helpers.CommentsAdapter;
@@ -41,6 +43,9 @@ public class AnnouncementFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private Announcement announcement;
+    PreferencesAgorApp prefs;
+    List<Comment> comments = new ArrayList<>();
+
 
     public AnnouncementFragment() {
         // Required empty public constructor
@@ -67,6 +72,7 @@ public class AnnouncementFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        prefs = new PreferencesAgorApp(getActivity());
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_announcement, container, false);
     }
@@ -121,7 +127,6 @@ public class AnnouncementFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //Toast.makeText(AnnouncementsAdapter.super.getContext(), "Esborrar: " + announcement.getId(), Toast.LENGTH_LONG).show();
-                PreferencesAgorApp prefs = new PreferencesAgorApp(getActivity());
 
                 JsonObject ann = new JsonObject();
                 ann.addProperty("user_id",prefs.getId());
@@ -142,17 +147,34 @@ public class AnnouncementFragment extends Fragment {
 
             }});
 
-        // Construct the data source
-        List<Comment> comments = new ArrayList<>();
         // Create the adapter to convert the array to views
-        CommentsAdapter adapter = new CommentsAdapter(getActivity(), comments);
+        final CommentsAdapter adapter = new CommentsAdapter(getActivity(), comments);
         // Attach the adapter to a ListView
         final ListView listView = (ListView) view.findViewById(R.id.comments_list);
         listView.setAdapter(adapter);
         //comments = announcement.getComments();
-        comments = ObjectsHelper.getFakeComments();
-        adapter.addAll(comments);
+        AgorAppApiManager
+                .getService()
+                .getComments(announcement.getId(), Integer.valueOf(prefs.getId()), prefs.getActiveToken())
+                //.getAnnouncements(16, "aujEXUFZaWPotQhujtd9cMzL")
+                .enqueue(new retrofit2.Callback<ArrayList<Comment>>() {
+                    @Override
+                    public void onResponse(Call<ArrayList<Comment>> call, Response<ArrayList<Comment>> response) {
 
+                        //Log.i("response code", String.valueOf(response.code()));
+                        //Log.d("this is my array", "arr: " + response.body().toString());
+                        comments = response.body();
+                        adapter.addAll(comments);
+                        Log.d("this is my array", "arr: " + response.body().toString());
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<ArrayList<Comment>> call, Throwable t) {
+                        System.out.println("Something went wrong!");
+                        new DialogServerKO(getActivity()).show();
+                    }
+                });
     }
 
     public void setAnnouncement(Announcement anAnnouncement) {

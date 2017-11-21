@@ -1,36 +1,18 @@
 package pes.agorapp.helpers;
 
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.JsonObject;
-
-import org.w3c.dom.Text;
-
-import okhttp3.Request;
-import pes.agorapp.JSONObjects.UserAgorApp;
-import pes.agorapp.activities.LoginActivity;
-import pes.agorapp.customComponents.DialogServerKO;
-import pes.agorapp.globals.PreferencesAgorApp;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import java.io.IOException;
 import java.util.List;
 
 import pes.agorapp.JSONObjects.Comment;
 import pes.agorapp.R;
-import pes.agorapp.network.AgorAppApiManager;
 
 /**
  * Created by Alex on 01-Nov-17.
@@ -57,8 +39,8 @@ public class CommentsAdapter extends ArrayAdapter<Comment> {
         TextView reward = (TextView) convertView.findViewById(R.id.comment_reward);
         //ImageView imgView = (ImageView) convertView.findViewById(R.id.icon_comment);
         // Populate the data into the template view using the data object
-        title.setText(comment.getAuthor());
-        text.setText(comment.getContent());
+        title.setText(comment.getUser_id());
+        text.setText(comment.getText());
         date.setText(comment.getDateString());
         reward.setText("Demana " + comment.getReward() + " AgoraCoins");
         //buttons
