@@ -145,7 +145,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
         AgorAppApiManager
                 .getService()
                 .getAnnouncements(Integer.valueOf(prefs.getId()), prefs.getActiveToken())
-                //.getAnnouncements(16, "aujEXUFZaWPotQhujtd9cMzL")
                 .enqueue(new retrofit2.Callback<ArrayList<Announcement>>() {
                     @Override
                     public void onResponse(Call<ArrayList<Announcement>> call, Response<ArrayList<Announcement>> response) {
