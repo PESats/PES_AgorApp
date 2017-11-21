@@ -23,10 +23,12 @@ public class Announcement {
     private Date created_at;
     private UserAgorApp user;
 
+    private UserAgorApp userAgorApp;
+
 
     public Announcement() {}
     public Announcement(String title, String text, float latitude, float longitude, int reward,
-                        int user_id, Date created_at) {
+                        int user_id, Date created_at, UserAgorApp userAgorApp) {
         this.title = title;
         this.description = text;
         this.latitude = latitude;
@@ -34,6 +36,7 @@ public class Announcement {
         this.reward = reward;
         this.user_id = user_id;
         this.created_at = created_at;
+        this.userAgorApp = userAgorApp;
     }
 
     @Override

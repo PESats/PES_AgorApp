@@ -146,7 +146,7 @@ public class AnnouncementFragment extends Fragment {
                 });
 
             }});
-        if (!String.valueOf(announcement.getUser_id()).equals(prefs.getId())) {
+        if (!String.valueOf(announcement.getUser().getId()).equals(prefs.getId())) {
             buttonDelete.setVisibility(View.INVISIBLE);
         }
         // Create the adapter to convert the array to views
