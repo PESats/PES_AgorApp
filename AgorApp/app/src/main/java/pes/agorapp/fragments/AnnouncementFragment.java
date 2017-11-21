@@ -113,7 +113,7 @@ public class AnnouncementFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         final TextView title = (TextView) view.findViewById(R.id.announcement_title);
-        title.setText(this.announcement.getDescription());
+        title.setText(this.announcement.getTitle());
 
         final TextView text = (TextView) view.findViewById(R.id.announcement_text);
         text.setText(this.announcement.getDescription());
