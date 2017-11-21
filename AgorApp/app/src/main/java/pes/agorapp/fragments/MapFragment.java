@@ -150,7 +150,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
                     public void onResponse(Call<ArrayList<Announcement>> call, Response<ArrayList<Announcement>> response) {
 
                         //Log.i("response code", String.valueOf(response.code()));
-                        Log.d("this is my array", "arr: " + response.body().toString());
+                        Log.d("this is my arra3y", "arr: " + response.body().toString());
                         anuncis = response.body();
                         for(Announcement anunci: anuncis) {
                             //Log.d("anunci " + anunci.getId(), "Latitude: " + anunci.getLatitude() + " Longitude " + anunci.getLongitude());

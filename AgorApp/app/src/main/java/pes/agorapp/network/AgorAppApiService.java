@@ -71,16 +71,18 @@ public interface AgorAppApiService {
     @DELETE("anuncis/{id}")
     Call<Announcement> deleteAnnouncement(
             @Path("id") int id,
-            @Body JsonObject user
+            @Query("user_id") int user_id,
+            @Query("active_token") String active_token
     );
 
     /* COMENTARIS */
 
-    @GET("comments/{announcementId}")
+    @GET("anuncis/{announcementId}/comentaris")
     Call<ArrayList<Comment>> getComments(
             @Path("announcementId") int id,
-            @Body JsonObject user
-    );
+            @Query("user_id") int user_id,
+            @Query("active_token") String active_token
+            );
 
     @PUT("comments/{id}")
     Call<Comment> editComment(

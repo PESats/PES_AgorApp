@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +12,23 @@ import android.support.v4.app.Fragment;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import pes.agorapp.JSONObjects.Announcement;
 import pes.agorapp.R;
+import pes.agorapp.customComponents.DialogServerKO;
+import pes.agorapp.globals.PreferencesAgorApp;
 import pes.agorapp.helpers.AnnouncementsAdapter;
 import pes.agorapp.helpers.ObjectsHelper;
+import pes.agorapp.network.AgorAppApiManager;
+import retrofit2.Call;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +41,9 @@ import pes.agorapp.helpers.ObjectsHelper;
 public class AnnouncementListFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
+    List<Announcement> announcements = new ArrayList<>();
+    private PreferencesAgorApp prefs;
+
 
     public AnnouncementListFragment() {
         // Required empty public constructor
@@ -61,6 +75,7 @@ public class AnnouncementListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        prefs = new PreferencesAgorApp(getActivity());
         return inflater.inflate(R.layout.fragment_announcement_list, container, false);
     }
 
@@ -102,9 +117,8 @@ public class AnnouncementListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Construct the data source
-        List<Announcement> announcements = new ArrayList<>();
         // Create the adapter to convert the array to views
-        AnnouncementsAdapter adapter = new AnnouncementsAdapter(getActivity(), announcements);
+        final AnnouncementsAdapter adapter = new AnnouncementsAdapter(getActivity(), announcements);
         // Attach the adapter to a ListView
         final ListView listView = (ListView) view.findViewById(R.id.listViewAnnouncement);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -115,7 +129,27 @@ public class AnnouncementListFragment extends Fragment {
             }
         });
         listView.setAdapter(adapter);
-        announcements = ObjectsHelper.getFakeAnnouncementList();
-        adapter.addAll(announcements);
+        AgorAppApiManager
+                .getService()
+                .getAnnouncements(Integer.valueOf(prefs.getId()), prefs.getActiveToken())
+                //.getAnnouncements(16, "aujEXUFZaWPotQhujtd9cMzL")
+                .enqueue(new retrofit2.Callback<ArrayList<Announcement>>() {
+                    @Override
+                    public void onResponse(Call<ArrayList<Announcement>> call, Response<ArrayList<Announcement>> response) {
+
+                        //Log.i("response code", String.valueOf(response.code()));
+                        //Log.d("this is my array", "arr: " + response.body().toString());
+                        announcements = response.body();
+                        adapter.addAll(announcements);
+                        Log.d("this is my array", "arr: " + response.body().toString());
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<ArrayList<Announcement>> call, Throwable t) {
+                        System.out.println("Something went wrong!");
+                        new DialogServerKO(getActivity()).show();
+                    }
+                });
     }
 }

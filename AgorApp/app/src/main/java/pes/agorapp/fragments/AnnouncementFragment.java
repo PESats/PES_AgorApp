@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,9 +43,11 @@ public class AnnouncementFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private Announcement announcement;
+    PreferencesAgorApp prefs;
+    List<Comment> comments = new ArrayList<>();
     private AlertDialog.Builder comment_dialog;
     private EditText new_comment;
-    private PreferencesAgorApp prefs;
+
 
     public AnnouncementFragment() {
         // Required empty public constructor
@@ -72,6 +75,7 @@ public class AnnouncementFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        prefs = new PreferencesAgorApp(getActivity());
         // Inflate the layout for this fragment
 
         return inflater.inflate(R.layout.fragment_announcement, container, false);
@@ -166,13 +170,13 @@ public class AnnouncementFragment extends Fragment {
         });
 
         final TextView title = (TextView) view.findViewById(R.id.announcement_title);
-        title.setText(this.announcement.getDescription());
+        title.setText(this.announcement.getTitle());
 
         final TextView text = (TextView) view.findViewById(R.id.announcement_text);
         text.setText(this.announcement.getDescription());
 
         final TextView author = (TextView) view.findViewById(R.id.announcement_author);
-        author.setText(String.valueOf(this.announcement.getUser_id()));
+        author.setText(String.valueOf(this.announcement.getUser().getId()));
 
         //buttons
         Button buttonDelete = (Button) view.findViewById(R.id.announcement_delete);
@@ -180,13 +184,12 @@ public class AnnouncementFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //Toast.makeText(AnnouncementsAdapter.super.getContext(), "Esborrar: " + announcement.getId(), Toast.LENGTH_LONG).show();
-                PreferencesAgorApp prefs = new PreferencesAgorApp(getActivity());
 
                 JsonObject ann = new JsonObject();
                 ann.addProperty("user_id",prefs.getId());
                 ann.addProperty("active_token",prefs.getActiveToken());
 
-                AgorAppApiManager.getService().deleteAnnouncement(announcement.getId(),ann).enqueue(new retrofit2.Callback<Announcement>() {
+                AgorAppApiManager.getService().deleteAnnouncement(announcement.getId(),Integer.valueOf(prefs.getId()), prefs.getActiveToken()).enqueue(new retrofit2.Callback<Announcement>() {
                     @Override
                     public void onResponse(Call<Announcement> call, Response<Announcement> response) {
                         Integer code = response.code();
@@ -200,18 +203,37 @@ public class AnnouncementFragment extends Fragment {
                 });
 
             }});
-
-        // Construct the data source
-        List<Comment> comments = new ArrayList<>();
+        if (!String.valueOf(announcement.getUser().getId()).equals(prefs.getId())) {
+            buttonDelete.setVisibility(View.INVISIBLE);
+        }
         // Create the adapter to convert the array to views
-        CommentsAdapter adapter = new CommentsAdapter(getActivity(), comments);
+        final CommentsAdapter adapter = new CommentsAdapter(getActivity(), comments);
         // Attach the adapter to a ListView
         final ListView listView = (ListView) view.findViewById(R.id.comments_list);
         listView.setAdapter(adapter);
         //comments = announcement.getComments();
-        comments = ObjectsHelper.getFakeComments();
-        adapter.addAll(comments);
+        AgorAppApiManager
+                .getService()
+                .getComments(announcement.getId(), Integer.valueOf(prefs.getId()), prefs.getActiveToken())
+                //.getAnnouncements(16, "aujEXUFZaWPotQhujtd9cMzL")
+                .enqueue(new retrofit2.Callback<ArrayList<Comment>>() {
+                    @Override
+                    public void onResponse(Call<ArrayList<Comment>> call, Response<ArrayList<Comment>> response) {
 
+                        //Log.i("response code", String.valueOf(response.code()));
+                        //Log.d("this is my array", "arr: " + response.body().toString());
+                        comments = response.body();
+                        adapter.addAll(comments);
+                        Log.d("this is my array", "arr: " + response.body().toString());
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<ArrayList<Comment>> call, Throwable t) {
+                        System.out.println("Something went wrong!");
+                        new DialogServerKO(getActivity()).show();
+                    }
+                });
     }
 
     public void setAnnouncement(Announcement anAnnouncement) {
