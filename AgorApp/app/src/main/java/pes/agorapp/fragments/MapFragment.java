@@ -110,7 +110,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        mMap.getUiSettings().setMapToolbarEnabled(true);
+s        mMap.getUiSettings().setMapToolbarEnabled(true);
         mMap.getUiSettings().setZoomControlsEnabled(true);
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -151,7 +151,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
                     public void onResponse(Call<ArrayList<Announcement>> call, Response<ArrayList<Announcement>> response) {
 
                         //Log.i("response code", String.valueOf(response.code()));
-                        Log.d("this is my array", "arr: " + response.body().toString());
+                        Log.d("this is my arra3y", "arr: " + response.body().toString());
                         anuncis = response.body();
                         for(Announcement anunci: anuncis) {
                             //Log.d("anunci " + anunci.getId(), "Latitude: " + anunci.getLatitude() + " Longitude " + anunci.getLongitude());
