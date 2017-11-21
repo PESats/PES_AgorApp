@@ -146,7 +146,9 @@ public class AnnouncementFragment extends Fragment {
                 });
 
             }});
-
+        if (!String.valueOf(announcement.getUser_id()).equals(prefs.getId())) {
+            buttonDelete.setVisibility(View.INVISIBLE);
+        }
         // Create the adapter to convert the array to views
         final CommentsAdapter adapter = new CommentsAdapter(getActivity(), comments);
         // Attach the adapter to a ListView
