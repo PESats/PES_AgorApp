@@ -54,6 +54,14 @@ public interface AgorAppApiService {
             @Body JsonObject announcement
     );
 
+    @POST("anuncis/{id}/comentaris?")
+    Call<Comment> createAnnouncementComment(
+            @Path("id") int id,
+            @Query("user_id") String user_id,
+            @Query("active_token") String active_token,
+            @Body JsonObject announcement
+    );
+
     @PUT("anuncis/{id}")
     Call<Comment> editAnnouncement(
             @Path("id") int id,
@@ -87,5 +95,7 @@ public interface AgorAppApiService {
             @Path("id") int id,
             @Body JsonObject user
     );
+
+
 
 }

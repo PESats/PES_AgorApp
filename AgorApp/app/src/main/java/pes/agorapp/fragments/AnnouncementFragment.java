@@ -1,16 +1,17 @@
 package pes.agorapp.fragments;
 
 import android.content.Context;
-import android.net.Uri;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,7 +25,6 @@ import pes.agorapp.JSONObjects.Comment;
 import pes.agorapp.R;
 import pes.agorapp.customComponents.DialogServerKO;
 import pes.agorapp.globals.PreferencesAgorApp;
-import pes.agorapp.helpers.AnnouncementsAdapter;
 import pes.agorapp.helpers.CommentsAdapter;
 import pes.agorapp.helpers.ObjectsHelper;
 import pes.agorapp.network.AgorAppApiManager;
@@ -45,6 +45,8 @@ public class AnnouncementFragment extends Fragment {
     private Announcement announcement;
     PreferencesAgorApp prefs;
     List<Comment> comments = new ArrayList<>();
+    private AlertDialog.Builder comment_dialog;
+    private EditText new_comment;
 
 
     public AnnouncementFragment() {
@@ -66,6 +68,7 @@ public class AnnouncementFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
     }
 
@@ -74,6 +77,7 @@ public class AnnouncementFragment extends Fragment {
                              Bundle savedInstanceState) {
         prefs = new PreferencesAgorApp(getActivity());
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_announcement, container, false);
     }
 
@@ -106,11 +110,64 @@ public class AnnouncementFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         void onCommentSelected(Comment comment);
+        void onNecessaryReload();
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        prefs = new PreferencesAgorApp(getActivity());
+
+        comment_dialog = new AlertDialog.Builder(getActivity());
+        comment_dialog.setTitle("Nuevo comentario");
+        new_comment = new EditText(getContext());
+        //if (new_comment.getParent() != null)
+            //((EditText)new_comment.getParent()).removeView(new_comment);
+        comment_dialog.setView(new_comment);
+        comment_dialog.setPositiveButton("Enviar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //Toast.makeText(getContext(), new_comment.getText().toString(), Toast.LENGTH_LONG);
+                JsonObject jsonUser = new JsonObject();
+                jsonUser.addProperty("text", new_comment.getText().toString());
+
+                JsonObject json = new JsonObject();
+                json.add("comentari", jsonUser);
+                AgorAppApiManager
+                        .getService()
+                        .createAnnouncementComment(announcement.getId(),prefs.getId(), prefs.getActiveToken() ,json)
+                        .enqueue(new retrofit2.Callback<Comment>() {
+                            @Override
+                            public void onResponse(Call<Comment> call, Response<Comment> response) {
+                                mListener.onNecessaryReload();
+                            }
+
+                            @Override
+                            public void onFailure(Call<Comment> call, Throwable t) {
+                                System.out.println("Something went wrong!");
+                                new DialogServerKO(getActivity()).show();
+                                mListener.onNecessaryReload();
+                            }
+                        });
+
+            }
+        });
+        comment_dialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        comment_dialog.create();
+
+        final Button button = (Button) view.findViewById(R.id.new_comment_announcement);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Code here executes on main thread after user presses button
+                comment_dialog.show();
+            }
+        });
 
         final TextView title = (TextView) view.findViewById(R.id.announcement_title);
         title.setText(this.announcement.getTitle());
