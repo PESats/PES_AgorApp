@@ -18,6 +18,7 @@ public class Comment {
     private Date created_at;
     private int reward;
     private int anunci_id;
+    private UserAgorApp user;
 
     public Comment(int id, String user_id, String text, Date date, int reward) {
         this.id = id;
@@ -70,5 +71,13 @@ public class Comment {
 
     public void setAnunci_id(int anunci_id) {
         this.anunci_id = anunci_id;
+    }
+
+    public UserAgorApp getUser() {
+        return user;
+    }
+
+    public void setUser(UserAgorApp user) {
+        this.user = user;
     }
 }
