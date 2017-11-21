@@ -13,16 +13,17 @@ public class Comment {
     private int id;
 
     // TODO: update String to UserAgorApp class
-    private String author;
-    private String content;
-    private Date date;
+    private String user_id;
+    private String text;
+    private Date created_at;
     private int reward;
+    private int anunci_id;
 
-    public Comment(int id, String author, String content, Date date, int reward) {
+    public Comment(int id, String user_id, String text, Date date, int reward) {
         this.id = id;
-        this.author = author;
-        this.content = content;
-        this.date = date;
+        this.user_id = user_id;
+        this.text = text;
+        this.created_at = date;
         this.reward = reward;
     }
 
@@ -30,24 +31,24 @@ public class Comment {
 
     public void setId(int id) { this.id = id; }
 
-    public String getAuthor() {
-        return author;
+    public String getUser_id() {
+        return user_id;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 
-    public String getContent() {
-        return content;
+    public String getText() {
+        return text;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public Date getDate() {
-        return date;
+        return created_at;
     }
 
     public int getReward() { return reward; }
@@ -55,11 +56,19 @@ public class Comment {
     public void setReward(int reward) { this.reward = reward; }
 
     public void setDate(Date date) {
-        this.date = date;
+        this.created_at = date;
     }
 
     public String getDateString() {
         DateFormat df = new SimpleDateFormat("HH:mm dd/MM");
-        return df.format(date);
+        return df.format(created_at);
+    }
+
+    public int getAnunci_id() {
+        return anunci_id;
+    }
+
+    public void setAnunci_id(int anunci_id) {
+        this.anunci_id = anunci_id;
     }
 }
