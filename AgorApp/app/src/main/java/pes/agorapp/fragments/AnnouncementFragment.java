@@ -132,7 +132,7 @@ public class AnnouncementFragment extends Fragment {
                 ann.addProperty("user_id",prefs.getId());
                 ann.addProperty("active_token",prefs.getActiveToken());
 
-                AgorAppApiManager.getService().deleteAnnouncement(announcement.getId(),ann).enqueue(new retrofit2.Callback<Announcement>() {
+                AgorAppApiManager.getService().deleteAnnouncement(announcement.getId(),Integer.valueOf(prefs.getId()), prefs.getActiveToken()).enqueue(new retrofit2.Callback<Announcement>() {
                     @Override
                     public void onResponse(Call<Announcement> call, Response<Announcement> response) {
                         Integer code = response.code();
@@ -146,7 +146,9 @@ public class AnnouncementFragment extends Fragment {
                 });
 
             }});
-
+        if (!String.valueOf(announcement.getUser_id()).equals(prefs.getId())) {
+            buttonDelete.setVisibility(View.INVISIBLE);
+        }
         // Create the adapter to convert the array to views
         final CommentsAdapter adapter = new CommentsAdapter(getActivity(), comments);
         // Attach the adapter to a ListView
