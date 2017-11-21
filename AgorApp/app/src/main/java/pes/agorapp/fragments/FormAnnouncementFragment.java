@@ -133,7 +133,7 @@ public class FormAnnouncementFragment extends Fragment implements View.OnClickLi
             @Override
             public void onResponse(Call<Announcement> call, Response<Announcement> response) {
                 Announcement announcement = response.body();
-                Toast.makeText(getActivity(), String.valueOf(locAnn.getLatitude()), Toast.LENGTH_LONG).show();
+                //Toast.makeText(getActivity(), String.valueOf(locAnn.getLatitude()), Toast.LENGTH_LONG).show();
                 //Toast.makeText(getActivity(), announcement.getDescription(), Toast.LENGTH_LONG).show();
                 //Falta implementar el que ve a continuacio
             }
