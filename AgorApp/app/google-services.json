@@ -1,35 +1,25 @@
 {
   "project_info": {
-    "project_number": "616472791718",
-    "firebase_url": "https://agorapp-977a2.firebaseio.com",
-    "project_id": "agorapp-977a2",
-    "storage_bucket": "agorapp-977a2.appspot.com"
+    "project_number": "398501982793",
+    "project_id": "pesplaces-1510660667379"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:616472791718:android:eda9e1db54593471",
+        "mobilesdk_app_id": "1:398501982793:android:eda9e1db54593471",
         "android_client_info": {
           "package_name": "pes.agorapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "616472791718-hlktl6pkaou8lnudo3f8vmh89qjc797t.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "pes.agorapp",
-            "certificate_hash": "40502b5d086eee8d2fd282157be348af6c5c07bd"
-          }
-        },
-        {
-          "client_id": "616472791718-qdfpsvrknd91objkdq243303drv3ktv6.apps.googleusercontent.com",
+          "client_id": "398501982793-25efg0a9s6k34u1alie86l4uhd2i787m.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyChb45W-MNP8GiOsQXtP-vQBWw4tvP13GU"
+          "current_key": "AIzaSyBXfQgGgH2Lqw5hRaHcAH7ksv6_f8ew_g0"
         }
       ],
       "services": {
@@ -37,16 +27,11 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "616472791718-qdfpsvrknd91objkdq243303drv3ktv6.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
-          "status": 2
+          "status": 1
         }
       }
     }
