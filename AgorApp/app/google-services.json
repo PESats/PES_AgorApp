@@ -1,7 +1,9 @@
 {
   "project_info": {
     "project_number": "398501982793",
-    "project_id": "pesplaces-1510660667379"
+    "firebase_url": "https://pesplaces-1510660667379.firebaseio.com",
+    "project_id": "pesplaces-1510660667379",
+    "storage_bucket": "pesplaces-1510660667379.appspot.com"
   },
   "client": [
     {
@@ -12,6 +14,18 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "398501982793-0h7p6eunq4u1n3kal6or65p7m0d9bqik.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pes.agorapp",
+            "certificate_hash": "efe7595c6d4d83bd7207866c446170323a1b36c0"
+          }
+        },
+        {
+          "client_id": "398501982793-l7ikc17tsjmt1v0t43q7af6pk30jutmk.apps.googleusercontent.com",
+          "client_type": 3
+        },
         {
           "client_id": "398501982793-25efg0a9s6k34u1alie86l4uhd2i787m.apps.googleusercontent.com",
           "client_type": 3
@@ -31,7 +45,7 @@
           "other_platform_oauth_client": []
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }
