@@ -21,11 +21,13 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import pes.agorapp.JSONObjects.Announcement;
+import pes.agorapp.JSONObjects.Chat;
 import pes.agorapp.JSONObjects.Comment;
 import pes.agorapp.R;
 import pes.agorapp.fragments.AnnouncementFragment;
 import pes.agorapp.fragments.AnnouncementListFragment;
 import pes.agorapp.fragments.ChatFragment;
+import pes.agorapp.fragments.ChatListFragment;
 import pes.agorapp.fragments.FormAnnouncementFragment;
 import pes.agorapp.fragments.MapFragment;
 import pes.agorapp.fragments.MarketplaceFragment;
@@ -36,7 +38,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         AnnouncementFragment.OnFragmentInteractionListener,
         AnnouncementListFragment.OnFragmentInteractionListener,
-        MapFragment.OnFragmentInteractionListener{
+        MapFragment.OnFragmentInteractionListener,
+        ChatListFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,10 +162,10 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         } else if (id == R.id.nav_slideshow) {
-            ChatFragment chatFragment = new ChatFragment();
+            ChatListFragment chatListFragment = new ChatListFragment();
 
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, chatFragment);
+            fragmentTransaction.replace(R.id.fragment_container, chatListFragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         } else if (id == R.id.nav_manage) {
@@ -232,6 +235,23 @@ public class MainActivity extends AppCompatActivity
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack so the user can navigate back
         transaction.replace(R.id.fragment_container, newFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+    }
+
+    @Override
+    public void onChatSelected(Chat chat) {
+        // Call the other fragment
+        // Create fragment and give it an argument specifying the article it should show
+        ChatFragment newFragment = new ChatFragment();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment_container, newFragment, "chat");
         transaction.addToBackStack(null);
 
         // Commit the transaction
