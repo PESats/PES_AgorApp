@@ -14,7 +14,7 @@ import pes.agorapp.globals.PreferencesAgorApp;
 
 public class SplashActivity extends Activity {
 
-    private static int SECONDS_SPLASH = 2500;
+    private static int SECONDS_SPLASH = 2000;
     private PreferencesAgorApp prefs;
 
     @Override

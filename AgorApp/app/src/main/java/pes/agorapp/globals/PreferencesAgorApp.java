@@ -47,7 +47,7 @@ public class PreferencesAgorApp {
         return prefs.getString(NAME, "");
     }
 
-    public void setName(String name) {
+    public void setUsername(String name) {
         prefs.edit().putString(NAME, name).apply();
     }
 

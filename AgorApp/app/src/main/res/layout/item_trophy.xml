@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="5dp">
 
     <ImageView
+        android:id="@+id/trophy_iconimage"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:adjustViewBounds="true"
-        android:background="@drawable/ic_notifications_active_black_24dp"
+        android:src="@drawable/icon_trophy"
         android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/trophy_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="mec mec"
+        android:layout_below="@id/trophy_iconimage"
+        android:gravity="center"/>
 
 </RelativeLayout>

@@ -2,12 +2,11 @@ package pes.agorapp.activities;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -24,19 +23,19 @@ import android.widget.Toast;
 import pes.agorapp.JSONObjects.Announcement;
 import pes.agorapp.JSONObjects.Comment;
 import pes.agorapp.R;
-import pes.agorapp.fragments.FormAnnouncementFragment;
-import pes.agorapp.fragments.MarketplaceFragment;
-import pes.agorapp.fragments.ProfileFragment;
 import pes.agorapp.fragments.AnnouncementFragment;
 import pes.agorapp.fragments.AnnouncementListFragment;
+import pes.agorapp.fragments.FormAnnouncementFragment;
 import pes.agorapp.fragments.MapFragment;
+import pes.agorapp.fragments.MarketplaceFragment;
 import pes.agorapp.fragments.ProfileFragment;
 
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         AnnouncementFragment.OnFragmentInteractionListener,
-        AnnouncementListFragment.OnFragmentInteractionListener {
+        AnnouncementListFragment.OnFragmentInteractionListener,
+        MapFragment.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -191,7 +190,7 @@ public class MainActivity extends AppCompatActivity
 
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack so the user can navigate back
-        transaction.replace(R.id.fragment_container, newFragment);
+        transaction.replace(R.id.fragment_container, newFragment, "anuncement");
         transaction.addToBackStack(null);
 
         // Commit the transaction
@@ -203,6 +202,17 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onCommentSelected(Comment comment) {
         Toast.makeText(getApplicationContext(), "comment", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onNecessaryReload() {
+        // Reload current fragment
+        Fragment frg = null;
+        frg = getSupportFragmentManager().findFragmentByTag("anuncement");
+        final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.detach(frg);
+        ft.attach(frg);
+        ft.commit();
     }
 
     @Override
