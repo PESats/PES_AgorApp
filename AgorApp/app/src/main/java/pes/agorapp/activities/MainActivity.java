@@ -25,6 +25,7 @@ import pes.agorapp.JSONObjects.Comment;
 import pes.agorapp.R;
 import pes.agorapp.fragments.AnnouncementFragment;
 import pes.agorapp.fragments.AnnouncementListFragment;
+import pes.agorapp.fragments.ChatFragment;
 import pes.agorapp.fragments.FormAnnouncementFragment;
 import pes.agorapp.fragments.MapFragment;
 import pes.agorapp.fragments.MarketplaceFragment;
@@ -158,7 +159,12 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         } else if (id == R.id.nav_slideshow) {
-            //printProfile();
+            ChatFragment chatFragment = new ChatFragment();
+
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, chatFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
         } else if (id == R.id.nav_manage) {
             //printProfile();
         } else if (id == R.id.nav_share) {
