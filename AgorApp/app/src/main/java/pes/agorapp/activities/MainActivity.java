@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -189,7 +190,7 @@ public class MainActivity extends AppCompatActivity
 
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack so the user can navigate back
-        transaction.replace(R.id.fragment_container, newFragment);
+        transaction.replace(R.id.fragment_container, newFragment, "anuncement");
         transaction.addToBackStack(null);
 
         // Commit the transaction
@@ -201,6 +202,17 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onCommentSelected(Comment comment) {
         Toast.makeText(getApplicationContext(), "comment", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onNecessaryReload() {
+        // Reload current fragment
+        Fragment frg = null;
+        frg = getSupportFragmentManager().findFragmentByTag("anuncement");
+        final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.detach(frg);
+        ft.attach(frg);
+        ft.commit();
     }
 
     @Override
