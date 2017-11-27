@@ -18,12 +18,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.AutocompleteFilter;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import pes.agorapp.JSONObjects.Location;
 import pes.agorapp.JSONObjects.Trophy;
 import pes.agorapp.JSONObjects.UserAgorApp;
 import pes.agorapp.R;
@@ -45,6 +51,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private AnnouncementListFragment.OnFragmentInteractionListener mListener;
     private PreferencesAgorApp prefs;
+    private Location locationMerchant;
 
     public ProfileFragment() {}
 
@@ -77,14 +84,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 myDialog.setContentView(R.layout.fragment_form_verify_merchant);
                 myDialog.show();
 
-                EditText merchantName = (EditText) myDialog.findViewById(R.id.form_verify_titleEdit);
-                EditText merchantDescription = (EditText) myDialog.findViewById(R.id.form_verify_descriptionEdit);
+                final EditText etMerchantName = (EditText) myDialog.findViewById(R.id.form_verify_titleEdit);
+                final EditText etMerchantDescription = (EditText) myDialog.findViewById(R.id.form_verify_descriptionEdit);
                 Button verifyButton = (Button) myDialog.findViewById(R.id.btn_form_verify_publish);
 
                 verifyButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        myDialog.dismiss();
+                        verifyUser(etMerchantName, etMerchantDescription);
                     }
                 });
 
@@ -109,6 +116,32 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         gridView.setAdapter(adapter);
         trophies = ObjectsHelper.getFakeTrophies();
         adapter.addAll(trophies);
+    }
+
+    private void verifyUser(EditText etMerchantName, EditText etMerchantDescription) {
+        PlaceAutocompleteFragment autocompFrag = (PlaceAutocompleteFragment) getActivity().getFragmentManager().findFragmentByTag("place_verify_form");
+        //We only want the addresses, so we declare a filter to make sure of it
+        AutocompleteFilter typeFilter = new AutocompleteFilter.Builder().setTypeFilter(AutocompleteFilter.TYPE_FILTER_ADDRESS).build();
+        autocompFrag.setFilter(typeFilter);
+
+        String userName = prefs.getUserName();
+        String merchantName = etMerchantName.getText().toString();
+        String merchantDescription = etMerchantDescription.getText().toString();
+
+        autocompFrag.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+                //Log.i(TAG, "Place: " + place.getName());//get place details here
+                locationMerchant = new Location(place.getLatLng().latitude,place.getLatLng().longitude);
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                //Log.i(TAG, "An error occurred: " + status);
+            }
+        });
     }
 
     private void printProfile(View view) {
