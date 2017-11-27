@@ -32,7 +32,7 @@ import retrofit2.Response;
  * Created by marc on 6/11/17.
  */
 
-public class FormAnnouncementFragment extends Fragment {
+public class FormAnnouncementFragment extends Fragment implements View.OnClickListener {
     private EditText etTitle;
     private EditText etDesc;
     private SeekBar sbReward;
@@ -53,6 +53,7 @@ public class FormAnnouncementFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //botó publish
+        view.findViewById(R.id.btn_form_announcement_publish).setOnClickListener(this);
 
         etTitle = (EditText) view.findViewById(R.id.form_announcement_titleEdit);
         etDesc = (EditText) view.findViewById(R.id.form_announcement_descriptionEdit);
@@ -96,5 +97,55 @@ public class FormAnnouncementFragment extends Fragment {
                 //Log.i(TAG, "An error occurred: " + status);
             }
         });
+    }
+
+    @Override
+    public void onClick (View v){
+        switch (v.getId()) {
+            case R.id.btn_form_announcement_publish:
+                create_announcement(v);
+                break;
+        }
+    }
+
+    private void create_announcement(View view) {
+
+        String title = etTitle.getText().toString();
+        String desc = etDesc.getText().toString();
+        String reward = String.valueOf(sbReward.getProgress());
+
+        JsonObject jsonAnn = new JsonObject();
+        jsonAnn.addProperty("title",title);
+        jsonAnn.addProperty("description",desc);
+        jsonAnn.addProperty("reward",reward);
+        jsonAnn.addProperty("latitude",locAnn.getLatitude());
+        jsonAnn.addProperty("longitude", locAnn.getLongitude());
+
+        final JsonObject ann = new JsonObject();
+        ann.add("anunci",jsonAnn);
+
+        int user_id = Integer.valueOf(prefs.getId());
+        String active_token = prefs.getActiveToken();
+
+
+
+        AgorAppApiManager.getService().createAnnouncement(user_id,active_token,ann).enqueue(new retrofit2.Callback<Announcement>(){
+            @Override
+            public void onResponse(Call<Announcement> call, Response<Announcement> response) {
+                Announcement announcement = response.body();
+                Toast.makeText(getActivity(), String.valueOf(locAnn.getLatitude()), Toast.LENGTH_LONG).show();
+                //Toast.makeText(getActivity(), announcement.getDescription(), Toast.LENGTH_LONG).show();
+                //Falta implementar el que ve a continuacio
+            }
+
+            @Override
+            public void onFailure(Call<Announcement> call, Throwable t) {
+                System.out.println("Unable to create the announcement!");
+                new DialogServerKO(getActivity()).show();
+            }
+        });
+
+        //TextView myAwesomeTextView = (TextView) view.findViewById(R.id.form_announcement_title);
+        //myAwesomeTextView.setText("hola");
     }
 }
