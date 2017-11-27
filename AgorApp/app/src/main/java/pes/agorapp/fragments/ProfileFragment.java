@@ -1,15 +1,19 @@
 package pes.agorapp.fragments;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -63,6 +67,39 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 mListener.onMarketplaceOpen();
             }
         });
+
+        /* ************************************************************* */
+        /* NOTA pel marc del futur: refactoritza aquest codi que fa pena */
+        view.findViewById(R.id.profile_btn_verify).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog myDialog = new Dialog(getActivity());
+                myDialog.setContentView(R.layout.fragment_form_verify_merchant);
+                myDialog.show();
+
+                EditText merchantName = (EditText) myDialog.findViewById(R.id.form_verify_titleEdit);
+                EditText merchantDescription = (EditText) myDialog.findViewById(R.id.form_verify_descriptionEdit);
+                Button verifyButton = (Button) myDialog.findViewById(R.id.btn_form_verify_publish);
+
+                verifyButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        myDialog.dismiss();
+                    }
+                });
+
+                myDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        android.app.FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
+                        ft.remove(getActivity().getFragmentManager().findFragmentByTag("place_verify_form"));
+                        ft.commit();
+                    }
+                });
+            }
+        });
+        /* ************************************************************* */
+
         //info d'usuari i imatge
         printProfile(view);
 
@@ -77,6 +114,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private void printProfile(View view) {
         printTextProfile(view);
         printImageProfile(view);
+        printOrHideVerifyButton(view);
+    }
+
+    private void printOrHideVerifyButton(View view) {
+        /*amaguem el botó si ja està verificat*/
+        if (prefs.isMerchant()) {
+            Button verifyButton = (Button) view.findViewById(R.id.profile_btn_verify);
+            verifyButton.setVisibility(View.INVISIBLE);
+        }
     }
 
     private void printImageProfile(View view) {
@@ -97,8 +143,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private void printTextProfile(View view) {
         /*info d'usuari*/
         String userName = prefs.getUserName();
-        TextView myAwesomeTextView = (TextView) view.findViewById(R.id.profile_name);
-        myAwesomeTextView.setText(userName);
+        TextView profileNameTextView = (TextView) view.findViewById(R.id.profile_name);
+        profileNameTextView.setText(userName);
+        String userType = "Ciutadà";
+        if (prefs.isMerchant()) userType = "Botiguer verificat";
+        TextView profileTypeTextView = (TextView) view.findViewById(R.id.profile_verified);
+        profileTypeTextView.setText(userType);
     }
 
     @Override

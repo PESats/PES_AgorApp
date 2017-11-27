@@ -22,6 +22,7 @@ public class PreferencesAgorApp {
     private static String PLATFORM_LOGIN = "platform_login";
     private static String ACTIVE_TOKEN = "active_token";
     private static String COINS = "coins";
+    private static String MERCHANT = "merchant";
 
     public PreferencesAgorApp(Context activity) {
         prefs = activity.getSharedPreferences(NAME_PREFERENCES, Context.MODE_PRIVATE);
@@ -107,6 +108,10 @@ public class PreferencesAgorApp {
         prefs.edit().putInt(COINS, coins).apply();
     }
 
+    public boolean isMerchant() { return prefs.getBoolean(MERCHANT, false); }
+
+    public void setMerchant(boolean merchant) { prefs.edit().putBoolean(MERCHANT, merchant).apply(); }
+
     public void deleteSession(){
         prefs.edit().remove(NAME).apply();
         prefs.edit().remove(ID).apply();
@@ -116,6 +121,7 @@ public class PreferencesAgorApp {
         prefs.edit().remove(LEVEL).apply();
         prefs.edit().remove(ACTIVE_TOKEN).apply();
         prefs.edit().remove(COINS).apply();
+        prefs.edit().remove(MERCHANT).apply();
     }
 
     public void checkPreferences(){
@@ -127,5 +133,6 @@ public class PreferencesAgorApp {
         Log.i("platform", getPlatform());
         Log.i("Token", getActiveToken());
         Log.i("Coins", String.valueOf(getCoins()));
+        Log.i("Merchant", String.valueOf(isMerchant()));
     }
 }
