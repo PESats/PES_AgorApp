@@ -27,6 +27,7 @@ public class Announcement {
 
 
     public Announcement() {}
+
     public Announcement(String title, String text, float latitude, float longitude, int reward,
                         int user_id, Date created_at, UserAgorApp userAgorApp) {
         this.title = title;

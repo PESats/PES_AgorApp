@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,10 +24,12 @@ import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
+import com.twitter.sdk.android.core.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import pes.agorapp.JSONObjects.Botiga;
 import pes.agorapp.JSONObjects.Location;
 import pes.agorapp.JSONObjects.Trophy;
 import pes.agorapp.JSONObjects.UserAgorApp;
@@ -51,7 +52,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private AnnouncementListFragment.OnFragmentInteractionListener mListener;
     private PreferencesAgorApp prefs;
-    private Location locationMerchant;
+    private Location locationBotiga;
+    private Dialog myDialog;
 
     public ProfileFragment() {}
 
@@ -75,23 +77,21 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        /* ************************************************************* */
-        /* NOTA pel marc del futur: refactoritza aquest codi que fa pena */
         view.findViewById(R.id.profile_btn_verify).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Dialog myDialog = new Dialog(getActivity());
-                myDialog.setContentView(R.layout.fragment_form_verify_merchant);
+                myDialog = new Dialog(getActivity());
+                myDialog.setContentView(R.layout.form_verify_merchant);
                 myDialog.show();
 
-                final EditText etMerchantName = (EditText) myDialog.findViewById(R.id.form_verify_titleEdit);
-                final EditText etMerchantDescription = (EditText) myDialog.findViewById(R.id.form_verify_descriptionEdit);
+                final EditText etNameBotiga = (EditText) myDialog.findViewById(R.id.form_verify_titleEdit);
+                final EditText etDescriptionBotiga = (EditText) myDialog.findViewById(R.id.form_verify_descriptionEdit);
                 Button verifyButton = (Button) myDialog.findViewById(R.id.btn_form_verify_publish);
 
                 verifyButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        verifyUser(etMerchantName, etMerchantDescription);
+                        upgradeAndCreateBotiga(etNameBotiga, etDescriptionBotiga);
                     }
                 });
 
@@ -105,7 +105,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 });
             }
         });
-        /* ************************************************************* */
 
         //info d'usuari i imatge
         printProfile(view);
@@ -118,30 +117,70 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         adapter.addAll(trophies);
     }
 
-    private void verifyUser(EditText etMerchantName, EditText etMerchantDescription) {
+    private void upgradeAndCreateBotiga(EditText etNameBotiga, EditText etDescriptionBotiga) {
         PlaceAutocompleteFragment autocompFrag = (PlaceAutocompleteFragment) getActivity().getFragmentManager().findFragmentByTag("place_verify_form");
         //We only want the addresses, so we declare a filter to make sure of it
         AutocompleteFilter typeFilter = new AutocompleteFilter.Builder().setTypeFilter(AutocompleteFilter.TYPE_FILTER_ADDRESS).build();
         autocompFrag.setFilter(typeFilter);
 
-        String userName = prefs.getUserName();
-        String merchantName = etMerchantName.getText().toString();
-        String merchantDescription = etMerchantDescription.getText().toString();
-
         autocompFrag.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
-                // TODO: Get info about the selected place.
                 //Log.i(TAG, "Place: " + place.getName());//get place details here
-                locationMerchant = new Location(place.getLatLng().latitude,place.getLatLng().longitude);
+                locationBotiga = new Location(place.getLatLng().latitude,place.getLatLng().longitude);
             }
 
             @Override
             public void onError(Status status) {
-                // TODO: Handle the error.
                 //Log.i(TAG, "An error occurred: " + status);
             }
         });
+
+        final int user_id = Integer.valueOf(prefs.getId());
+        final String active_token = prefs.getActiveToken();
+
+        String nameBotiga = etNameBotiga.getText().toString();
+        String descriptionBotiga = etDescriptionBotiga.getText().toString();
+
+        JsonObject jsonBotiga = new JsonObject();
+        jsonBotiga.addProperty("name", nameBotiga);
+        jsonBotiga.addProperty("description", descriptionBotiga);
+        jsonBotiga.addProperty("latitude", locationBotiga.getLatitude());
+        jsonBotiga.addProperty("longitude", locationBotiga.getLongitude());
+
+        AgorAppApiManager
+                .getService()
+                .createBotiga(user_id, active_token, jsonBotiga)
+                .enqueue(new retrofit2.Callback<Botiga>() {
+                    @Override
+                    public void onResponse(Call<Botiga> call, Response<Botiga> response) {
+                        Toast.makeText(getActivity(), response.body().getDescription(), Toast.LENGTH_LONG).show();
+                        upgradeUser(user_id, active_token);
+                    }
+
+                    @Override
+                    public void onFailure(Call<Botiga> call, Throwable t) {
+                        new DialogServerKO(getActivity()).show();
+                    }
+                });
+    }
+
+    private void upgradeUser(int user_id, String active_token) {
+        AgorAppApiManager
+                .getService()
+                .upgradeBotiguer(user_id, active_token)
+                .enqueue(new retrofit2.Callback<UserAgorApp>() {
+                    @Override
+                    public void onResponse(Call<UserAgorApp> call, Response<UserAgorApp> response) {
+                        Toast.makeText(getActivity(), response.body().getId(), Toast.LENGTH_LONG).show();
+                        myDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserAgorApp> call, Throwable t) {
+                        new DialogServerKO(getActivity()).show();
+                    }
+                });
     }
 
     private void printProfile(View view) {
@@ -155,6 +194,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         if (prefs.isMerchant()) {
             Button verifyButton = (Button) view.findViewById(R.id.profile_btn_verify);
             verifyButton.setVisibility(View.INVISIBLE);
+        } else {
+            TextView userType = (TextView) view.findViewById(R.id.profile_verified);
+            userType.setVisibility(View.INVISIBLE);
         }
     }
 
