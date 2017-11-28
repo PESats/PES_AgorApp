@@ -115,4 +115,15 @@ public interface AgorAppApiService {
             @Body JsonObject botiga
     );
 
+    /* XECS DESCOMPTE */
+
+    /*
+    @POST("descomptes")
+    Call<ValDescompte> createValDescompte(
+            @Query("user_id") int user_id,
+            @Query("active_token") String active_token,
+            @Body JsonObject valDescompte
+    );
+    */
+
 }

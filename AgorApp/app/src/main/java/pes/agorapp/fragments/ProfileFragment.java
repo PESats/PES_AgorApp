@@ -53,7 +53,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private AnnouncementListFragment.OnFragmentInteractionListener mListener;
     private PreferencesAgorApp prefs;
     private Location locationBotiga;
-    private Dialog myDialog;
+    private Dialog dialogForm;
 
     public ProfileFragment() {}
 
@@ -80,13 +80,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.profile_btn_verify).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myDialog = new Dialog(getActivity());
-                myDialog.setContentView(R.layout.form_verify_merchant);
-                myDialog.show();
+                dialogForm = new Dialog(getActivity());
+                dialogForm.setContentView(R.layout.form_verify_merchant);
+                dialogForm.show();
 
-                final EditText etNameBotiga = (EditText) myDialog.findViewById(R.id.form_verify_titleEdit);
-                final EditText etDescriptionBotiga = (EditText) myDialog.findViewById(R.id.form_verify_descriptionEdit);
-                Button verifyButton = (Button) myDialog.findViewById(R.id.btn_form_verify_publish);
+                final EditText etNameBotiga = (EditText) dialogForm.findViewById(R.id.form_verify_titleEdit);
+                final EditText etDescriptionBotiga = (EditText) dialogForm.findViewById(R.id.form_verify_descriptionEdit);
+                Button verifyButton = (Button) dialogForm.findViewById(R.id.btn_form_verify_publish);
 
                 verifyButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -95,7 +95,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     }
                 });
 
-                myDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                dialogForm.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
                         android.app.FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
@@ -173,7 +173,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onResponse(Call<UserAgorApp> call, Response<UserAgorApp> response) {
                         Toast.makeText(getActivity(), response.body().getId(), Toast.LENGTH_LONG).show();
-                        myDialog.dismiss();
+                        dialogForm.dismiss();
                     }
 
                     @Override
