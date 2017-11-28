@@ -24,17 +24,16 @@ import pes.agorapp.helpers.CouponAdapter;
 /**
  * Created by marc on 6/11/17.
  */
-
+public class MarketplaceFragment extends Fragment implements View.OnClickListener {
     private MarketplaceFragment.OnFragmentInteractionListener mListener;
     List<Coupon> announcements = new ArrayList<>();
     private PreferencesAgorApp prefs;
-public class MarketplaceFragment extends Fragment implements View.OnClickListener {
+    private Dialog dialogForm;
+    private Button marketplace_publish;
 
     public MarketplaceFragment() {
         // Required empty public constructor
     }
-    private Dialog dialogForm;
-    private Button marketplace_publish;
 
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,

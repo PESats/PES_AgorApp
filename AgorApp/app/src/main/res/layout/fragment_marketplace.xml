@@ -19,9 +19,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/newCoupon"
         android:layout_marginTop="15dp"/>
-
-</RelativeLayout>
-
+    
     <Button
         android:textStyle="bold"
         android:textAllCaps="false"
@@ -36,3 +34,4 @@
         android:layout_marginBottom="10dp"
         android:background="@color/colorButtons"
         android:textColor="@color/tw__solid_white" />
+</RelativeLayout>
