@@ -6,14 +6,46 @@ android:layout_height="wrap_content"
 android:orientation="vertical"
 android:padding="5dp">
 
-<TextView
-    android:id="@+id/item_title"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    tools:text="Val de descompte"
-    android:textSize="20sp"
-    android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/item_coupon_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Nom de la botiga"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
 
+    <TextView
+        android:id="@+id/item_coupon_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_coupon_title"
+        android:textSize="15sp"
+        tools:text="Preu: "
+        android:orientation="horizontal"/>
+
+    <TextView
+        android:textColor="@color/tw__blue_default"
+        android:textStyle="bold"
+        android:id="@+id/item_coupon_prize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/item_coupon_text"
+        android:textSize="15sp"
+        tools:text="4000 AgoraCoins"
+        android:layout_toEndOf="@id/item_coupon_text" />
+
+    <TextView
+        android:textStyle="bold"
+        android:textColor="@color/colorButtons"
+        android:id="@+id/item_coupon_discount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/item_coupon_title"
+        android:textSize="22sp"
+        android:text="75%"
+        android:orientation="vertical"
+        android:layout_centerVertical="true" />
 
 
 </RelativeLayout>

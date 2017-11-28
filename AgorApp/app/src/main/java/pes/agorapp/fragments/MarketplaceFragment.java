@@ -20,6 +20,7 @@ import pes.agorapp.JSONObjects.Coupon;
 import pes.agorapp.R;
 import pes.agorapp.globals.PreferencesAgorApp;
 import pes.agorapp.helpers.CouponAdapter;
+import pes.agorapp.helpers.ObjectsHelper;
 
 /**
  * Created by marc on 6/11/17.
@@ -82,9 +83,10 @@ public class MarketplaceFragment extends Fragment implements View.OnClickListene
 
         // Construct the data source
         // Create the adapter to convert the array to views
+        List<Coupon> coupons = new ArrayList<>();
         final CouponAdapter adapter = new CouponAdapter(getActivity(), announcements);
-    // Attach the adapter to a ListView
-        final ListView listView = (ListView) view.findViewById(R.id.listViewAnnouncement);
+        // Attach the adapter to a ListView
+        final ListView listView = (ListView) view.findViewById(R.id.listCoupons);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -93,6 +95,8 @@ public class MarketplaceFragment extends Fragment implements View.OnClickListene
             }
         });
         listView.setAdapter(adapter);
+        coupons = ObjectsHelper.getFakeCoupons();
+        adapter.addAll(coupons);
 
         //CRIDA A LA API PER A MOSTRAR TOTS ELS VALS
 
