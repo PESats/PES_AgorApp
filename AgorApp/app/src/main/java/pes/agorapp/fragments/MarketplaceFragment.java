@@ -84,7 +84,7 @@ public class MarketplaceFragment extends Fragment implements View.OnClickListene
         // Create the adapter to convert the array to views
         final CouponAdapter adapter = new CouponAdapter(getActivity(), announcements);
     // Attach the adapter to a ListView
-        final ListView listView = (ListView) view.findViewById(R.id.listViewAnnouncement);
+        final ListView listView = (ListView) view.findViewById(R.id.listCoupons);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

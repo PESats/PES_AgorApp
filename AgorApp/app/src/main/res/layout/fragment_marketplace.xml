@@ -4,22 +4,13 @@
     android:layout_height="match_parent"
     tools:context="pes.agorapp.fragments.MarketplaceFragment">
 
-    <Button
-        android:textColor="@color/tw__solid_white"
-        android:text="Nou val"
-        android:background="@color/com_facebook_blue"
-        android:id="@+id/newCoupon"
-        android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:layout_marginTop="10dp"/>
-
     <ListView
         android:id="@+id/listCoupons"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/newCoupon"
+        android:layout_below="@+id/btn_marketplace_publish"
         android:layout_marginTop="15dp"/>
-    
+
     <Button
         android:textStyle="bold"
         android:textAllCaps="false"

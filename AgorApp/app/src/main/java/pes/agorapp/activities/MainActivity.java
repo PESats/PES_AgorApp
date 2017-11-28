@@ -1,6 +1,7 @@
 package pes.agorapp.activities;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -236,6 +238,17 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onCouponSelected(Coupon coupon) {
-        //NIL DEL FUTUR: fes això!!
+        Dialog dialogCoupon = new Dialog(this);
+        dialogCoupon.setContentView(R.layout.show_coupon);
+        dialogCoupon.show();
+
+        Button deleteButton = (Button) dialogCoupon.findViewById(R.id.btn_coupon_delete);
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //
+            }
+        });
     }
 }
