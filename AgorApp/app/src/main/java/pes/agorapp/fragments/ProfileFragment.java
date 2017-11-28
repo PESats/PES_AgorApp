@@ -68,6 +68,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //wallet
+        String walletText = prefs.getCoins() + " AgoraCoins";
+        TextView wallet = (TextView) view.findViewById(R.id.profile_wallet_coins);
+        wallet.setText(walletText);
         //botons
         view.findViewById(R.id.profile_btn_logout).setOnClickListener(this);
         view.findViewById(R.id.profile_btn_marketplace).setOnClickListener(new View.OnClickListener() {
