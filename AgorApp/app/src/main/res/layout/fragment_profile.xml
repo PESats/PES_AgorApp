@@ -86,6 +86,49 @@
                         android:text="Marc"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
+                    <TextView
+                        android:textSize="16dp"
+                        android:id="@+id/profile_verified"
+                        fontPath="fonts/Lato-Regular.ttf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center_horizontal"
+                        android:paddingTop="10dp"
+                        android:text="Ciutadà"
+                        android:layout_marginBottom="10dp"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <Button
+                        android:textStyle="bold"
+                        android:textAllCaps="false"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="70dp"
+                        android:layout_marginRight="70dp"
+                        android:id="@+id/profile_btn_verify"
+                        android:text="Verificar-me com a botiguer"
+                        android:enabled="true"
+                        android:layout_weight="1.2"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@color/colorButtons"
+                        android:textColor="@color/tw__solid_white" />
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:textSize="17dp"
+                        android:background="@color/colorPrimary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Valoració dels altres veïns"
+                        android:id="@+id/profile_ratingBar_title"
+                        android:gravity="center_horizontal"
+                        android:paddingBottom="4dp"
+                        android:paddingTop="4dp"
+                        fontPath="fonts/Montserrat-Regular.ttf"/>
+
                     <RatingBar
                         android:scaleX=".8"
                         android:scaleY=".8"
@@ -94,6 +137,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"/>
+
+                    <TextView
+                        android:textSize="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="T'han valorat 15 usuaris"
+                        android:id="@+id/profile_ratingBar_subtitle"
+                        android:gravity="center_horizontal"
+                        fontPath="fonts/Montserrat-Regular.ttf"
+                        android:layout_marginBottom="10dp"/>
 
                     <TextView
                         android:textStyle="bold"

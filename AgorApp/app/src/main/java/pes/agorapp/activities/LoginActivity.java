@@ -370,6 +370,7 @@ public class LoginActivity extends AppCompatActivity
         prefs.setEmail(email);
         prefs.setImageUrl(url_image);
         prefs.setActiveToken(active_token);
+        prefs.setMerchant(false);
     }
 
     private void loginok() {

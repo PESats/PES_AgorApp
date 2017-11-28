@@ -21,3 +21,18 @@
         android:layout_marginTop="15dp"/>
 
 </RelativeLayout>
+
+    <Button
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        android:id="@+id/btn_marketplace_publish"
+        android:text="Publicar xec de descompte"
+        android:enabled="true"
+        android:layout_width="match_parent"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/colorButtons"
+        android:textColor="@color/tw__solid_white" />
