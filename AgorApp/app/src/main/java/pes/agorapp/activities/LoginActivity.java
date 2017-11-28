@@ -350,7 +350,8 @@ public class LoginActivity extends AppCompatActivity
 
                         String id = response.body().getId();
                         String token = response.body().getActiveToken();
-                        saveUserInPreferences(id, token);
+                        Integer coins = response.body().getCoins();
+                        saveUserInPreferences(id, token, coins);
 
                         loginok();
                     }
@@ -363,12 +364,13 @@ public class LoginActivity extends AppCompatActivity
                 });
     }
 
-    private void saveUserInPreferences(String id, String active_token) {
+    private void saveUserInPreferences(String id, String active_token, Integer coins) {
         prefs.setId(id);
         prefs.setPlatform(platform_name);
         prefs.setUsername(userName);
         prefs.setEmail(email);
         prefs.setImageUrl(url_image);
+        prefs.setCoins(coins);
         prefs.setActiveToken(active_token);
         prefs.setMerchant(false);
     }

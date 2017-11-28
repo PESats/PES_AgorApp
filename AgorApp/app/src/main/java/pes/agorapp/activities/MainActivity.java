@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import pes.agorapp.JSONObjects.Announcement;
 import pes.agorapp.JSONObjects.Comment;
+import pes.agorapp.JSONObjects.Coupon;
 import pes.agorapp.R;
 import pes.agorapp.fragments.AnnouncementFragment;
 import pes.agorapp.fragments.AnnouncementListFragment;
@@ -35,7 +36,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         AnnouncementFragment.OnFragmentInteractionListener,
         AnnouncementListFragment.OnFragmentInteractionListener,
-        MapFragment.OnFragmentInteractionListener{
+        MapFragment.OnFragmentInteractionListener,
+        MarketplaceFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -232,4 +234,8 @@ public class MainActivity extends AppCompatActivity
         transaction.commit();
     }
 
+    @Override
+    public void onCouponSelected(Coupon coupon) {
+        //NIL DEL FUTUR: fes això!!
+    }
 }
