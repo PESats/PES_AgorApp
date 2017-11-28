@@ -7,7 +7,7 @@ android:orientation="vertical"
 android:padding="5dp">
 
     <TextView
-        android:id="@+id/item_coupon_title"
+        android:id="@+id/item_coupon_establishment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="Nom de la botiga"
@@ -18,7 +18,7 @@ android:padding="5dp">
         android:id="@+id/item_coupon_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/item_coupon_title"
+        android:layout_below="@id/item_coupon_establishment"
         android:textSize="15sp"
         tools:text="Preu: "
         android:orientation="horizontal"/>
@@ -26,7 +26,7 @@ android:padding="5dp">
     <TextView
         android:textColor="@color/tw__blue_default"
         android:textStyle="bold"
-        android:id="@+id/item_coupon_prize"
+        android:id="@+id/item_coupon_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/item_coupon_text"
@@ -41,7 +41,7 @@ android:padding="5dp">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/item_coupon_title"
+        android:layout_alignTop="@+id/item_coupon_establishment"
         android:textSize="22sp"
         android:text="75%"
         android:orientation="vertical"

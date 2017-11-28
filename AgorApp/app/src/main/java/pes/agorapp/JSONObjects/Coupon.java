@@ -7,17 +7,15 @@ package pes.agorapp.JSONObjects;
 public class Coupon {
     private int id;
     private String user_id;
-    private String title;
     private String establishment;
-    private int pricePoints;
+    private int price;
     private int discount;
 
-    public Coupon(int id, String user_id, String title, String establishment, int pricePoints, int discount) {
+    public Coupon(int id, String user_id, String establishment, int price, int discount) {
         this.id = id;
-        this.title = title;
         this.user_id = user_id;
         this.establishment = establishment;
-        this.pricePoints = pricePoints;
+        this.price = price;
         this.discount = discount;
     }
 
@@ -33,21 +31,13 @@ public class Coupon {
         this.user_id = user_id;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String user_id) {
-        this.title = title;
-    }
-
     public String getEstablishment() { return establishment; }
 
     public void setEstablishment(String establishment) { this.establishment = establishment; }
 
-    public int getPricePoints() { return pricePoints; }
+    public int getPrice() { return price; }
 
-    public void setPricePoints(int pricePoints) { this.pricePoints = pricePoints; }
+    public void setPrice(int price) { this.price = price; }
 
     public int getDiscount() { return discount; }
 

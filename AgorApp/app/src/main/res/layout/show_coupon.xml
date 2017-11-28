@@ -21,22 +21,58 @@
         android:textAlignment="center" />
 
     <TextView
-        android:id="@+id/coupon_text"
+        android:id="@+id/coupon_text_establishment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/com_facebook_blue"
-        android:text="Get out"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Botiga piticlin"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/coupon_text_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Descompte 15%"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/coupon_text_discount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Preu: 50 AgoraCoins"
+        android:textAlignment="center" />
 
     <Button
+        android:textStyle="bold"
+        android:textColor="@color/tw__solid_white"
+        android:backgroundTint="@color/colorButtons"
         android:layout_marginTop="10dp"
-        android:id="@+id/btn_coupon_delete"
+        android:id="@+id/btn_coupon_buy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Esborrar" />
+        android:text="COMPRAR" />
+
+    <LinearLayout
+        android:id="@+id/item_coupon_creator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1">
+
+        <Button
+            android:layout_weight=".5"
+            android:layout_marginTop="10dp"
+            android:id="@+id/btn_coupon_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Editar" />
+
+        <Button
+            android:layout_weight=".5"
+            android:layout_marginTop="10dp"
+            android:id="@+id/btn_coupon_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Esborrar" />
+
+    </LinearLayout>
 
 </LinearLayout>
