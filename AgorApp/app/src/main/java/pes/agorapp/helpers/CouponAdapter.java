@@ -24,22 +24,27 @@ public class CouponAdapter extends ArrayAdapter<Coupon> {
         super(context, 0, coupons);
     }
 
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // Get the data item for this position
         final Coupon coupon = getItem(position);
-        // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_coupon, parent, false);
         }
 
-        // Lookup view for data population
-        TextView title = (TextView) convertView.findViewById(R.id.item_title);
-        // Populate the data into the template view using the data object
-        title.setText(coupon.getTitle());
+        TextView establishment = (TextView) convertView.findViewById(R.id.item_coupon_establishment);
+        establishment.setText(coupon.getEstablishment());
 
-        // Return the completed view to render on screen
+        TextView textPrice = (TextView) convertView.findViewById(R.id.item_coupon_text);
+        textPrice.setText("Preu: ");
+
+        TextView price = (TextView) convertView.findViewById(R.id.item_coupon_price);
+        String priceValue = String.valueOf(coupon.getPrice())+" AgoraCoins";
+        price.setText(priceValue);
+
+        TextView discount = (TextView) convertView.findViewById(R.id.item_coupon_discount);
+        String discountValue = String.valueOf(coupon.getDiscount())+"%";
+        discount.setText(discountValue);
+
         return convertView;
     }
 

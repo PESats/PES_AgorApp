@@ -73,10 +73,10 @@ public class ObjectsHelper {
 
     public static List<Coupon> getFakeCoupons() {
         List<Coupon> coupons = new ArrayList<>();
-        coupons.add(new Coupon(1, "1", "cupó fake 1", "Pepito e hijos", 300, 15));
-        coupons.add(new Coupon(2, "12", "cupó fake 2", "Bar mec mec", 150, 15));
-        coupons.add(new Coupon(3, "6", "cupó fake 3", "Bar piticlin", 400, 15));
-        coupons.add(new Coupon(4, "5", "cupó fake 4", "Llibreria bup bup", 700, 15));
+        coupons.add(new Coupon(1, "1", "Pepito e hijos", 300, 75));
+        coupons.add(new Coupon(2, "12", "Bar mec mec", 150, 10));
+        coupons.add(new Coupon(3, "6", "Bar piticlin", 400, 25));
+        coupons.add(new Coupon(4, "5", "Llibreria bup bup", 700, 45));
         return coupons;
     }
 }
