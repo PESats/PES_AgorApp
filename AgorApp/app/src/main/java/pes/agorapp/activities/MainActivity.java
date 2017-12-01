@@ -32,6 +32,7 @@ import pes.agorapp.fragments.FormAnnouncementFragment;
 import pes.agorapp.fragments.MapFragment;
 import pes.agorapp.fragments.MarketplaceFragment;
 import pes.agorapp.fragments.ProfileFragment;
+import pes.agorapp.globals.PreferencesAgorApp;
 
 
 public class MainActivity extends AppCompatActivity
@@ -241,14 +242,48 @@ public class MainActivity extends AppCompatActivity
         Dialog dialogCoupon = new Dialog(this);
         dialogCoupon.setContentView(R.layout.show_coupon);
         dialogCoupon.show();
-
+        PreferencesAgorApp prefs = new PreferencesAgorApp(this);;
+        //Delete
         Button deleteButton = (Button) dialogCoupon.findViewById(R.id.btn_coupon_delete);
-
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //
+                //Crida API delete coupon
             }
         });
+
+        //Edit
+        Button editButton = (Button) dialogCoupon.findViewById(R.id.btn_coupon_edit);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog dialogFormEdit = new Dialog(MainActivity.this);
+                dialogFormEdit.setContentView(R.layout.form_publish_marketplace);
+                dialogFormEdit.show();
+                //Podem utilitzar el mateix formulari per crear que per editar el val
+                Button confirmEditButton = (Button) dialogFormEdit.findViewById(R.id.btn_marketplace_publish);
+
+                confirmEditButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //crida API edit coupon
+                    }
+                });
+            }
+        });
+
+        //Buy
+        Button buyButton = (Button) dialogCoupon.findViewById(R.id.btn_coupon_buy);
+        buyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //crida API buy coupon
+            }
+        });
+
+        if (!String.valueOf(coupon.getUser_id()).equals(prefs.getId())) {
+            deleteButton.setVisibility(View.INVISIBLE);
+            editButton.setVisibility(View.INVISIBLE);
+        }
     }
 }
