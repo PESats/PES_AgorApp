@@ -47,6 +47,7 @@ public class ChatListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         prefs = new PreferencesAgorApp(getActivity());
+        chats = requestChats();
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_chat_list, container, false);
     }
@@ -90,7 +91,7 @@ public class ChatListFragment extends Fragment {
         });
         listView.setAdapter(adapter);
 
-        adapter.addAll(requestChats());
+        adapter.addAll(chats);
     }
 
     private List<Chat> requestChats() {

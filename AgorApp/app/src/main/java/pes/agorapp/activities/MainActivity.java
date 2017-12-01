@@ -59,22 +59,6 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                findViewById(R.id.fab).setVisibility(View.INVISIBLE);
-                FormAnnouncementFragment formAnnouncementFragment = new FormAnnouncementFragment();
-                //CAL REFACTORING!!!
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, formAnnouncementFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
-            }
-        });
-
         ImageView logo = (ImageView) findViewById(R.id.logo_agorapp);
         logo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -206,6 +190,15 @@ public class MainActivity extends AppCompatActivity
         transaction.commit();
 
         newFragment.setAnnouncement(announcement);
+    }
+
+    @Override
+    public void createNewAnnouncement() {
+        FormAnnouncementFragment formAnnouncementFragment = new FormAnnouncementFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, formAnnouncementFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     @Override

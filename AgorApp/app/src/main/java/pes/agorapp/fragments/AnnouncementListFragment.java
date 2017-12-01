@@ -3,6 +3,8 @@ package pes.agorapp.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,13 +88,20 @@ public class AnnouncementListFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         void onAnnouncementSelected(Announcement announcement);
-
+        void createNewAnnouncement();
         void onMarketplaceOpen();
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab_list);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.createNewAnnouncement();
+            }
+        });
 
         // Construct the data source
         // Create the adapter to convert the array to views
