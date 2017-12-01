@@ -197,10 +197,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         /*amaguem el botó si ja està verificat*/
         if (prefs.isMerchant()) {
             Button verifyButton = (Button) view.findViewById(R.id.profile_btn_verify);
-            verifyButton.setVisibility(View.INVISIBLE);
+            verifyButton.setVisibility(View.GONE);
         } else {
             TextView userType = (TextView) view.findViewById(R.id.profile_verified);
-            userType.setVisibility(View.INVISIBLE);
+            userType.setVisibility(View.GONE);
         }
     }
 

@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import pes.agorapp.JSONObjects.Announcement;
@@ -249,6 +250,15 @@ public class MainActivity
         Dialog dialogCoupon = new Dialog(this);
         dialogCoupon.setContentView(R.layout.show_coupon);
         dialogCoupon.show();
+
+        TextView tvBotiga = (TextView) dialogCoupon.findViewById(R.id.coupon_text_establishment);
+        TextView tvDiscount = (TextView) dialogCoupon.findViewById(R.id.coupon_text_discount);
+        TextView tvPrice = (TextView) dialogCoupon.findViewById(R.id.coupon_text_price);
+
+        tvBotiga.setText(coupon.getEstablishment());
+        tvDiscount.setText(String.valueOf(coupon.getDiscount()) + "%");
+        tvPrice.setText(String.valueOf(coupon.getPrice()) + " AgoraCoins");
+
         PreferencesAgorApp prefs = new PreferencesAgorApp(this);
         //Delete
         Button deleteButton = (Button) dialogCoupon.findViewById(R.id.btn_coupon_delete);
@@ -289,8 +299,8 @@ public class MainActivity
         });
 
         if (!String.valueOf(coupon.getUser_id()).equals(prefs.getId())) {
-            deleteButton.setVisibility(View.INVISIBLE);
-            editButton.setVisibility(View.INVISIBLE);
+            deleteButton.setVisibility(View.GONE);
+            editButton.setVisibility(View.GONE);
         }
     }
 
