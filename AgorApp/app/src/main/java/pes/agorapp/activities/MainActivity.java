@@ -2,7 +2,9 @@ package pes.agorapp.activities;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -13,8 +15,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,7 +42,8 @@ import pes.agorapp.fragments.ProfileFragment;
 import pes.agorapp.globals.PreferencesAgorApp;
 
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity
+        extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         AnnouncementFragment.OnFragmentInteractionListener,
         AnnouncementListFragment.OnFragmentInteractionListener,
@@ -244,13 +249,13 @@ public class MainActivity extends AppCompatActivity
         Dialog dialogCoupon = new Dialog(this);
         dialogCoupon.setContentView(R.layout.show_coupon);
         dialogCoupon.show();
-        PreferencesAgorApp prefs = new PreferencesAgorApp(this);;
+        PreferencesAgorApp prefs = new PreferencesAgorApp(this);
         //Delete
         Button deleteButton = (Button) dialogCoupon.findViewById(R.id.btn_coupon_delete);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Crida API delete coupon
+                popUpDeleteCoupon();
             }
         });
 
@@ -287,6 +292,29 @@ public class MainActivity extends AppCompatActivity
             deleteButton.setVisibility(View.INVISIBLE);
             editButton.setVisibility(View.INVISIBLE);
         }
+    }
+
+    private void popUpDeleteCoupon() {
+        AlertDialog.Builder adb = new AlertDialog.Builder(this);
+
+        adb.setTitle("Segur que vols esborrar aquest xec?");
+
+        Drawable icon = getResources().getDrawable(android.R.drawable.ic_dialog_alert);
+        icon.setTint(getColor(R.color.colorButtons));
+        adb.setIcon(icon);
+
+        adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(), "Oferta esborrada (manca crida API)", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        adb.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        adb.show();
     }
 
     @Override
