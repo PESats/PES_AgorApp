@@ -1,13 +1,18 @@
 package pes.agorapp.helpers;
 
+import com.github.javafaker.Faker;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import pes.agorapp.JSONObjects.Announcement;
+import pes.agorapp.JSONObjects.BuyTransaction;
 import pes.agorapp.JSONObjects.Comment;
 import pes.agorapp.JSONObjects.Coupon;
 import pes.agorapp.JSONObjects.Trophy;
+import pes.agorapp.JSONObjects.UserAgorApp;
 
 /**
  * Created by Alex on 01-Nov-17.
@@ -15,11 +20,14 @@ import pes.agorapp.JSONObjects.Trophy;
 
 public class ObjectsHelper {
 
+    private static Faker faker = new Faker();
+    private static Random random = new Random();
+
     public static Announcement getFakeAnnouncement() {
         //(String title, String text, float latitude, float longitude, int reward, int user_id, Date created_at)
         Announcement anAnnouncement = new Announcement("Pintar habitacio",
                 "Necessito ajuda per pintar la meva habitacio, es la meva primera vegada!!!",
-                (float) 41.190368, (float) 2.814508, 50, 1, new Date(),null);
+                (float) 41.190368, (float) 2.814508, 50, 1, new Date(), null);
         return anAnnouncement;
     }
 
@@ -78,5 +86,32 @@ public class ObjectsHelper {
         coupons.add(new Coupon(3, "6", "Bar piticlin", 400, 25));
         coupons.add(new Coupon(4, "5", "Llibreria bup bup", 700, 45));
         return coupons;
+    }
+
+    public static UserAgorApp getFakeUser() {
+        UserAgorApp user = new UserAgorApp();
+        user.setName(faker.superhero().name());
+        user.setEmail(faker.internet().emailAddress());
+        user.setCoins(random.nextInt(1000));
+        user.setId(String.valueOf(random.nextInt(10)));
+
+        return user;
+    }
+
+    public static List<BuyTransaction> getFakeTransactions() {
+        List<BuyTransaction> list = new ArrayList<>();
+        for (int i=0; i < 5; ++i) {
+            list.add(new BuyTransaction(getFakeUser(), getFakeUser(), random.nextInt(1000)));
+        }
+        return list;
+    }
+
+    public static String getFakeMessage() {
+        return faker.chuckNorris().fact();
+    }
+
+    public static Date getFakeDate() {
+        return faker.date().between(new Date(2017,3,1,0,0),
+                new Date(2017,12,1,0,0));
     }
 }

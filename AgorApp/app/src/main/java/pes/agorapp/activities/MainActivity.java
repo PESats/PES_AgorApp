@@ -23,11 +23,14 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import pes.agorapp.JSONObjects.Announcement;
+import pes.agorapp.JSONObjects.Chat;
 import pes.agorapp.JSONObjects.Comment;
 import pes.agorapp.JSONObjects.Coupon;
 import pes.agorapp.R;
 import pes.agorapp.fragments.AnnouncementFragment;
 import pes.agorapp.fragments.AnnouncementListFragment;
+import pes.agorapp.fragments.ChatFragment;
+import pes.agorapp.fragments.ChatListFragment;
 import pes.agorapp.fragments.FormAnnouncementFragment;
 import pes.agorapp.fragments.MapFragment;
 import pes.agorapp.fragments.MarketplaceFragment;
@@ -40,6 +43,7 @@ public class MainActivity extends AppCompatActivity
         AnnouncementFragment.OnFragmentInteractionListener,
         AnnouncementListFragment.OnFragmentInteractionListener,
         MapFragment.OnFragmentInteractionListener,
+        ChatListFragment.OnFragmentInteractionListener,
         MarketplaceFragment.OnFragmentInteractionListener {
 
     @Override
@@ -59,22 +63,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                findViewById(R.id.fab).setVisibility(View.INVISIBLE);
-                FormAnnouncementFragment formAnnouncementFragment = new FormAnnouncementFragment();
-                //CAL REFACTORING!!!
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, formAnnouncementFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
-            }
-        });
 
         ImageView logo = (ImageView) findViewById(R.id.logo_agorapp);
         logo.setOnClickListener(new View.OnClickListener() {
@@ -163,7 +151,12 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         } else if (id == R.id.nav_slideshow) {
-            //printProfile();
+            ChatListFragment chatListFragment = new ChatListFragment();
+
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, chatListFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
         } else if (id == R.id.nav_manage) {
             //printProfile();
         } else if (id == R.id.nav_share) {
@@ -202,6 +195,15 @@ public class MainActivity extends AppCompatActivity
         transaction.commit();
 
         newFragment.setAnnouncement(announcement);
+    }
+
+    @Override
+    public void createNewAnnouncement() {
+        FormAnnouncementFragment formAnnouncementFragment = new FormAnnouncementFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, formAnnouncementFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     @Override
@@ -285,5 +287,22 @@ public class MainActivity extends AppCompatActivity
             deleteButton.setVisibility(View.INVISIBLE);
             editButton.setVisibility(View.INVISIBLE);
         }
+    }
+
+    @Override
+    public void onChatSelected(Chat chat) {
+        // Call the other fragment
+        // Create fragment and give it an argument specifying the article it should show
+        ChatFragment newFragment = new ChatFragment();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment_container, newFragment, "chat");
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
     }
 }
