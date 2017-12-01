@@ -103,12 +103,12 @@ public class FormAnnouncementFragment extends Fragment implements View.OnClickLi
     public void onClick (View v){
         switch (v.getId()) {
             case R.id.btn_form_announcement_publish:
-                create_announcement(v);
+                create_announcement();
                 break;
         }
     }
 
-    private void create_announcement(View view) {
+    private void create_announcement() {
 
         String title = etTitle.getText().toString();
         String desc = etDesc.getText().toString();
@@ -133,7 +133,7 @@ public class FormAnnouncementFragment extends Fragment implements View.OnClickLi
             @Override
             public void onResponse(Call<Announcement> call, Response<Announcement> response) {
                 Announcement announcement = response.body();
-                Toast.makeText(getActivity(), String.valueOf(locAnn.getLatitude()), Toast.LENGTH_LONG).show();
+                //Toast.makeText(getActivity(), String.valueOf(locAnn.getLatitude()), Toast.LENGTH_LONG).show();
                 //Toast.makeText(getActivity(), announcement.getDescription(), Toast.LENGTH_LONG).show();
                 //Falta implementar el que ve a continuacio
             }

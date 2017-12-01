@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:minWidth="260dp">>
+
+    <TextView
+        android:layout_marginBottom="15dp"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp"
+        android:textStyle="bold"
+        android:textSize="17dp"
+        android:textColor="@color/tw__solid_white"
+        android:id="@+id/form_verify"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Xec de descompte"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/coupon_text_establishment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Botiga piticlin"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/coupon_text_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Descompte 15%"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/coupon_text_discount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Preu: 50 AgoraCoins"
+        android:textAlignment="center" />
+
+    <Button
+        android:textStyle="bold"
+        android:textColor="@color/tw__solid_white"
+        android:backgroundTint="@color/colorButtons"
+        android:layout_marginTop="10dp"
+        android:id="@+id/btn_coupon_buy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="COMPRAR" />
+
+    <LinearLayout
+        android:id="@+id/item_coupon_creator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1">
+
+        <Button
+            android:layout_weight=".5"
+            android:layout_marginTop="10dp"
+            android:id="@+id/btn_coupon_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Editar" />
+
+        <Button
+            android:layout_weight=".5"
+            android:layout_marginTop="10dp"
+            android:id="@+id/btn_coupon_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Esborrar" />
+
+    </LinearLayout>
+
+</LinearLayout>

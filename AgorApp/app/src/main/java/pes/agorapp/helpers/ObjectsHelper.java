@@ -10,6 +10,7 @@ import java.util.Random;
 import pes.agorapp.JSONObjects.Announcement;
 import pes.agorapp.JSONObjects.BuyTransaction;
 import pes.agorapp.JSONObjects.Comment;
+import pes.agorapp.JSONObjects.Coupon;
 import pes.agorapp.JSONObjects.Trophy;
 import pes.agorapp.JSONObjects.UserAgorApp;
 
@@ -76,6 +77,15 @@ public class ObjectsHelper {
         trophies.add(new Trophy(6, "AgoraExpert", "Bescanvia AgoraCoins per algun val de descompte"));
         trophies.add(new Trophy(7, "Modernet de merda", "Comparteix un anunci a alguna xarxa social"));
         return trophies;
+    }
+
+    public static List<Coupon> getFakeCoupons() {
+        List<Coupon> coupons = new ArrayList<>();
+        coupons.add(new Coupon(1, "1", "Pepito e hijos", 300, 75));
+        coupons.add(new Coupon(2, "12", "Bar mec mec", 150, 10));
+        coupons.add(new Coupon(3, "6", "Bar piticlin", 400, 25));
+        coupons.add(new Coupon(4, "5", "Llibreria bup bup", 700, 45));
+        return coupons;
     }
 
     public static UserAgorApp getFakeUser() {

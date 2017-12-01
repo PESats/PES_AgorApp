@@ -1,10 +1,12 @@
 package pes.agorapp.network;
 
 import com.google.gson.JsonObject;
+import com.twitter.sdk.android.core.models.User;
 
 import java.util.ArrayList;
 
 import pes.agorapp.JSONObjects.Announcement;
+import pes.agorapp.JSONObjects.Botiga;
 import pes.agorapp.JSONObjects.Comment;
 import pes.agorapp.JSONObjects.UserAgorApp;
 
@@ -27,11 +29,19 @@ public interface AgorAppApiService {
 
     @POST("users/login")
     Call<UserAgorApp> createUser(
-            @Body JsonObject user);
+            @Body JsonObject user
+    );
 
     @POST("users/logout")
     Call<UserAgorApp> logoutUser(
-            @Body JsonObject user);
+            @Body JsonObject user
+    );
+
+    @PUT("users")
+    Call<UserAgorApp> upgradeBotiguer(
+            @Query("user_id") int user_id,
+            @Query("active_token") String active_token
+    );
 
     /* ANUNCIS */
 
@@ -82,7 +92,7 @@ public interface AgorAppApiService {
             @Path("announcementId") int id,
             @Query("user_id") int user_id,
             @Query("active_token") String active_token
-            );
+    );
 
     @PUT("comments/{id}")
     Call<Comment> editComment(
@@ -96,6 +106,24 @@ public interface AgorAppApiService {
             @Body JsonObject user
     );
 
+    /* BOTIGUES */
 
+    @POST("botigues")
+    Call<Botiga> createBotiga(
+            @Query("user_id") int user_id,
+            @Query("active_token") String active_token,
+            @Body JsonObject botiga
+    );
+
+    /* XECS DESCOMPTE */
+
+    /*
+    @POST("descomptes")
+    Call<ValDescompte> createValDescompte(
+            @Query("user_id") int user_id,
+            @Query("active_token") String active_token,
+            @Body JsonObject valDescompte
+    );
+    */
 
 }

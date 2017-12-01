@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:minWidth="260dp">>
+
+    <TextView
+        android:layout_marginBottom="15dp"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp"
+        android:textStyle="bold"
+        android:textSize="17dp"
+        android:textColor="@color/tw__solid_white"
+        android:id="@+id/form_verify"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Xec de descompte"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/form_marketplace_publish_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/com_facebook_blue"
+        android:text="Nom de la botiga"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/form_verify_titleEdit"
+        android:text="Pepito e hijos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/form_verify_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Descompte"
+        android:textAlignment="center" />
+
+    <SeekBar
+        android:id="@+id/seekBar_discount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/discount_percentage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="0%"
+        android:max="100"
+        android:textAlignment="center" />
+
+    <Button
+        android:layout_marginTop="10dp"
+        android:id="@+id/btn_marketplace_publish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Publicar" />
+
+</LinearLayout>

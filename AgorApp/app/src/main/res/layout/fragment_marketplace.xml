@@ -1,21 +1,28 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1">
+    tools:context="pes.agorapp.fragments.MarketplaceFragment">
 
-    <TextView
-        android:id="@+id/form_announcement_title"
+    <ListView
+        android:id="@+id/listCoupons"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/com_facebook_blue"
-        android:text="marketplace"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.17000002" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/btn_marketplace_publish"
+        android:layout_marginTop="15dp"/>
 
-</LinearLayout>
+    <Button
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        android:id="@+id/btn_marketplace_publish"
+        android:text="Publicar xec de descompte"
+        android:enabled="true"
+        android:layout_width="match_parent"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/colorButtons"
+        android:textColor="@color/tw__solid_white" />
+</RelativeLayout>
