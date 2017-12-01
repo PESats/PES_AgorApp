@@ -1,9 +1,10 @@
 package pes.agorapp.fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +12,6 @@ import android.view.ViewGroup;
 import android.support.v4.app.Fragment;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,19 +21,11 @@ import pes.agorapp.R;
 import pes.agorapp.customComponents.DialogServerKO;
 import pes.agorapp.globals.PreferencesAgorApp;
 import pes.agorapp.helpers.AnnouncementsAdapter;
-import pes.agorapp.helpers.ObjectsHelper;
 import pes.agorapp.network.AgorAppApiManager;
 import retrofit2.Call;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link AnnouncementListFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link AnnouncementListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class AnnouncementListFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
@@ -49,14 +37,6 @@ public class AnnouncementListFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AnnouncementListFragment.
-     */
     public static AnnouncementListFragment newInstance(String param1, String param2) {
         AnnouncementListFragment fragment = new AnnouncementListFragment();
         Bundle args = new Bundle();
@@ -108,13 +88,20 @@ public class AnnouncementListFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         void onAnnouncementSelected(Announcement announcement);
-
+        void createNewAnnouncement();
         void onMarketplaceOpen();
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab_list);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.createNewAnnouncement();
+            }
+        });
 
         // Construct the data source
         // Create the adapter to convert the array to views

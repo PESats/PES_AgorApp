@@ -30,6 +30,8 @@ public class UserAgorApp {
         this.coins = coins;
     }
 
+    public UserAgorApp() { }
+
     public String getName() {
         return name;
     }
@@ -62,4 +64,19 @@ public class UserAgorApp {
 
     public Integer getCoins() { return coins; }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setCoins(Integer coins) {
+        this.coins = coins;
+    }
 }

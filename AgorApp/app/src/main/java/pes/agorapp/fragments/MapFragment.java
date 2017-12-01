@@ -7,6 +7,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -57,6 +58,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
 
     public interface OnFragmentInteractionListener {
         void onAnnouncementSelected(Announcement announcement);
+        void createNewAnnouncement();
     }
 
     @Override
@@ -139,7 +141,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
 
     private void setMarkers() {
         //TODO: Fer cirda api i pintar marker per cada un
-        Log.d("AQUI:", prefs.getId() + " " +prefs.getActiveToken());
+        Log.d("AQUI:", prefs.getId() + " " + prefs.getActiveToken());
         //Integer.valueOf(prefs.getId())
 
         AgorAppApiManager
@@ -150,9 +152,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
                     public void onResponse(Call<ArrayList<Announcement>> call, Response<ArrayList<Announcement>> response) {
 
                         //Log.i("response code", String.valueOf(response.code()));
-                        Log.d("this is my arra3y", "arr: " + response.body().toString());
+                        //Log.d("this is my arra3y", "arr: " + response.body().toString());
                         anuncis = response.body();
-                        for(Announcement anunci: anuncis) {
+                        for (Announcement anunci : anuncis) {
                             //Log.d("anunci " + anunci.getId(), "Latitude: " + anunci.getLatitude() + " Longitude " + anunci.getLongitude());
                             LatLng coords = new LatLng(anunci.getLatitude(), anunci.getLongitude());
                             mMap.addMarker(new MarkerOptions()
@@ -160,15 +162,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
                                     .title(Integer.toString(anuncis.indexOf(anunci)))
                             );
 
-                            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener()
-                            {
+                            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
 
                                 @Override
                                 public boolean onMarkerClick(Marker marker) {
                                     //if(marker.getTitle().equals("BARNA")) // if marker source is clicked
                                     //Toast.makeText(getActivity(), marker.getTitle(), Toast.LENGTH_SHORT).show();// display toast
                                     Announcement announcement = anuncis.get(Integer.valueOf(marker.getTitle()));
-                                    Log.d("",announcement.toString());
+                                    //Log.d("",announcement.toString());
                                     mListener.onAnnouncementSelected(announcement);
                                     return true;
                                 }
@@ -184,10 +185,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
                 });
 
 
-
-
     }
-
 
 
     @Override
@@ -203,5 +201,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
     @Override
     public void onMapReady(GoogleMap gMap) {
         mMap = gMap;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab_map);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.createNewAnnouncement();
+            }
+        });
     }
 }
