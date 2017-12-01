@@ -27,15 +27,19 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import pes.agorapp.JSONObjects.Announcement;
+import pes.agorapp.JSONObjects.Chat;
 import pes.agorapp.JSONObjects.Comment;
 import pes.agorapp.JSONObjects.Coupon;
 import pes.agorapp.R;
 import pes.agorapp.fragments.AnnouncementFragment;
 import pes.agorapp.fragments.AnnouncementListFragment;
+import pes.agorapp.fragments.ChatFragment;
+import pes.agorapp.fragments.ChatListFragment;
 import pes.agorapp.fragments.FormAnnouncementFragment;
 import pes.agorapp.fragments.MapFragment;
 import pes.agorapp.fragments.MarketplaceFragment;
 import pes.agorapp.fragments.ProfileFragment;
+import pes.agorapp.globals.PreferencesAgorApp;
 
 
 public class MainActivity
@@ -44,6 +48,7 @@ public class MainActivity
         AnnouncementFragment.OnFragmentInteractionListener,
         AnnouncementListFragment.OnFragmentInteractionListener,
         MapFragment.OnFragmentInteractionListener,
+        ChatListFragment.OnFragmentInteractionListener,
         MarketplaceFragment.OnFragmentInteractionListener {
 
     @Override
@@ -63,22 +68,6 @@ public class MainActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                findViewById(R.id.fab).setVisibility(View.INVISIBLE);
-                FormAnnouncementFragment formAnnouncementFragment = new FormAnnouncementFragment();
-                //CAL REFACTORING!!!
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, formAnnouncementFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
-            }
-        });
 
         ImageView logo = (ImageView) findViewById(R.id.logo_agorapp);
         logo.setOnClickListener(new View.OnClickListener() {
@@ -167,7 +156,12 @@ public class MainActivity
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         } else if (id == R.id.nav_slideshow) {
-            //printProfile();
+            ChatListFragment chatListFragment = new ChatListFragment();
+
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, chatListFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
         } else if (id == R.id.nav_manage) {
             //printProfile();
         } else if (id == R.id.nav_share) {
@@ -209,6 +203,15 @@ public class MainActivity
     }
 
     @Override
+    public void createNewAnnouncement() {
+        FormAnnouncementFragment formAnnouncementFragment = new FormAnnouncementFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, formAnnouncementFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    @Override
     public void onCommentSelected(Comment comment) {
         Toast.makeText(getApplicationContext(), "comment", Toast.LENGTH_LONG).show();
     }
@@ -246,23 +249,49 @@ public class MainActivity
         Dialog dialogCoupon = new Dialog(this);
         dialogCoupon.setContentView(R.layout.show_coupon);
         dialogCoupon.show();
-
-        Button editButton = (Button) dialogCoupon.findViewById(R.id.btn_coupon_edit);
+        PreferencesAgorApp prefs = new PreferencesAgorApp(this);
+        //Delete
         Button deleteButton = (Button) dialogCoupon.findViewById(R.id.btn_coupon_delete);
-
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //
-            }
-        });
-
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 popUpDeleteCoupon();
             }
         });
+
+        //Edit
+        Button editButton = (Button) dialogCoupon.findViewById(R.id.btn_coupon_edit);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog dialogFormEdit = new Dialog(MainActivity.this);
+                dialogFormEdit.setContentView(R.layout.form_publish_marketplace);
+                dialogFormEdit.show();
+                //Podem utilitzar el mateix formulari per crear que per editar el val
+                Button confirmEditButton = (Button) dialogFormEdit.findViewById(R.id.btn_marketplace_publish);
+
+                confirmEditButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //crida API edit coupon
+                    }
+                });
+            }
+        });
+
+        //Buy
+        Button buyButton = (Button) dialogCoupon.findViewById(R.id.btn_coupon_buy);
+        buyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //crida API buy coupon
+            }
+        });
+
+        if (!String.valueOf(coupon.getUser_id()).equals(prefs.getId())) {
+            deleteButton.setVisibility(View.INVISIBLE);
+            editButton.setVisibility(View.INVISIBLE);
+        }
     }
 
     private void popUpDeleteCoupon() {
@@ -286,5 +315,22 @@ public class MainActivity
             }
         });
         adb.show();
+    }
+
+    @Override
+    public void onChatSelected(Chat chat) {
+        // Call the other fragment
+        // Create fragment and give it an argument specifying the article it should show
+        ChatFragment newFragment = new ChatFragment();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment_container, newFragment, "chat");
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
     }
 }

@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,8 @@ public class MarketplaceFragment extends Fragment implements View.OnClickListene
     private PreferencesAgorApp prefs;
     private Dialog dialogForm;
     private Button marketplace_publish;
+    private SeekBar sbDiscount;
+    private TextView disc;
 
     public MarketplaceFragment() {
         // Required empty public constructor
@@ -116,6 +120,25 @@ public class MarketplaceFragment extends Fragment implements View.OnClickListene
         dialogForm = new Dialog(getActivity());
         dialogForm.setContentView(R.layout.form_publish_marketplace);
         dialogForm.show();
+
+        sbDiscount = (SeekBar) dialogForm.findViewById(R.id.seekBar_discount);
+        disc = (TextView) dialogForm.findViewById(R.id.discount_percentage);
+
+        sbDiscount.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
+                disc.setText(String.valueOf(progress) + "%");
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
 
         Button publishButton = (Button) dialogForm.findViewById(R.id.btn_marketplace_publish);
 
