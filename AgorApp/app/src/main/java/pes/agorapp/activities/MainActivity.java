@@ -157,11 +157,11 @@ public class MainActivity
             fragmentTransaction.commit();
         } else if (id == R.id.nav_slideshow) {
             ChatListFragment chatListFragment = new ChatListFragment();
-
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, chatListFragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
+//            chatListFragment.setSettings();
         } else if (id == R.id.nav_manage) {
             //printProfile();
         } else if (id == R.id.nav_share) {
@@ -332,5 +332,6 @@ public class MainActivity
 
         // Commit the transaction
         transaction.commit();
+        newFragment.setChat(chat);
     }
 }

@@ -11,6 +11,7 @@ public class Chat {
     private UserAgorApp user;
     private String lastMessage;
     private Date lastMessageDate;
+    private Bid bid;
 
     public Chat() { }
 
@@ -18,6 +19,14 @@ public class Chat {
         this.user = user;
         this.lastMessage = lastMessage;
         this.lastMessageDate = lastMessageDate;
+    }
+
+    public Bid getBid() {
+        return bid;
+    }
+
+    public void setBid(Bid bid) {
+        this.bid = bid;
     }
 
     public UserAgorApp getUser() {

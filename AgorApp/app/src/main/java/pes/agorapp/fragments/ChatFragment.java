@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.FirebaseDatabase;
 
+import pes.agorapp.JSONObjects.Chat;
 import pes.agorapp.JSONObjects.ChatMessage;
 import pes.agorapp.R;
 import pes.agorapp.globals.PreferencesAgorApp;
@@ -30,7 +31,8 @@ public class ChatFragment extends Fragment {
 
     private PreferencesAgorApp prefs;
     private FirebaseListAdapter<ChatMessage> adapter;
-    EditText input;
+    private EditText input;
+    private Chat chat;
 
     public ChatFragment() {
         // Required empty public constructor
@@ -91,7 +93,7 @@ public class ChatFragment extends Fragment {
                         .getReference()
                         .push()
                         .setValue(new ChatMessage(input.getText().toString(),
-                                prefs.getUserName())
+                                prefs.getUserName(), chat.getBid().getId())
                         );
 
                 // Clear the input
@@ -121,5 +123,9 @@ public class ChatFragment extends Fragment {
         };
 
         listOfMessages.setAdapter(adapter);
+    }
+
+    public void setChat(Chat chat) {
+        this.chat = chat;
     }
 }
