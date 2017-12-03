@@ -53,4 +53,7 @@ public class Chat {
         this.lastMessageDate = lastMessageDate;
     }
 
+    public String customHashCode() {
+        return String.valueOf(user.getId().hashCode()) + String.valueOf(bid.getId());
+    }
 }

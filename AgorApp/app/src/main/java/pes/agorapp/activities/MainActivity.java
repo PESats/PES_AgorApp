@@ -155,7 +155,7 @@ public class MainActivity
             fragmentTransaction.replace(R.id.fragment_container, listFragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_chat) {
             ChatListFragment chatListFragment = new ChatListFragment();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, chatListFragment);
