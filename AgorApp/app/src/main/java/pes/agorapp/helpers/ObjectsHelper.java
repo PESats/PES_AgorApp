@@ -135,6 +135,12 @@ public class ObjectsHelper {
         bids.add(
                 new Bid(350, true, getFakeUser("Aragorn"), 3, 3)
         );
+        UserAgorApp marc = new UserAgorApp();
+        marc.setId("13");
+        marc.setName("Marc");
+        bids.add(
+                new Bid(400, true, marc, 4, 4)
+        );
         return bids;
     }
 
