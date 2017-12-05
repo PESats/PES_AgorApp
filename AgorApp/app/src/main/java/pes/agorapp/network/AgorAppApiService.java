@@ -108,17 +108,17 @@ public interface AgorAppApiService {
 
     /* BOTIGUES */
 
-    @POST("botigues")
-    Call<Botiga> createBotiga(
+    @POST("shops")
+    Call<Botiga> createShop(
             @Query("user_id") int user_id,
             @Query("active_token") String active_token,
-            @Body JsonObject botiga
+            @Body JsonObject shop
     );
 
-    /* XECS DESCOMPTE */
+    /* CUPONS DE DESCOMPTE */
 
     /*
-    @POST("descomptes")
+    @POST("coupons")
     Call<ValDescompte> createValDescompte(
             @Query("user_id") int user_id,
             @Query("active_token") String active_token,
