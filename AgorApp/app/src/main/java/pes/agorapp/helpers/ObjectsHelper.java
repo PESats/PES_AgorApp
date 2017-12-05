@@ -125,18 +125,33 @@ public class ObjectsHelper {
     public static List<Bid> getFakeBids() {
         List<Bid> bids = new ArrayList<>();
         bids.add(
-                new Bid(250, true, getFakeUser("Gandalf"), 1, 1)
+                new Bid(250, true, getFakeUser("Gandalf"), new Announcement(), 1)
         );
 
         bids.add(
-                new Bid(300, true, getFakeUser("Boromir"), 2, 2)
+                new Bid(300, true, getFakeUser("Boromir"), new Announcement(), 2)
         );
 
         bids.add(
-                new Bid(350, true, getFakeUser("Aragorn"), 3, 3)
+                new Bid(350, true, getFakeUser("Aragorn"), new Announcement(), 3)
         );
         return bids;
     }
 
+    public static List<Bid> getFakeBidsAsAnnouncer() {
+        //esta to mal
+        List<Bid> bids = new ArrayList<>();
+        UserAgorApp marc = new UserAgorApp();
+        marc.setId("13");
+        marc.setName("Marc");
+
+        Announcement announcement = new Announcement();
+        announcement.setUser(marc);
+        announcement.setId(4000);
+        bids.add(
+                new Bid(400, true, new UserAgorApp(), announcement, 4)
+        );
+        return bids;
+    }
 
 }
