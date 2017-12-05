@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#F7E1CE</color>
-    <color name="colorPrimaryDark">#F7E1CE</color>
+    <color name="colorPrimary">#f7e1ce</color>
+    <color name="colorPrimaryDark">#f7ab68</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorAgoraCoins">#2a8b81</color>
     <color name="colorButtons">#f02414</color>

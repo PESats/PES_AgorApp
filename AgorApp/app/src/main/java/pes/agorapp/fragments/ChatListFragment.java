@@ -13,20 +13,18 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import pes.agorapp.JSONObjects.BuyTransaction;
+import pes.agorapp.JSONObjects.Bid;
 import pes.agorapp.JSONObjects.Chat;
 import pes.agorapp.R;
-import pes.agorapp.globals.PreferencesAgorApp;
 import pes.agorapp.helpers.ChatsAdapter;
 import pes.agorapp.helpers.ObjectsHelper;
 
 
 public class ChatListFragment extends Fragment {
     private List<Chat> chats = new ArrayList<>();
-    private PreferencesAgorApp prefs;
-    private ChatsAdapter adapter;
 
     private OnFragmentInteractionListener mListener;
+    private ChatsAdapter adapter;
 
     public ChatListFragment() {
         // Required empty public constructor
@@ -46,8 +44,6 @@ public class ChatListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        prefs = new PreferencesAgorApp(getActivity());
-        chats = requestChats();
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_chat_list, container, false);
     }
@@ -78,10 +74,10 @@ public class ChatListFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        chats = requestChats();
         adapter = new ChatsAdapter(getActivity(), chats);
         // Attach the adapter to a ListView
-        final ListView listView = (ListView) view.findViewById(R.id.listChats);
+        final ListView listView = (ListView) getView().findViewById(R.id.listChats);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -90,24 +86,21 @@ public class ChatListFragment extends Fragment {
             }
         });
         listView.setAdapter(adapter);
-
-        adapter.addAll(chats);
     }
 
     private List<Chat> requestChats() {
         List<Chat> chats = new ArrayList<>();
-        List<BuyTransaction> transactions = ObjectsHelper.getFakeTransactions();
+        List<Bid> bids = ObjectsHelper.getFakeBids();
 
-        for (BuyTransaction transaction : transactions) {
+        for (Bid bid : bids) {
           Chat chat = new Chat();
-          chat.setUser(transaction.getOtherUser(prefs.getId()));
+          chat.setUser(bid.getUser());
           chat.setLastMessage(ObjectsHelper.getFakeMessage());
           chat.setLastMessageDate(ObjectsHelper.getFakeDate());
+          chat.setBid(bid);
 
           chats.add(chat);
         }
         return chats;
     }
-
-
 }
