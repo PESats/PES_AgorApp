@@ -154,7 +154,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         AgorAppApiManager
                 .getService()
-                .createBotiga(user_id, active_token, jsonBotiga)
+                .createShop(user_id, active_token, jsonBotiga)
                 .enqueue(new retrofit2.Callback<Botiga>() {
                     @Override
                     public void onResponse(Call<Botiga> call, Response<Botiga> response) {
@@ -195,12 +195,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private void printOrHideVerifyButton(View view) {
         /*amaguem el botó si ja està verificat*/
-        if (prefs.isMerchant()) {
+        if (prefs.hasShop()) {
             Button verifyButton = (Button) view.findViewById(R.id.profile_btn_verify);
-            verifyButton.setVisibility(View.INVISIBLE);
+            verifyButton.setVisibility(View.GONE);
         } else {
             TextView userType = (TextView) view.findViewById(R.id.profile_verified);
-            userType.setVisibility(View.INVISIBLE);
+            userType.setVisibility(View.GONE);
         }
     }
 
@@ -225,7 +225,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         TextView profileNameTextView = (TextView) view.findViewById(R.id.profile_name);
         profileNameTextView.setText(userName);
         String userType = "Ciutadà";
-        if (prefs.isMerchant()) userType = "Botiguer verificat";
+        if (prefs.hasShop()) userType = "Comerciant verificat: " + prefs.getShop();
         TextView profileTypeTextView = (TextView) view.findViewById(R.id.profile_verified);
         profileTypeTextView.setText(userType);
     }

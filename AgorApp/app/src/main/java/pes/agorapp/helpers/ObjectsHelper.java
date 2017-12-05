@@ -1,13 +1,12 @@
 package pes.agorapp.helpers;
 
-import com.github.javafaker.Faker;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
 import pes.agorapp.JSONObjects.Announcement;
+import pes.agorapp.JSONObjects.Bid;
 import pes.agorapp.JSONObjects.BuyTransaction;
 import pes.agorapp.JSONObjects.Comment;
 import pes.agorapp.JSONObjects.Coupon;
@@ -20,7 +19,6 @@ import pes.agorapp.JSONObjects.UserAgorApp;
 
 public class ObjectsHelper {
 
-    private static Faker faker = new Faker();
     private static Random random = new Random();
 
     public static Announcement getFakeAnnouncement() {
@@ -90,8 +88,18 @@ public class ObjectsHelper {
 
     public static UserAgorApp getFakeUser() {
         UserAgorApp user = new UserAgorApp();
-        user.setName(faker.superhero().name());
-        user.setEmail(faker.internet().emailAddress());
+        user.setName("jonathan");
+        user.setEmail("fake@mail.com");
+        user.setCoins(random.nextInt(1000));
+        user.setId(String.valueOf(random.nextInt(10)));
+
+        return user;
+    }
+
+    public static UserAgorApp getFakeUser(String name) {
+        UserAgorApp user = new UserAgorApp();
+        user.setName(name);
+        user.setEmail("fake@email.com");
         user.setCoins(random.nextInt(1000));
         user.setId(String.valueOf(random.nextInt(10)));
 
@@ -107,11 +115,28 @@ public class ObjectsHelper {
     }
 
     public static String getFakeMessage() {
-        return faker.chuckNorris().fact();
+        return "Fakeee message";
     }
 
     public static Date getFakeDate() {
-        return faker.date().between(new Date(2017,3,1,0,0),
-                new Date(2017,12,1,0,0));
+        return new Date(2017,3,1,0,0);
     }
+
+    public static List<Bid> getFakeBids() {
+        List<Bid> bids = new ArrayList<>();
+        bids.add(
+                new Bid(250, true, getFakeUser("Gandalf"), 1, 1)
+        );
+
+        bids.add(
+                new Bid(300, true, getFakeUser("Boromir"), 2, 2)
+        );
+
+        bids.add(
+                new Bid(350, true, getFakeUser("Aragorn"), 3, 3)
+        );
+        return bids;
+    }
+
+
 }

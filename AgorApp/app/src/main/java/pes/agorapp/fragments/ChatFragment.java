@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.FirebaseDatabase;
 
+import pes.agorapp.JSONObjects.Chat;
 import pes.agorapp.JSONObjects.ChatMessage;
 import pes.agorapp.R;
 import pes.agorapp.globals.PreferencesAgorApp;
@@ -30,7 +31,8 @@ public class ChatFragment extends Fragment {
 
     private PreferencesAgorApp prefs;
     private FirebaseListAdapter<ChatMessage> adapter;
-    EditText input;
+    private EditText input;
+    private Chat chat;
 
     public ChatFragment() {
         // Required empty public constructor
@@ -78,8 +80,8 @@ public class ChatFragment extends Fragment {
 
         prefs = new PreferencesAgorApp(getActivity());
 
-        input = (EditText)view.findViewById(R.id.input);
-        FloatingActionButton fab = (FloatingActionButton)view.findViewById(R.id.fab);
+        input = (EditText) view.findViewById(R.id.input);
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,10 +90,10 @@ public class ChatFragment extends Fragment {
                 // Read the input field and push a new instance
                 // of ChatMessage to the Firebase database
                 FirebaseDatabase.getInstance()
-                        .getReference()
+                        .getReference(String.valueOf(chat.getBid().getId()))
                         .push()
                         .setValue(new ChatMessage(input.getText().toString(),
-                                prefs.getUserName())
+                                prefs.getUserName(), chat.getBid().getId())
                         );
 
                 // Clear the input
@@ -99,27 +101,31 @@ public class ChatFragment extends Fragment {
             }
         });
 
-        ListView listOfMessages = (ListView)view.findViewById(R.id.list_of_messages);
+        ListView listOfMessages = (ListView) view.findViewById(R.id.list_of_messages);
 
         adapter = new FirebaseListAdapter<ChatMessage>(getActivity(), ChatMessage.class,
-                R.layout.chat_message, FirebaseDatabase.getInstance().getReference()) {
+                R.layout.chat_message, FirebaseDatabase.getInstance().getReference(String.valueOf(chat.getBid().getId()))) {
             @Override
             protected void populateView(View v, ChatMessage model, int position) {
-                // Get references to the views of message.xml
-                TextView messageText = (TextView)v.findViewById(R.id.message_text);
-                TextView messageUser = (TextView)v.findViewById(R.id.message_user);
-                TextView messageTime = (TextView)v.findViewById(R.id.message_time);
+                    // Get references to the views of message.xml
+                    TextView messageText = (TextView) v.findViewById(R.id.message_text);
+                    TextView messageUser = (TextView) v.findViewById(R.id.message_user);
+                    TextView messageTime = (TextView) v.findViewById(R.id.message_time);
 
-                // Set their text
-                messageText.setText(model.getMessageText());
-                messageUser.setText(model.getMessageUser());
+                    // Set their text
+                    messageText.setText(model.getMessageText());
+                    messageUser.setText(model.getMessageUser());
 
-                // Format the date before showing it
-                messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)",
-                        model.getMessageTime()));
+                    // Format the date before showing it
+                    messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)",
+                            model.getMessageTime()));
             }
         };
 
         listOfMessages.setAdapter(adapter);
+    }
+
+    public void setChat(Chat chat) {
+        this.chat = chat;
     }
 }
