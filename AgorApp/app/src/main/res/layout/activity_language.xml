@@ -52,7 +52,7 @@
             android:layout_weight="1"
             android:layout_width="match_parent"
             style="@style/Button_Images"
-            android:drawableLeft="@drawable/icon_eng"></Button>
+            android:layout_marginTop="15dp"></Button>
 
         <Button
             android:layout_height="0dp"
@@ -61,7 +61,8 @@
             android:enabled="true"
             android:layout_weight="1"
             android:layout_width="match_parent"
-            style="@style/Button_Images"></Button>
+            style="@style/Button_Images"
+            android:layout_marginTop="15dp"></Button>
 
         <Button
             android:layout_height="0dp"
@@ -69,7 +70,8 @@
             android:text="Entrar"
             android:enabled="true"
             android:layout_weight="1"
-            android:layout_width="match_parent"></Button>
+            android:layout_width="match_parent"
+            android:layout_marginTop="25dp"></Button>
 
     </LinearLayout>
 </RelativeLayout>
