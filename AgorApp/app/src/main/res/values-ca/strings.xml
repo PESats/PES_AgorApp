@@ -24,4 +24,8 @@
     <string name="profile_wallet_button">Bescanviar al MARKETPLACE</string>
     <string name="profile_trophies">Premis desbloquejats</string>
 
+    <string name="lang_cat">Català</string>
+    <string name="lang_eng">Anglès</string>
+    <string name="lang_esp">Espanyol</string>
+
 </resources>

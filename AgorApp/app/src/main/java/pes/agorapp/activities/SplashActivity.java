@@ -2,8 +2,11 @@ package pes.agorapp.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
+
+import java.util.Locale;
 
 import pes.agorapp.R;
 import pes.agorapp.globals.PreferencesAgorApp;
@@ -16,6 +19,7 @@ public class SplashActivity extends Activity {
 
     private static int SECONDS_SPLASH = 2000;
     private PreferencesAgorApp prefs;
+    private boolean hasLanguage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +30,9 @@ public class SplashActivity extends Activity {
 
         //Calculem meesures pantalla per a ajustar texts
         prefs.setScreenSize(getResources().getDisplayMetrics().density);
+
+        //obtenim si hi ha idioma previ
+        hasLanguage = prefs.hasLanguage();
 
         IntentLauncher launcher = new IntentLauncher();
         launcher.start();
@@ -40,9 +47,25 @@ public class SplashActivity extends Activity {
             catch (Exception e) {
                 Log.e("IntentLauncher", e.getMessage());
             }
-            Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-            startActivity(intent);
-            finish();
+
+            if (hasLanguage) {
+                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+            else {
+                String languageToLoad  = "ca"; // your language
+                Locale locale = new Locale(languageToLoad);
+                Locale.setDefault(locale);
+                Configuration config = new Configuration();
+                config.locale = locale;
+                getBaseContext().getResources().updateConfiguration(config,
+                        getBaseContext().getResources().getDisplayMetrics());
+
+                Intent intent = new Intent(SplashActivity.this, LanguageActivity.class);
+                startActivity(intent);
+                finish();
+            }
         }
     }
 }

@@ -23,6 +23,8 @@ public class PreferencesAgorApp {
     private static String ACTIVE_TOKEN = "active_token";
     private static String COINS = "coins";
     private static String SHOP = "shop";
+    private static String LANGUAGE_SAVED = "languageToSave";
+    private static String HAS_LANGUAGE = "hasLanguage";
 
     public PreferencesAgorApp(Context activity) {
         prefs = activity.getSharedPreferences(NAME_PREFERENCES, Context.MODE_PRIVATE);
@@ -114,6 +116,21 @@ public class PreferencesAgorApp {
 
     public void setShop(Integer shop) { prefs.edit().putInt(SHOP, shop).apply(); }
 
+    public boolean hasLanguage(){
+        return prefs.getBoolean(HAS_LANGUAGE, false);
+    }
+
+    public String getLanguage() {
+        return prefs.getString(LANGUAGE_SAVED, Constants.LANG_ES);
+    }
+
+    public void setLanguage(String language){
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(LANGUAGE_SAVED, language);
+        editor.putBoolean(HAS_LANGUAGE, true);
+        editor.apply();
+    }
+
     public void deleteSession(){
         prefs.edit().remove(NAME).apply();
         prefs.edit().remove(ID).apply();
@@ -136,5 +153,6 @@ public class PreferencesAgorApp {
         Log.i("Token", getActiveToken());
         Log.i("Coins", String.valueOf(getCoins()));
         Log.i("Shop", String.valueOf(getShop()));
+        Log.i("Language", getLanguage());
     }
 }

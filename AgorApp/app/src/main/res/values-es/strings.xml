@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">AgorApp</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="com.twitter.sdk.android.CONSUMER_KEY">uihuD7MlWyOX46SAluZDeZxNS</string>
+    <string name="com.twitter.sdk.android.CONSUMER_SECRET">96x570TCgJJuOWSKVKW6UsULWDJcyRn2Oac9kBeCSkFyerk1HC</string>
+
+    <string name="facebook_app_id">740588166129564</string>
+    <string name="fb_login_protocol_scheme">fb740588166129564</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Custom strings -->
+    <string name="menu_profile">Perfil</string>
+    <string name="menu_announcements">Llista anuncis</string>
+
+    <string name="profile_wallet_title">Tu cartera</string>
+    <string name="profile_wallet_subtitle">Actualmente tienes</string>
+    <string name="profile_wallet_button">Intercamviar en el MARKETPLACE</string>
+    <string name="profile_trophies">Premios desbloqueados</string>
+
+    <string name="lang_cat">Catalán</string>
+    <string name="lang_eng">Inglés</string>
+    <string name="lang_esp">Español</string>
+
+</resources>

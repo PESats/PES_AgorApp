@@ -17,8 +17,9 @@ public class Constants {
     public static String BASE_URL = DOMAIN + "/";
 
     //Languages (per més endavant)
-    public static String LANG_ES = "es";
     public static String LANG_CA = "ca";
+    public static String LANG_EN = "en";
+    public static String LANG_ES = "es";
 
     //Intent tags
     public class EXTRA_INTENT_TAG {
