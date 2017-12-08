@@ -36,6 +36,7 @@ import pes.agorapp.fragments.AnnouncementFragment;
 import pes.agorapp.fragments.AnnouncementListFragment;
 import pes.agorapp.fragments.ChatFragment;
 import pes.agorapp.fragments.ChatListFragment;
+import pes.agorapp.fragments.CouponListFragment;
 import pes.agorapp.fragments.FormAnnouncementFragment;
 import pes.agorapp.fragments.MapFragment;
 import pes.agorapp.fragments.MarketplaceFragment;
@@ -50,7 +51,8 @@ public class MainActivity
         AnnouncementListFragment.OnFragmentInteractionListener,
         MapFragment.OnFragmentInteractionListener,
         ChatListFragment.OnFragmentInteractionListener,
-        MarketplaceFragment.OnFragmentInteractionListener {
+        MarketplaceFragment.OnFragmentInteractionListener,
+        CouponListFragment.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,6 +152,14 @@ public class MainActivity
             fragmentTransaction.commit();
         } else if (id == R.id.announcement_list) {
             AnnouncementListFragment listFragment = new AnnouncementListFragment();
+            listFragment.setArguments(getIntent().getExtras());
+            //CAL REFACTORING!!!
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, listFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        } else if (id == R.id.coupons_list) {
+            CouponListFragment listFragment = new CouponListFragment();
             listFragment.setArguments(getIntent().getExtras());
             //CAL REFACTORING!!!
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
