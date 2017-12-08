@@ -16,16 +16,58 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!-- Custom strings -->
+    <string name="main_menu">Menú principal</string>
+
     <string name="menu_profile">Perfil</string>
     <string name="menu_announcements">Llista anuncis</string>
+    <string name="menu_chat">Xat</string>
 
     <string name="profile_wallet_title">La teva cartera</string>
     <string name="profile_wallet_subtitle">Actualment tens</string>
+    <string name="profile_wallet_coins">0 AgoraCoins</string>
     <string name="profile_wallet_button">Bescanviar al MARKETPLACE</string>
-    <string name="profile_trophies">Premis desbloquejats</string>
+    <string name="profile_trophies_title">Premis desbloquejats</string>
+    <string name="profile_verify_button">Verificar-me com a botiguer</string>
+    <string name="profile_rating_title">Valoració dels teus veïns</string>
+    <string name="profile_rating_text">Encara no t\'ha valorat cap usuari</string>
+    <string name="profile_logout">LOGOUT</string>
+
+    <string name="marketplace_publish_button">Publicar xec de descompte</string>
+
+    <string name="form_publish_marketplace_title">Xec de descompte</string>
+    <string name="form_publish_marketplace_shop">Nom de la botiga</string>
+    <string name="form_publish_marketplace_discount">Descompte</string>
+    <string name="form_publish_marketplace_discount0">0%</string>
+    <string name="form_publish_marketplace_discount_button">Publicar</string>
+
+    <string name="form_announcement_title">Títol de l\'anunci</string>
+    <string name="form_announcement_title_hint">Títol</string>
+    <string name="form_announcement_description">Descripció de l\'anunci</string>
+    <string name="form_announcement_description_hint">Descripció</string>
+    <string name="form_announcement_publish">Publicar</string>
+
+    <string name="form_verify_merchant_title">Verificació com a botiguer</string>
+    <string name="form_verify_merchant_shop_name">Nom de la botiga</string>
+    <string name="form_verify_merchant_title_hint">Nom</string>
+    <string name="form_verify_merchant_description">Descripció del local</string>
+    <string name="form_verify_merchant_description_hint">Descripció</string>
+    <string name="form_verify_merchant_location">Ubicació</string>
+    <string name="form_verify_merchant_button">Verificar-me</string>
+
+    <string name="coupon_clients_button">Compradors</string>
+    <string name="coupon_delete_button">Esborrar</string>
+
+    <string name="coupon_shop_name">Compradors</string>
+    <string name="coupon_price">Preu: </string>
+
+    <string name="announcement_delete_button">Esborrar</string>
+    <string name="announcement_comment_button">Comentar</string>
+
+    <string name="chat_hint">Escriu quelcom</string>
 
     <string name="lang_cat">Català</string>
     <string name="lang_eng">Anglès</string>
     <string name="lang_esp">Espanyol</string>
+    <string name="start">Entrar</string>
 
 </resources>

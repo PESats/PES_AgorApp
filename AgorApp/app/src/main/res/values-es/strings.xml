@@ -16,16 +16,58 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!-- Custom strings -->
+    <string name="main_menu">Menú principal</string>
+
     <string name="menu_profile">Perfil</string>
-    <string name="menu_announcements">Llista anuncis</string>
+    <string name="menu_announcements">Lista de anuncios</string>
+    <string name="menu_chat">Chat</string>
 
     <string name="profile_wallet_title">Tu cartera</string>
     <string name="profile_wallet_subtitle">Actualmente tienes</string>
-    <string name="profile_wallet_button">Intercamviar en el MARKETPLACE</string>
+    <string name="profile_wallet_coins">0 AgoraCoins</string>
+    <string name="profile_wallet_button">Intercambiar en el MARKETPLACE</string>
     <string name="profile_trophies">Premios desbloqueados</string>
+    <string name="profile_verify_button">Verifícate como comerciante</string>
+    <string name="profile_rating_title">Valoración de tus vecinos</string>
+    <string name="profile_rating_text">Aún no te ha valorado ningún usuario</string>
+    <string name="profile_logout">LOGOUT</string>
+
+    <string name="marketplace_publish_button">Publicar cupón de descuento</string>
+
+    <string name="form_publish_marketplace_title">Cupón de descuento</string>
+    <string name="form_publish_marketplace_shop">Nombre del comercio</string>
+    <string name="form_publish_marketplace_discount">Descuento</string>
+    <string name="form_publish_marketplace_discount0">0%</string>
+    <string name="form_publish_marketplace_discount_button">Publicar</string>
+
+    <string name="form_announcement_title">Announcement title</string>
+    <string name="form_announcement_title_hint">Title</string>
+    <string name="form_announcement_description">Announcement description</string>
+    <string name="form_announcement_description_hint">Description</string>
+    <string name="form_announcement_publish">Upload</string>
+
+    <string name="form_verify_merchant_title">Verificación como comerciante</string>
+    <string name="form_verify_merchant_shop_name">Nombre del local</string>
+    <string name="form_verify_merchant_title_hint">Nombre</string>
+    <string name="form_verify_merchant_description">Descripción del local</string>
+    <string name="form_verify_merchant_description_hint">Descripción</string>
+    <string name="form_verify_merchant_location">Ubicación</string>
+    <string name="form_verify_merchant_button">Verificar</string>
+
+    <string name="coupon_clients_button">Compradores</string>
+    <string name="coupon_delete_button">Borrar</string>
+
+    <string name="coupon_shop_name">Compradores</string>
+    <string name="coupon_price">Precio: </string>
+
+    <string name="announcement_delete_button">Borrar</string>
+    <string name="announcement_comment_button">Comentar</string>
+
+    <string name="chat_hint">Escribe algo</string>
 
     <string name="lang_cat">Catalán</string>
     <string name="lang_eng">Inglés</string>
     <string name="lang_esp">Español</string>
+    <string name="start">Entrar</string>
 
 </resources>

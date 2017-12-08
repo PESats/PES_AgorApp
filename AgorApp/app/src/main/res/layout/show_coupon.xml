@@ -63,7 +63,7 @@
             android:id="@+id/btn_coupon_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Editar" />
+            android:text="@string/coupon_clients_button" />
 
         <Button
             android:layout_weight=".5"
@@ -71,7 +71,7 @@
             android:id="@+id/btn_coupon_delete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Esborrar" />
+            android:text="@string/coupon_delete_button" />
 
     </LinearLayout>
 

@@ -18,7 +18,7 @@
         android:layout_marginLeft="80dp"
         android:layout_marginRight="80dp"
         android:id="@+id/btn_marketplace_publish"
-        android:text="Publicar xec de descompte"
+        android:text="@string/marketplace_publish_button"
         android:enabled="true"
         android:layout_width="match_parent"
         android:layout_marginTop="1dp"

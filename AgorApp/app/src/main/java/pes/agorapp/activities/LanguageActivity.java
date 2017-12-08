@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.DisplayMetrics;
@@ -23,6 +24,8 @@ public class LanguageActivity extends Activity {
     private Button eng_Button;
     private Button esp_Button;
     private Button enter_Button;
+
+    private Drawable img_greenTick, img_flag_cat, img_flag_esp, img_flag_eng;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,12 @@ public class LanguageActivity extends Activity {
     }
 
     private void initComponents() {
+        img_greenTick = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_check_24dp, null);
+        img_greenTick.setTint(getResources().getColor(R.color.colorButtons));
+        img_flag_cat = ResourcesCompat.getDrawable(getResources(), R.drawable.catalunya_flag, null);;
+        img_flag_esp = ResourcesCompat.getDrawable(getResources(), R.drawable.espana_flag, null);;
+        img_flag_eng = ResourcesCompat.getDrawable(getResources(), R.drawable.england_flag, null);;
+
         cat_Button = (Button) findViewById(R.id.btn_catala_lang);
         eng_Button = (Button) findViewById(R.id.btn_english_lang);
         esp_Button = (Button) findViewById(R.id.btn_espanol_lang);
@@ -89,9 +98,9 @@ public class LanguageActivity extends Activity {
      * Show tick in Spanish button, and change language
      */
     private void spanish_checked(){
-        cat_Button.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
-        eng_Button.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
-        esp_Button.setCompoundDrawablesWithIntrinsicBounds(null, null, ResourcesCompat.getDrawable(getResources(), R.drawable.checked_petit_verd, null), null);
+        cat_Button.setCompoundDrawablesWithIntrinsicBounds(img_flag_cat, null, null, null);
+        eng_Button.setCompoundDrawablesWithIntrinsicBounds(img_flag_eng, null, null, null);
+        esp_Button.setCompoundDrawablesWithIntrinsicBounds(img_flag_esp, null, img_greenTick, null);
         lang = Constants.LANG_ES;
         setLanguage();
     }
@@ -100,9 +109,9 @@ public class LanguageActivity extends Activity {
      * Show tick in Catalan button, and change language
      */
     private void catalan_checked(){
-        cat_Button.setCompoundDrawablesWithIntrinsicBounds(null, null, ResourcesCompat.getDrawable(getResources(), R.drawable.checked_petit_verd, null), null);
-        eng_Button.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
-        esp_Button.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+        cat_Button.setCompoundDrawablesWithIntrinsicBounds(img_flag_cat, null, img_greenTick, null);
+        eng_Button.setCompoundDrawablesWithIntrinsicBounds(img_flag_eng, null, null, null);
+        esp_Button.setCompoundDrawablesWithIntrinsicBounds(img_flag_esp, null, null, null);
         lang = Constants.LANG_CA;
         setLanguage();
     }
@@ -111,9 +120,9 @@ public class LanguageActivity extends Activity {
      * Show tick in English button, and change language
      */
     private void english_checked(){
-        cat_Button.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
-        eng_Button.setCompoundDrawablesWithIntrinsicBounds(null, null, ResourcesCompat.getDrawable(getResources(), R.drawable.checked_petit_verd, null), null);
-        esp_Button.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+        cat_Button.setCompoundDrawablesWithIntrinsicBounds(img_flag_cat, null, null, null);
+        eng_Button.setCompoundDrawablesWithIntrinsicBounds(img_flag_eng, null, img_greenTick, null);
+        esp_Button.setCompoundDrawablesWithIntrinsicBounds(img_flag_esp, null, null, null);
         lang = Constants.LANG_EN;
         setLanguage();
     }
@@ -138,6 +147,7 @@ public class LanguageActivity extends Activity {
         cat_Button.setText(R.string.lang_cat);
         eng_Button.setText(R.string.lang_eng);
         esp_Button.setText(R.string.lang_esp);
+        enter_Button.setText(R.string.start);
 
         super.onConfigurationChanged(newConfig);
     }

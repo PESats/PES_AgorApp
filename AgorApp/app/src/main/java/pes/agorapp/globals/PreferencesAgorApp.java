@@ -124,23 +124,34 @@ public class PreferencesAgorApp {
         return prefs.getString(LANGUAGE_SAVED, Constants.LANG_ES);
     }
 
-    public void setLanguage(String language){
+    public void setLanguage(String language) {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(LANGUAGE_SAVED, language);
         editor.putBoolean(HAS_LANGUAGE, true);
         editor.apply();
     }
 
+    public void deleteLanguage() {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.remove(LANGUAGE_SAVED);
+        editor.putBoolean(HAS_LANGUAGE, false);
+        editor.apply();
+    }
+
     public void deleteSession(){
-        prefs.edit().remove(NAME).apply();
-        prefs.edit().remove(ID).apply();
-        prefs.edit().remove(IMAGE_URL).apply();
-        prefs.edit().remove(EMAIL).apply();
-        prefs.edit().remove(PLATFORM_LOGIN).apply();
-        prefs.edit().remove(LEVEL).apply();
-        prefs.edit().remove(ACTIVE_TOKEN).apply();
-        prefs.edit().remove(COINS).apply();
-        prefs.edit().remove(SHOP).apply();
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.remove(NAME);
+        editor.remove(ID);
+        editor.remove(IMAGE_URL);
+        editor.remove(EMAIL);
+        editor.remove(PLATFORM_LOGIN);
+        editor.remove(LEVEL);
+        editor.remove(ACTIVE_TOKEN);
+        editor.remove(COINS);
+        editor.remove(SHOP);
+        editor.remove(LANGUAGE_SAVED);
+        editor.remove(HAS_LANGUAGE);
+        editor.apply();
     }
 
     public void checkPreferences(){

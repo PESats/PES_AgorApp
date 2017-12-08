@@ -384,8 +384,12 @@ public class LoginActivity extends AppCompatActivity
     @Override
     public void onResume() {
         super.onResume();
-
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
 
+    @Override
+    public void onStop() {
+        prefs.deleteLanguage();
+        super.onStop();
     }
 }

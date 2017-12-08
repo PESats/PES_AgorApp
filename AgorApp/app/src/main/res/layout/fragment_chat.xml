@@ -28,7 +28,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Escriu quelcom"
+            android:hint="@string/chat_hint"
             android:id="@+id/input"
             />
     </android.support.design.widget.TextInputLayout>

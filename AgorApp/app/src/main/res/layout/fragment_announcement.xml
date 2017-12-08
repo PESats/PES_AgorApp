@@ -19,7 +19,7 @@
             android:gravity="center"
             android:textSize="24sp"
             android:textStyle="bold"
-            tools:text="Help!" />
+            android:text="Help!" />
 
         <TextView
             android:id="@+id/announcement_author"
@@ -28,7 +28,7 @@
             android:layout_below="@+id/announcement_title"
             android:gravity="center"
             android:textSize="18sp"
-            tools:text="Don Alfonso" />
+            android:text="Don Alfonso" />
 
         <TextView
             android:id="@+id/announcement_text"
@@ -36,10 +36,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/announcement_author"
             android:gravity="center"
-            tools:text="Ayuudame con la casa" />
+            android:text="Ayuudame con la casa" />
         <Button
             android:textColor="@color/tw__solid_white"
-            android:text="Esborrar Anunci"
+            android:text="@string/announcement_delete_button"
             android:background="@color/tw__composer_red"
             android:id="@+id/announcement_delete"
             android:layout_width="wrap_content"
@@ -57,7 +57,7 @@
             android:id="@+id/new_comment_announcement"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="Comentar" />
+            android:text="@string/announcement_comment_button" />
 
         <ListView
             android:listSelector="@android:color/transparent"

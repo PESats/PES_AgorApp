@@ -6,12 +6,12 @@ package pes.agorapp.globals;
 
 public class Constants {
 
-    /*de moment no distingim DEV/PRO*/
+    /*màquina on hi tenim el backend*/
     private static String DNS_PRO = "10.4.41.145:3000";
     private static String DNS_DEV = "10.4.41.145:3000";
 
     //indiquem si apuntem a PRO o a DEV
-    private static String ip = DNS_DEV;
+    private static String ip = DNS_PRO;
 
     public static String DOMAIN = "http://" + ip;
     public static String BASE_URL = DOMAIN + "/";
@@ -21,11 +21,4 @@ public class Constants {
     public static String LANG_EN = "en";
     public static String LANG_ES = "es";
 
-    //Intent tags
-    public class EXTRA_INTENT_TAG {
-        public static final String EMAIL = "email";
-        public static final String USERNAME = "username";
-        public static final String IMAGE_URL = "image_url";
-        public static final String PLATFORM = "platform";
-    }
 }

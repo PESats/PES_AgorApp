@@ -29,10 +29,9 @@
     <style name="Button_Images" parent="@android:style/Widget.Button">
         <item name="android:textColor" >@android:color/black</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:textSize" >20sp</item>
+        <item name="android:textSize" >18sp</item>
         <item name="android:drawablePadding">15sp</item>
         <item name="android:background" >@android:color/white</item>
-        <item name="android:drawableRight">@drawable/ico_boto</item>
         <item name="android:focusable" >true</item>
         <item name="android:clickable" >true</item>
         <item name="android:gravity">center_vertical</item>

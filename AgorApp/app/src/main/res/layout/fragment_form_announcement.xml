@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/com_facebook_blue"
-        android:text="Títol"
+        android:text="@string/form_announcement_title"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Títol"
+        android:hint="@string/form_announcement_title_hint"
         android:inputType="textPersonName" />
 
     <RadioGroup
@@ -41,7 +41,7 @@
         android:id="@+id/form_announcement_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Descripció"
+        android:text="@string/form_announcement_description"
         android:textAlignment="center" />
 
     <EditText
@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.26"
         android:ems="10"
-        android:hint="Descripicó"
+        android:hint="@string/form_announcement_description_hint"
         android:inputType="textMultiLine" />
 
     <TextView
@@ -70,6 +70,6 @@
         android:id="@+id/btn_form_announcement_publish"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Publicar" />
+        android:text="@string/form_announcement_publish" />
 
 </LinearLayout>

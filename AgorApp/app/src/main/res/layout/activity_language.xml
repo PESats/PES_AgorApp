@@ -27,51 +27,55 @@
             android:layout_gravity="center"
             android:background="@drawable/agorapp"
             android:id="@+id/logoSplash"
+            android:layout_marginBottom="60dp"
             />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight=".5"/>
-
         <Button
-            android:layout_height="0dp"
+            android:layout_height="20dp"
             android:id="@+id/btn_catala_lang"
             android:text="@string/lang_cat"
             android:enabled="true"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_marginTop="1dp"
-            style="@style/Button_Images"></Button>
+            style="@style/Button_Images"
+            android:drawableLeft="@drawable/catalunya_flag"/>
 
         <Button
-            android:layout_height="0dp"
+            android:layout_height="20dp"
             android:id="@+id/btn_english_lang"
             android:text="@string/lang_eng"
             android:enabled="true"
             android:layout_weight="1"
             android:layout_width="match_parent"
             style="@style/Button_Images"
-            android:layout_marginTop="15dp"></Button>
+            android:layout_marginTop="30dp"
+            android:drawableLeft="@drawable/england_flag"/>
 
         <Button
-            android:layout_height="0dp"
+            android:layout_height="20dp"
             android:id="@+id/btn_espanol_lang"
             android:text="@string/lang_esp"
             android:enabled="true"
             android:layout_weight="1"
             android:layout_width="match_parent"
             style="@style/Button_Images"
-            android:layout_marginTop="15dp"></Button>
+            android:layout_marginTop="30dp"
+            android:drawableLeft="@drawable/espana_flag"/>
 
         <Button
-            android:layout_height="0dp"
             android:id="@+id/btn_enter_lang"
-            android:text="Entrar"
+            android:text="@string/start"
+            android:textStyle="bold"
+            android:backgroundTint="@color/colorButtons"
+            android:textColor="@color/tw__solid_white"
             android:enabled="true"
             android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_marginTop="25dp"></Button>
+            android:layout_marginTop="75dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"/>
 
     </LinearLayout>
 </RelativeLayout>

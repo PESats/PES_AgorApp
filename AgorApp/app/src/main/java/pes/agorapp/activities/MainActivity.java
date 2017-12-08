@@ -256,8 +256,12 @@ public class MainActivity
         TextView tvPrice = (TextView) dialogCoupon.findViewById(R.id.coupon_text_price);
 
         tvBotiga.setText(coupon.getEstablishment());
-        tvDiscount.setText(String.valueOf(coupon.getDiscount()) + "%");
-        tvPrice.setText(String.valueOf(coupon.getPrice()) + " AgoraCoins");
+
+        String discount = String.valueOf(coupon.getDiscount()) + "%";
+        tvDiscount.setText(discount);
+
+        String price = String.valueOf(coupon.getPrice()) + " AgoraCoins";
+        tvPrice.setText(price);
 
         PreferencesAgorApp prefs = new PreferencesAgorApp(this);
         //Delete
