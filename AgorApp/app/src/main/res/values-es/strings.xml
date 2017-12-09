@@ -26,7 +26,7 @@
     <string name="profile_wallet_subtitle">Actualmente tienes</string>
     <string name="profile_wallet_coins">0 AgoraCoins</string>
     <string name="profile_wallet_button">Intercambiar en el MARKETPLACE</string>
-    <string name="profile_trophies">Premios desbloqueados</string>
+    <string name="profile_trophies_title">Premios desbloqueados</string>
     <string name="profile_verify_button">Verifícate como comerciante</string>
     <string name="profile_rating_title">Valoración de tus vecinos</string>
     <string name="profile_rating_text">Aún no te ha valorado ningún usuario</string>

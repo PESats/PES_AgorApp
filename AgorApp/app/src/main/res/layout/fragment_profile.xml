@@ -208,7 +208,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="@string/profile_trophies"
+                        android:text="@string/profile_trophies_title"
                         android:id="@+id/profile_trophies_title"
                         android:gravity="center_horizontal"
                         android:layout_marginTop="30dp"
