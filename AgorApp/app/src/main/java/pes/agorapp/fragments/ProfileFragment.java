@@ -24,7 +24,6 @@ import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
-import com.twitter.sdk.android.core.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +38,7 @@ import pes.agorapp.customComponents.DialogServerKO;
 import pes.agorapp.globals.PreferencesAgorApp;
 import pes.agorapp.customComponents.MyGridView;
 import pes.agorapp.helpers.ObjectsHelper;
-import pes.agorapp.helpers.TrophiesAdapter;
+import pes.agorapp.adapters.TrophiesAdapter;
 import pes.agorapp.network.AgorAppApiManager;
 import retrofit2.Call;
 import retrofit2.Response;

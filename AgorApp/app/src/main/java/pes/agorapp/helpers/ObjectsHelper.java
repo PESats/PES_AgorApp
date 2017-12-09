@@ -1,7 +1,5 @@
 package pes.agorapp.helpers;
 
-import com.twitter.sdk.android.core.models.User;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

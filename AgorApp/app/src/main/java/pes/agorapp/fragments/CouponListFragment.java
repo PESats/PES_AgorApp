@@ -3,9 +3,6 @@ package pes.agorapp.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +15,8 @@ import java.util.List;
 
 import pes.agorapp.JSONObjects.Coupon;
 import pes.agorapp.R;
-import pes.agorapp.customComponents.DialogServerKO;
 import pes.agorapp.globals.PreferencesAgorApp;
-import pes.agorapp.helpers.CouponsAdapter;
-import pes.agorapp.network.AgorAppApiManager;
-import retrofit2.Call;
-import retrofit2.Response;
+import pes.agorapp.adapters.CouponsAdapter;
 
 
 public class CouponListFragment extends Fragment {
