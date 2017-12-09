@@ -29,7 +29,7 @@ import retrofit2.Response;
 public class CouponListFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
-    List<Coupon>  coupons = new ArrayList<>();
+    List<Coupon> coupons = new ArrayList<>();
     private PreferencesAgorApp prefs;
 
 
@@ -89,6 +89,8 @@ public class CouponListFragment extends Fragment {
     public interface OnFragmentInteractionListener {
 
         void onMarketplaceOpen();
+
+        void onCouponSelected(Coupon coupon);
     }
 
     @Override
@@ -103,8 +105,8 @@ public class CouponListFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Coupon coupon = (Coupon) listView.getItemAtPosition(position);
-                //mListener.onCouponSelected(coupon);
+                Coupon coupon = (Coupon) listView.getItemAtPosition(position);
+                mListener.onCouponSelected(coupon);
             }
         });
         listView.setAdapter(adapter);

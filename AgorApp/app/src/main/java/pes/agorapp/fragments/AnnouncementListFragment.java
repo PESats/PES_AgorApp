@@ -103,10 +103,8 @@ public class AnnouncementListFragment extends Fragment {
             }
         });
 
-        // Construct the data source
-        // Create the adapter to convert the array to views
         final AnnouncementsAdapter adapter = new AnnouncementsAdapter(getActivity(), announcements);
-        // Attach the adapter to a ListView
+
         final ListView listView = (ListView) view.findViewById(R.id.listViewAnnouncement);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -119,13 +117,10 @@ public class AnnouncementListFragment extends Fragment {
         AgorAppApiManager
                 .getService()
                 .getAnnouncements(Integer.valueOf(prefs.getId()), prefs.getActiveToken())
-                //.getAnnouncements(16, "aujEXUFZaWPotQhujtd9cMzL")
                 .enqueue(new retrofit2.Callback<ArrayList<Announcement>>() {
                     @Override
                     public void onResponse(Call<ArrayList<Announcement>> call, Response<ArrayList<Announcement>> response) {
 
-                        //Log.i("response code", String.valueOf(response.code()));
-                        //Log.d("this is my array", "arr: " + response.body().toString());
                         announcements = response.body();
                         adapter.addAll(announcements);
                         Log.d("this is my array", "arr: " + response.body().toString());

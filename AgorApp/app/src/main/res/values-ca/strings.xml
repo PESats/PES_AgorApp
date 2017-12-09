@@ -40,11 +40,13 @@
     <string name="form_publish_marketplace_discount0">0%</string>
     <string name="form_publish_marketplace_discount_button">Publicar</string>
 
+    <string name="form_announcement_title_bar">Publica el teu anunci</string>
     <string name="form_announcement_title">Títol de l\'anunci</string>
     <string name="form_announcement_title_hint">Títol</string>
     <string name="form_announcement_description">Descripció de l\'anunci</string>
     <string name="form_announcement_description_hint">Descripció</string>
     <string name="form_announcement_publish">Publicar</string>
+    <string name="form_announcement_location">Ubicació</string>
 
     <string name="form_verify_merchant_title">Verificació com a botiguer</string>
     <string name="form_verify_merchant_shop_name">Nom de la botiga</string>

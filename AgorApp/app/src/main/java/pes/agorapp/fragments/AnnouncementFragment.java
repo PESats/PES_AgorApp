@@ -136,7 +136,7 @@ public class AnnouncementFragment extends Fragment {
                 json.add("comentari", jsonUser);
                 AgorAppApiManager
                         .getService()
-                        .createAnnouncementComment(announcement.getId(),prefs.getId(), prefs.getActiveToken() ,json)
+                        .createAnnouncementComment(announcement.getId(), prefs.getId(), prefs.getActiveToken(), json)
                         .enqueue(new retrofit2.Callback<Comment>() {
                             @Override
                             public void onResponse(Call<Comment> call, Response<Comment> response) {

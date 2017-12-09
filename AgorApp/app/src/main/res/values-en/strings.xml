@@ -40,11 +40,13 @@
     <string name="form_publish_marketplace_discount0">0%</string>
     <string name="form_publish_marketplace_discount_button">Publish</string>
 
+    <string name="form_announcement_title_bar">Publish your announcement</string>
     <string name="form_announcement_title">Título del anuncio</string>
     <string name="form_announcement_title_hint">Título</string>
     <string name="form_announcement_description">Descripción del anuncio</string>
     <string name="form_announcement_description_hint">Descripción</string>
     <string name="form_announcement_publish">Publicar</string>
+    <string name="form_announcement_location">Location</string>
 
     <string name="form_verify_merchant_title">Merchant verification</string>
     <string name="form_verify_merchant_shop_name">Shop name</string>

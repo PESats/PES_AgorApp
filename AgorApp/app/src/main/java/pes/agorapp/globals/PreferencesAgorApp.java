@@ -23,6 +23,7 @@ public class PreferencesAgorApp {
     private static String ACTIVE_TOKEN = "active_token";
     private static String COINS = "coins";
     private static String SHOP = "shop";
+    private static String HAS_SHOP = "hasShop";
     private static String LANGUAGE_SAVED = "languageToSave";
     private static String HAS_LANGUAGE = "hasLanguage";
 
@@ -110,11 +111,23 @@ public class PreferencesAgorApp {
         prefs.edit().putInt(COINS, coins).apply();
     }
 
-    public boolean hasShop() { return !prefs.getString(SHOP, "").equals(""); }
+    public boolean hasShop() { return prefs.getBoolean(SHOP, false); }
 
     public Integer getShop() { return prefs.getInt(SHOP, 0); }
 
-    public void setShop(Integer shop) { prefs.edit().putInt(SHOP, shop).apply(); }
+    public void setShop(Integer shop) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(SHOP, shop);
+        editor.putBoolean(HAS_SHOP, true);
+        editor.apply();
+    }
+
+    public void deleteShop() {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.remove(SHOP);
+        editor.putBoolean(HAS_SHOP, false);
+        editor.apply();
+    }
 
     public boolean hasLanguage(){
         return prefs.getBoolean(HAS_LANGUAGE, false);

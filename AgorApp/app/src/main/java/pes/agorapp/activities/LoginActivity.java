@@ -364,7 +364,7 @@ public class LoginActivity extends AppCompatActivity
         prefs.setImageUrl(url_image);
         prefs.setCoins(coins);
         prefs.setActiveToken(active_token);
-        prefs.setShop(idShop);
+        if (idShop != null) prefs.setShop(idShop);
     }
 
     private void loginok() {

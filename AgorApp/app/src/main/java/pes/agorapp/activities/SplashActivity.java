@@ -49,23 +49,26 @@ public class SplashActivity extends Activity {
             }
 
             if (hasLanguage) {
+                setLanguage(prefs.getLanguage());
                 Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
             }
             else {
-                String languageToLoad  = "ca"; // your language
-                Locale locale = new Locale(languageToLoad);
-                Locale.setDefault(locale);
-                Configuration config = new Configuration();
-                config.locale = locale;
-                getBaseContext().getResources().updateConfiguration(config,
-                        getBaseContext().getResources().getDisplayMetrics());
-
+                setLanguage("ca");
                 Intent intent = new Intent(SplashActivity.this, LanguageActivity.class);
                 startActivity(intent);
                 finish();
             }
         }
+    }
+
+    private void setLanguage(String languageToLoad) {
+        Locale locale = new Locale(languageToLoad);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
     }
 }
