@@ -382,26 +382,6 @@ public class MainActivity
             }
         });
 
-        //Edit
-        Button editButton = (Button) dialogCoupon.findViewById(R.id.btn_coupon_edit);
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Dialog dialogFormEdit = new Dialog(MainActivity.this);
-                dialogFormEdit.setContentView(R.layout.form_publish_marketplace);
-                dialogFormEdit.show();
-                //Podem utilitzar el mateix formulari per crear que per editar el val
-                Button confirmEditButton = (Button) dialogFormEdit.findViewById(R.id.btn_marketplace_publish);
-
-                confirmEditButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //crida API edit coupon
-                    }
-                });
-            }
-        });
-
         //Buy
         Button buyButton = (Button) dialogCoupon.findViewById(R.id.btn_coupon_buy);
         buyButton.setOnClickListener(new View.OnClickListener() {
@@ -413,7 +393,6 @@ public class MainActivity
 
         if (!String.valueOf(coupon.getUser_id()).equals(prefs.getId())) {
             deleteButton.setVisibility(View.GONE);
-            editButton.setVisibility(View.GONE);
         }
     }
 

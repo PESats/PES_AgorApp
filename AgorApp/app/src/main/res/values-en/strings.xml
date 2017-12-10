@@ -56,6 +56,8 @@
     <string name="form_verify_merchant_location">Location</string>
     <string name="form_verify_merchant_button">Verify</string>
 
+    <string name="coupon_title">Discount coupon</string>
+    <string name="coupon_buy">BUY</string>
     <string name="coupon_clients_button">Customers</string>
     <string name="coupon_delete_button">Delete</string>
 
@@ -71,5 +73,8 @@
     <string name="lang_eng">English</string>
     <string name="lang_esp">Spanish</string>
     <string name="start">Start</string>
+
+    <string name="dialog_server_ko_title">Warning</string>
+    <string name="dialog_server_ko_message">Server unreachabe</string>
 
 </resources>

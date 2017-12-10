@@ -56,6 +56,8 @@
     <string name="form_verify_merchant_location">Ubicació</string>
     <string name="form_verify_merchant_button">Verificar-me</string>
 
+    <string name="coupon_title">Xec de descompte</string>
+    <string name="coupon_buy">COMPRAR</string>
     <string name="coupon_clients_button">Compradors</string>
     <string name="coupon_delete_button">Esborrar</string>
 
@@ -71,5 +73,8 @@
     <string name="lang_eng">Anglès</string>
     <string name="lang_esp">Espanyol</string>
     <string name="start">Entrar</string>
+
+    <string name="dialog_server_ko_title">Informació</string>
+    <string name="dialog_server_ko_message">No es pot accedir al servidor</string>
 
 </resources>
