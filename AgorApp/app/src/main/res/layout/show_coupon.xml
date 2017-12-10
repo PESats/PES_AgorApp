@@ -56,10 +56,10 @@
         android:layout_height="wrap_content"
         android:weightSum="1">
 
-        <TextView
+        <Button
             android:layout_weight=".5"
             android:layout_marginTop="10dp"
-            android:id="@+id/btn_coupon_edit"
+            android:id="@+id/btn_coupon_clients"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/coupon_clients_button" />

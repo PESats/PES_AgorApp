@@ -382,6 +382,15 @@ public class MainActivity
             }
         });
 
+        //Customers
+        Button customersButton = (Button) dialogCoupon.findViewById(R.id.btn_coupon_clients);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //mostrar compradors
+            }
+        });
+
         //Buy
         Button buyButton = (Button) dialogCoupon.findViewById(R.id.btn_coupon_buy);
         buyButton.setOnClickListener(new View.OnClickListener() {
