@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,6 +100,7 @@ public class MarketplaceFragment extends Fragment implements View.OnClickListene
         });
         listView.setAdapter(adapter);
 
+        //CRIDA A LA API PER A MOSTRAR TOTS ELS VALS
         AgorAppApiManager
                 .getService()
                 .getCoupons(Integer.valueOf(prefs.getId()), prefs.getActiveToken())
@@ -107,10 +109,12 @@ public class MarketplaceFragment extends Fragment implements View.OnClickListene
                     public void onResponse(Call<ArrayList<Coupon>> call, Response<ArrayList<Coupon>> response) {
                         coupons = response.body();
                         adapter.addAll(coupons);
+                        Log.d("this is my array", "arr: " + response.body().toString());
                     }
 
                     @Override
                     public void onFailure(Call<ArrayList<Coupon>> call, Throwable t) {
+                        System.out.println("Something went wrong!");
                         new DialogServerKO(getActivity()).show();
                     }
                 });
