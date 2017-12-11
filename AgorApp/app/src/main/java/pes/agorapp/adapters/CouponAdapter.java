@@ -32,7 +32,7 @@ public class CouponAdapter extends ArrayAdapter<Coupon> {
         }
 
         TextView establishment = (TextView) convertView.findViewById(R.id.item_coupon_establishment);
-        establishment.setText(coupon.getEstablishment());
+        establishment.setText(coupon.getBotiga().getName());
 
         TextView textPrice = (TextView) convertView.findViewById(R.id.item_coupon_text);
         textPrice.setText("Preu: ");

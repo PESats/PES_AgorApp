@@ -1,7 +1,9 @@
 package pes.agorapp.fragments;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,6 +14,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.util.Log;
+
+import com.google.gson.JsonObject;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +42,9 @@ public class MarketplaceFragment extends Fragment implements View.OnClickListene
     private PreferencesAgorApp prefs;
     private Dialog dialogForm;
     private Button marketplace_publish;
-    private SeekBar sbDiscount;
-    private TextView disc;
+    private SeekBar sbDiscount, sbPrice;
+    private TextView disc, pri;
+    private Integer discount, price;
 
     public MarketplaceFragment() {
         // Required empty public constructor
@@ -45,6 +53,8 @@ public class MarketplaceFragment extends Fragment implements View.OnClickListene
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
+        prefs = new PreferencesAgorApp(getActivity());
+
         return inflater.inflate(R.layout.fragment_marketplace, container, false);
     }
 
@@ -98,26 +108,28 @@ public class MarketplaceFragment extends Fragment implements View.OnClickListene
         });
         listView.setAdapter(adapter);
 
-        Integer user_id = Integer.valueOf(prefs.getId());
-        String active_token = prefs.getActiveToken();
-
+        //CRIDA A LA API PER A MOSTRAR TOTS ELS VALS
         AgorAppApiManager
                 .getService()
-                .getCoupons(user_id, active_token)
+                .getCoupons(Integer.valueOf(prefs.getId()), prefs.getActiveToken())
                 .enqueue(new retrofit2.Callback<ArrayList<Coupon>>() {
                     @Override
                     public void onResponse(Call<ArrayList<Coupon>> call, Response<ArrayList<Coupon>> response) {
                         coupons = response.body();
                         adapter.addAll(coupons);
+                        Log.d("this is my array", "arr: " + response.body().toString());
                     }
 
                     @Override
                     public void onFailure(Call<ArrayList<Coupon>> call, Throwable t) {
+                        System.out.println("Something went wrong!");
                         new DialogServerKO(getActivity()).show();
                     }
                 });
 
         view.findViewById(R.id.btn_marketplace_publish).setOnClickListener(this);
+
+        if (!prefs.hasShop()) view.findViewById(R.id.btn_marketplace_publish).setVisibility(View.GONE);
     }
 
     @Override
@@ -134,6 +146,9 @@ public class MarketplaceFragment extends Fragment implements View.OnClickListene
         dialogForm.setContentView(R.layout.form_publish_marketplace);
         dialogForm.show();
 
+        TextView tvShopName = (TextView) dialogForm.findViewById((R.id.form_marketplace_title));
+        tvShopName.setText(prefs.getShopName());
+
         sbDiscount = (SeekBar) dialogForm.findViewById(R.id.seekBar_discount);
         disc = (TextView) dialogForm.findViewById(R.id.discount_percentage);
 
@@ -141,7 +156,31 @@ public class MarketplaceFragment extends Fragment implements View.OnClickListene
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
                 disc.setText(String.valueOf(progress) + "%");
+                discount = progress;
+                System.out.println(discount);
             }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        sbPrice = (SeekBar) dialogForm.findViewById(R.id.seekBar_price);
+        pri = (TextView) dialogForm.findViewById(R.id.price_absolute);
+
+        sbPrice.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
+                pri.setText(String.valueOf(progress) + " AgoraCoins");
+                price = progress;
+                System.out.println(price);
+            }
+
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
 
@@ -158,7 +197,49 @@ public class MarketplaceFragment extends Fragment implements View.OnClickListene
         publishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //
+
+                System.out.println("discount: " + discount);
+                System.out.println("price: " + price);
+
+                JsonObject json = new JsonObject();
+                json.addProperty("title", prefs.getShopName());
+                //json.addProperty("description", "no obligatori");
+                json.addProperty("price", price);
+                json.addProperty("discount", discount);
+                json.addProperty("shop_id", prefs.getShopId());
+
+                JsonObject jsonCoupon = new JsonObject();
+                jsonCoupon.add("coupon", json);
+
+                AgorAppApiManager
+                        .getService()
+                        .createCoupon(Integer.valueOf(prefs.getId()), prefs.getActiveToken(), jsonCoupon)
+                        .enqueue(new retrofit2.Callback<Coupon>() {
+                            @Override
+                            public void onResponse(Call<Coupon> call, Response<Coupon> response) {
+                                //System.out.println(response.code());
+                                //System.out.println(response.body().getPrice());
+                                dialogForm.dismiss();
+
+                                final AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                                alertDialog.setTitle("Cupó creat");
+                                alertDialog.setMessage("Has afegit un nou cupó per al teu local " + prefs.getShopName());
+                                alertDialog.setIcon(R.drawable.ic_info_black_24dp);
+
+                                alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        alertDialog.dismiss();
+                                    }
+                                });
+
+                                alertDialog.show();
+                            }
+
+                            @Override
+                            public void onFailure(Call<Coupon> call, Throwable t) {
+                                new DialogServerKO(getActivity()).show();
+                            }
+                        });
             }
         });
     }

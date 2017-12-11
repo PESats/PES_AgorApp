@@ -17,6 +17,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -356,7 +358,7 @@ public class MainActivity
     }
 
     @Override
-    public void onCouponSelected(Coupon coupon) {
+    public void onCouponSelected(final Coupon coupon) {
         Dialog dialogCoupon = new Dialog(this);
         dialogCoupon.setContentView(R.layout.show_coupon);
         dialogCoupon.show();
@@ -365,7 +367,7 @@ public class MainActivity
         TextView tvDiscount = (TextView) dialogCoupon.findViewById(R.id.coupon_text_discount);
         TextView tvPrice = (TextView) dialogCoupon.findViewById(R.id.coupon_text_price);
 
-        tvBotiga.setText(coupon.getEstablishment());
+        tvBotiga.setText(String.valueOf(coupon.getShopId()));
 
         String discount = String.valueOf(coupon.getDiscount()) + "%";
         tvDiscount.setText(discount);
@@ -383,11 +385,19 @@ public class MainActivity
         });
 
         //Customers
+<<<<<<< HEAD
         Button customersButton = (Button) dialogCoupon.findViewById(R.id.btn_coupon_clients);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //mostrar compradors
+=======
+        Button customersButton = (Button) dialogCoupon.findViewById(R.id.btn_coupon_customers);
+        customersButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //popUpDeleteCoupon();
+>>>>>>> 621727c0d3f25ce0dd3eb0957e5d82613ba66079
             }
         });
 
@@ -396,12 +406,28 @@ public class MainActivity
         buyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //crida API buy coupon
+                AgorAppApiManager
+                        .getService()
+                        .buyCoupon(Integer.valueOf(prefs.getId()), Integer.valueOf(prefs.getId()), prefs.getActiveToken(), coupon.getId())
+                        .enqueue(new retrofit2.Callback<Coupon>() {
+                            @Override
+                            public void onResponse(Call<Coupon> call, Response<Coupon> response) {
+                                //cupó comprat
+                            }
+
+                            @Override
+                            public void onFailure(Call<Coupon> call, Throwable t) {
+                                System.out.println("Something went wrong!");
+                            }
+                        });
             }
         });
 
-        if (!String.valueOf(coupon.getUser_id()).equals(prefs.getId())) {
+        if (coupon.getShopId().equals(prefs.getShopId())) {
+            System.out.println(coupon.getShopId());
+            System.out.println(prefs.getShopId());
             deleteButton.setVisibility(View.GONE);
+            customersButton.setVisibility(View.GONE);
         }
     }
 

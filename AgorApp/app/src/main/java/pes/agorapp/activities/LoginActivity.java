@@ -5,7 +5,6 @@ import android.content.IntentSender;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -48,6 +47,7 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 
+import pes.agorapp.JSONObjects.Botiga;
 import pes.agorapp.JSONObjects.UserAgorApp;
 import pes.agorapp.JSONObjects.UserFacebook;
 import pes.agorapp.R;
@@ -70,6 +70,7 @@ public class LoginActivity extends AppCompatActivity
     private String userName;
     private String url_image;
     private String platform_name;
+    private String nameShop;
     private ConnectionResult mConnectionResult;
     private CallbackManager callbackManagerFacebook;
     private static final int REQUEST_CODE_RESOLVE_ERR = 9000;
@@ -102,6 +103,8 @@ public class LoginActivity extends AppCompatActivity
             initTwitterComponents();
             initFacebookComponents();
         }
+        //System.out.println(prefs.getActiveToken());
+        //System.out.println(prefs.getId());
     }
 
 
@@ -341,7 +344,8 @@ public class LoginActivity extends AppCompatActivity
                         String id = response.body().getId();
                         String token = response.body().getActiveToken();
                         Integer coins = response.body().getCoins();
-                        Integer idShop = response.body().getIdShop();
+                        Integer idShop = response.body().getShop();
+                        if (idShop != null) getNameShop(idShop);
 
                         saveUserInPreferences(id, token, coins, idShop);
 
@@ -356,6 +360,25 @@ public class LoginActivity extends AppCompatActivity
                 });
     }
 
+    private void getNameShop(Integer idShop) {
+        nameShop = "";
+        AgorAppApiManager
+                .getService()
+                .getShop(idShop, Integer.valueOf(prefs.getId()), prefs.getActiveToken())
+                .enqueue(new retrofit2.Callback<Botiga>() {
+                    @Override
+                    public void onResponse(Call<Botiga> call, Response<Botiga> response) {
+                        if (response.code() == 200) nameShop = response.body().getName();
+                    }
+
+                    @Override
+                    public void onFailure(Call<Botiga> call, Throwable t) {
+                        System.out.println("Something went wrong!");
+                        new DialogServerKO(LoginActivity.this).show();
+                    }
+                });
+    }
+
     private void saveUserInPreferences(String id, String active_token, Integer coins, Integer idShop) {
         prefs.setId(id);
         prefs.setPlatform(platform_name);
@@ -364,7 +387,7 @@ public class LoginActivity extends AppCompatActivity
         prefs.setImageUrl(url_image);
         prefs.setCoins(coins);
         prefs.setActiveToken(active_token);
-        if (idShop != null) prefs.setShop(idShop);
+        if (idShop != null && nameShop != null) prefs.setShop(idShop, nameShop);
     }
 
     private void loginok() {
