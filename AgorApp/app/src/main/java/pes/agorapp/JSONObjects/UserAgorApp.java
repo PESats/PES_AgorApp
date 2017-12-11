@@ -15,12 +15,12 @@ public class UserAgorApp {
     private String created_at;
     private String updated_at;
     private Integer coins;
-    private Integer shop;
+    private Botiga shop;
 
     public UserAgorApp(String name, String image_url, String id,
                        String active_token, String platform_name,
                        String email, String created_at, String updated_at,
-                       Integer coins, Integer shop) {
+                       Integer coins, Botiga shop) {
         this.name = name;
         this.image_url = image_url;
         this.id = id;
@@ -83,7 +83,7 @@ public class UserAgorApp {
         this.coins = coins;
     }
 
-    public Integer getShop() { return shop; }
+    public Botiga getShop() { return shop; }
 
-    public void setShop(Integer shop) { this.shop = shop; }
+    public void setShop(Botiga shop) { this.shop = shop; }
 }

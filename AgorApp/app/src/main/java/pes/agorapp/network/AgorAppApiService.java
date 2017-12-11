@@ -140,7 +140,7 @@ public interface AgorAppApiService {
             @Body JsonObject coupon
     );
 
-    @DELETE("coupon/{id}")
+    @DELETE("coupons/{id}")
     Call<Coupon> deleteCoupon(
             @Path("id") int id,
             @Query("user_id") int user_id,

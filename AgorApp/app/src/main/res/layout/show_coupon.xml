@@ -59,11 +59,7 @@
         <Button
             android:layout_weight=".5"
             android:layout_marginTop="10dp"
-<<<<<<< HEAD
-            android:id="@+id/btn_coupon_clients"
-=======
             android:id="@+id/btn_coupon_customers"
->>>>>>> 621727c0d3f25ce0dd3eb0957e5d82613ba66079
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/coupon_clients_button" />

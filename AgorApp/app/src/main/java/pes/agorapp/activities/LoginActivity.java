@@ -344,10 +344,9 @@ public class LoginActivity extends AppCompatActivity
                         String id = response.body().getId();
                         String token = response.body().getActiveToken();
                         Integer coins = response.body().getCoins();
-                        Integer idShop = response.body().getShop();
-                        if (idShop != null) getNameShop(idShop);
+                        Botiga shop = response.body().getShop();
 
-                        saveUserInPreferences(id, token, coins, idShop);
+                        saveUserInPreferences(id, token, coins, shop);
 
                         loginok();
                     }
@@ -360,26 +359,7 @@ public class LoginActivity extends AppCompatActivity
                 });
     }
 
-    private void getNameShop(Integer idShop) {
-        nameShop = "";
-        AgorAppApiManager
-                .getService()
-                .getShop(idShop, Integer.valueOf(prefs.getId()), prefs.getActiveToken())
-                .enqueue(new retrofit2.Callback<Botiga>() {
-                    @Override
-                    public void onResponse(Call<Botiga> call, Response<Botiga> response) {
-                        if (response.code() == 200) nameShop = response.body().getName();
-                    }
-
-                    @Override
-                    public void onFailure(Call<Botiga> call, Throwable t) {
-                        System.out.println("Something went wrong!");
-                        new DialogServerKO(LoginActivity.this).show();
-                    }
-                });
-    }
-
-    private void saveUserInPreferences(String id, String active_token, Integer coins, Integer idShop) {
+    private void saveUserInPreferences(String id, String active_token, Integer coins, Botiga shop) {
         prefs.setId(id);
         prefs.setPlatform(platform_name);
         prefs.setUsername(userName);
@@ -387,7 +367,7 @@ public class LoginActivity extends AppCompatActivity
         prefs.setImageUrl(url_image);
         prefs.setCoins(coins);
         prefs.setActiveToken(active_token);
-        if (idShop != null && nameShop != null) prefs.setShop(idShop, nameShop);
+        if (shop != null) prefs.setShop(shop.getId(), shop.getName());
     }
 
     private void loginok() {

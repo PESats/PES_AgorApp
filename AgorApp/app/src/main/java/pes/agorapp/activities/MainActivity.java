@@ -69,7 +69,7 @@ public class MainActivity
 
     private PreferencesAgorApp prefs;
     private Location locAnn;
-    private Dialog dialogForm;
+    private Dialog dialogForm, dialogCoupon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -359,7 +359,7 @@ public class MainActivity
 
     @Override
     public void onCouponSelected(final Coupon coupon) {
-        Dialog dialogCoupon = new Dialog(this);
+        dialogCoupon = new Dialog(this);
         dialogCoupon.setContentView(R.layout.show_coupon);
         dialogCoupon.show();
 
@@ -376,28 +376,20 @@ public class MainActivity
         tvPrice.setText(price);
 
         //Delete
-        Button deleteButton = (Button) dialogCoupon.findViewById(R.id.btn_coupon_delete);
+        final Button deleteButton = (Button) dialogCoupon.findViewById(R.id.btn_coupon_delete);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popUpDeleteCoupon();
+                popUpDeleteCoupon(coupon.getId());
             }
         });
 
         //Customers
-<<<<<<< HEAD
-        Button customersButton = (Button) dialogCoupon.findViewById(R.id.btn_coupon_clients);
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //mostrar compradors
-=======
         Button customersButton = (Button) dialogCoupon.findViewById(R.id.btn_coupon_customers);
         customersButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //popUpDeleteCoupon();
->>>>>>> 621727c0d3f25ce0dd3eb0957e5d82613ba66079
             }
         });
 
@@ -423,35 +415,62 @@ public class MainActivity
             }
         });
 
-        if (coupon.getShopId().equals(prefs.getShopId())) {
-            System.out.println(coupon.getShopId());
-            System.out.println(prefs.getShopId());
+        if (!coupon.getShopId().equals(prefs.getShopId())) {
+            //System.out.println(coupon.getShopId());
+            //System.out.println(prefs.getShopId());
             deleteButton.setVisibility(View.GONE);
             customersButton.setVisibility(View.GONE);
         }
     }
 
-    private void popUpDeleteCoupon() {
-        AlertDialog.Builder adb = new AlertDialog.Builder(this);
-
-        adb.setTitle("Segur que vols esborrar aquest xec?");
+    private void popUpDeleteCoupon(final Integer couponId) {
+        final android.app.AlertDialog aDialog = new android.app.AlertDialog.Builder(MainActivity.this).create();
+        aDialog.setTitle("Segur que vols esborrar aquest xec?");
 
         Drawable icon = getResources().getDrawable(android.R.drawable.ic_dialog_alert);
         icon.setTint(getColor(R.color.colorButtons));
-        adb.setIcon(icon);
+        aDialog.setIcon(icon);
 
-        adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        aDialog.setButton(Dialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getApplicationContext(), "Oferta esborrada (manca crida API)", Toast.LENGTH_LONG).show();
+                AgorAppApiManager
+                        .getService()
+                        .deleteCoupon(couponId, Integer.valueOf(prefs.getId()), prefs.getActiveToken())
+                        .enqueue(new retrofit2.Callback<Coupon>() {
+                            @Override
+                            public void onResponse(Call<Coupon> call, Response<Coupon> response) {
+                                dialogCoupon.dismiss();
+
+
+                                final android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(MainActivity.this).create();
+                                alertDialog.setTitle("Cupó esborrat");
+                                alertDialog.setMessage("Has esborrat el cupó del sistema");
+                                alertDialog.setIcon(R.drawable.ic_info_black_24dp);
+
+                                alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        alertDialog.dismiss();
+                                    }
+                                });
+
+                                alertDialog.show();
+                            }
+
+                            @Override
+                            public void onFailure(Call<Coupon> call, Throwable t) {
+                                System.out.println("Something went wrong!");
+                            }
+                        });
             }
         });
 
-        adb.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        aDialog.setButton(Dialog.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
-        adb.show();
+
+        aDialog.show();
     }
 
     @Override
