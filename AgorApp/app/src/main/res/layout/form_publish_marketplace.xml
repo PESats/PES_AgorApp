@@ -33,7 +33,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/form_verify_titleEdit"
+        android:id="@+id/form_marketplace_title"
         android:text="Pepito e hijos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
         android:id="@+id/price_absolute"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/form_publish_marketplace_discount0"
+        android:text="0 AgoraCoins"
         android:max="1000"
         android:textAlignment="center" />
 

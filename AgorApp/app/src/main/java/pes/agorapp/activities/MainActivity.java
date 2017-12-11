@@ -415,7 +415,9 @@ public class MainActivity
             }
         });
 
-        if (!String.valueOf(coupon.getShopId()).equals(prefs.getShopId())) {
+        if (coupon.getShopId().equals(prefs.getShopId())) {
+            System.out.println(coupon.getShopId());
+            System.out.println(prefs.getShopId());
             deleteButton.setVisibility(View.GONE);
             customersButton.setVisibility(View.GONE);
         }
