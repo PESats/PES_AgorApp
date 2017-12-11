@@ -150,7 +150,6 @@ public interface AgorAppApiService {
     @GET("users/{id}/bought_coupons")
     Call<ArrayList<Coupon>> getBoughtCoupons(
             @Path("id") int id,
-            @Query("user_id") int user_id,
             @Query("active_token") String active_token
     );
 
