@@ -15,8 +15,12 @@ import java.util.List;
 
 import pes.agorapp.JSONObjects.Coupon;
 import pes.agorapp.R;
+import pes.agorapp.customComponents.DialogServerKO;
 import pes.agorapp.globals.PreferencesAgorApp;
 import pes.agorapp.adapters.CouponsAdapter;
+import pes.agorapp.network.AgorAppApiManager;
+import retrofit2.Call;
+import retrofit2.Response;
 
 
 public class CouponListFragment extends Fragment {
@@ -105,13 +109,12 @@ public class CouponListFragment extends Fragment {
         listView.setAdapter(adapter);
         AgorAppApiManager
                 .getService()
-                .getUserCoupons(Integer.valueOf(prefs.getId()), prefs.getActiveToken())
+                .getBoughtCoupons(Integer.valueOf(prefs.getId()), prefs.getActiveToken())
                 .enqueue(new retrofit2.Callback<ArrayList<Coupon>>() {
                     @Override
                     public void onResponse(Call<ArrayList<Coupon>> call, Response<ArrayList<Coupon>> response) {
                         coupons = response.body();
                         adapter.addAll(coupons);
-                        Log.d("this is my array", "arr: " + response.body().toString());
                     }
 
                     @Override
