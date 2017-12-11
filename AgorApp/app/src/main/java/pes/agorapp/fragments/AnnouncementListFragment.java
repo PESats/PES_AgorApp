@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +19,7 @@ import pes.agorapp.JSONObjects.Announcement;
 import pes.agorapp.R;
 import pes.agorapp.customComponents.DialogServerKO;
 import pes.agorapp.globals.PreferencesAgorApp;
-import pes.agorapp.helpers.AnnouncementsAdapter;
+import pes.agorapp.adapters.AnnouncementsAdapter;
 import pes.agorapp.network.AgorAppApiManager;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -103,10 +102,8 @@ public class AnnouncementListFragment extends Fragment {
             }
         });
 
-        // Construct the data source
-        // Create the adapter to convert the array to views
         final AnnouncementsAdapter adapter = new AnnouncementsAdapter(getActivity(), announcements);
-        // Attach the adapter to a ListView
+
         final ListView listView = (ListView) view.findViewById(R.id.listViewAnnouncement);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -119,13 +116,10 @@ public class AnnouncementListFragment extends Fragment {
         AgorAppApiManager
                 .getService()
                 .getAnnouncements(Integer.valueOf(prefs.getId()), prefs.getActiveToken())
-                //.getAnnouncements(16, "aujEXUFZaWPotQhujtd9cMzL")
                 .enqueue(new retrofit2.Callback<ArrayList<Announcement>>() {
                     @Override
                     public void onResponse(Call<ArrayList<Announcement>> call, Response<ArrayList<Announcement>> response) {
 
-                        //Log.i("response code", String.valueOf(response.code()));
-                        //Log.d("this is my array", "arr: " + response.body().toString());
                         announcements = response.body();
                         adapter.addAll(announcements);
                         Log.d("this is my array", "arr: " + response.body().toString());

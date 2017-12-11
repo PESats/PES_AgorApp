@@ -22,7 +22,11 @@ public class PreferencesAgorApp {
     private static String PLATFORM_LOGIN = "platform_login";
     private static String ACTIVE_TOKEN = "active_token";
     private static String COINS = "coins";
-    private static String SHOP = "shop";
+    private static String SHOP_ID = "shop";
+    private static String SHOP_NAME = "shop_name";
+    private static String HAS_SHOP = "hasShop";
+    private static String LANGUAGE_SAVED = "languageToSave";
+    private static String HAS_LANGUAGE = "hasLanguage";
 
     public PreferencesAgorApp(Context activity) {
         prefs = activity.getSharedPreferences(NAME_PREFERENCES, Context.MODE_PRIVATE);
@@ -108,22 +112,64 @@ public class PreferencesAgorApp {
         prefs.edit().putInt(COINS, coins).apply();
     }
 
-    public boolean hasShop() { return !prefs.getString(SHOP, "").equals(""); }
+    public boolean hasShop() { return prefs.getBoolean(HAS_SHOP, false); }
 
-    public Integer getShop() { return prefs.getInt(SHOP, 0); }
+    public Integer getShopId() { return prefs.getInt(SHOP_ID, 0); }
 
-    public void setShop(Integer shop) { prefs.edit().putInt(SHOP, shop).apply(); }
+    public String getShopName() { return prefs.getString(SHOP_NAME, ""); }
+
+    public void setShop(Integer shopId, String shopName) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(SHOP_ID, shopId);
+        editor.putString(SHOP_NAME, shopName);
+        editor.putBoolean(HAS_SHOP, true);
+        editor.apply();
+    }
+
+    public void deleteShop() {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.remove(SHOP_ID);
+        editor.remove(SHOP_NAME);
+        editor.putBoolean(HAS_SHOP, false);
+        editor.apply();
+    }
+
+    public boolean hasLanguage(){
+        return prefs.getBoolean(HAS_LANGUAGE, false);
+    }
+
+    public String getLanguage() {
+        return prefs.getString(LANGUAGE_SAVED, Constants.LANG_ES);
+    }
+
+    public void setLanguage(String language) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(LANGUAGE_SAVED, language);
+        editor.putBoolean(HAS_LANGUAGE, true);
+        editor.apply();
+    }
+
+    public void deleteLanguage() {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.remove(LANGUAGE_SAVED);
+        editor.putBoolean(HAS_LANGUAGE, false);
+        editor.apply();
+    }
 
     public void deleteSession(){
-        prefs.edit().remove(NAME).apply();
-        prefs.edit().remove(ID).apply();
-        prefs.edit().remove(IMAGE_URL).apply();
-        prefs.edit().remove(EMAIL).apply();
-        prefs.edit().remove(PLATFORM_LOGIN).apply();
-        prefs.edit().remove(LEVEL).apply();
-        prefs.edit().remove(ACTIVE_TOKEN).apply();
-        prefs.edit().remove(COINS).apply();
-        prefs.edit().remove(SHOP).apply();
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.remove(NAME);
+        editor.remove(ID);
+        editor.remove(IMAGE_URL);
+        editor.remove(EMAIL);
+        editor.remove(PLATFORM_LOGIN);
+        editor.remove(LEVEL);
+        editor.remove(ACTIVE_TOKEN);
+        editor.remove(COINS);
+        editor.remove(SHOP_ID);
+        editor.remove(LANGUAGE_SAVED);
+        editor.remove(HAS_LANGUAGE);
+        editor.apply();
     }
 
     public void checkPreferences(){
@@ -135,6 +181,7 @@ public class PreferencesAgorApp {
         Log.i("platform", getPlatform());
         Log.i("Token", getActiveToken());
         Log.i("Coins", String.valueOf(getCoins()));
-        Log.i("Shop", String.valueOf(getShop()));
+        Log.i("Shop", String.valueOf(getShopId()));
+        Log.i("Language", getLanguage());
     }
 }

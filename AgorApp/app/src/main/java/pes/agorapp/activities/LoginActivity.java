@@ -364,7 +364,7 @@ public class LoginActivity extends AppCompatActivity
         prefs.setImageUrl(url_image);
         prefs.setCoins(coins);
         prefs.setActiveToken(active_token);
-        prefs.setShop(idShop);
+        if (idShop != null) prefs.setShop(idShop);
     }
 
     private void loginok() {
@@ -384,8 +384,12 @@ public class LoginActivity extends AppCompatActivity
     @Override
     public void onResume() {
         super.onResume();
-
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
 
+    @Override
+    public void onStop() {
+        prefs.deleteLanguage();
+        super.onStop();
     }
 }

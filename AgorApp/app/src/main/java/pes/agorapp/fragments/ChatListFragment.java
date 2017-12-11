@@ -16,7 +16,7 @@ import java.util.List;
 import pes.agorapp.JSONObjects.Bid;
 import pes.agorapp.JSONObjects.Chat;
 import pes.agorapp.R;
-import pes.agorapp.helpers.ChatsAdapter;
+import pes.agorapp.adapters.ChatsAdapter;
 import pes.agorapp.helpers.ObjectsHelper;
 
 

@@ -25,8 +25,7 @@ import pes.agorapp.JSONObjects.Comment;
 import pes.agorapp.R;
 import pes.agorapp.customComponents.DialogServerKO;
 import pes.agorapp.globals.PreferencesAgorApp;
-import pes.agorapp.helpers.CommentsAdapter;
-import pes.agorapp.helpers.ObjectsHelper;
+import pes.agorapp.adapters.CommentsAdapter;
 import pes.agorapp.network.AgorAppApiManager;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -136,7 +135,7 @@ public class AnnouncementFragment extends Fragment {
                 json.add("comentari", jsonUser);
                 AgorAppApiManager
                         .getService()
-                        .createAnnouncementComment(announcement.getId(),prefs.getId(), prefs.getActiveToken() ,json)
+                        .createAnnouncementComment(announcement.getId(), prefs.getId(), prefs.getActiveToken(), json)
                         .enqueue(new retrofit2.Callback<Comment>() {
                             @Override
                             public void onResponse(Call<Comment> call, Response<Comment> response) {

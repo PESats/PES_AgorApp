@@ -4,7 +4,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1"
-    android:minWidth="260dp">>
+    android:minWidth="260dp">
 
     <TextView
         android:layout_marginBottom="15dp"
@@ -17,7 +17,7 @@
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Verificació com a botiguer"
+        android:text="@string/form_verify_merchant_title"
         android:textAlignment="center" />
 
     <TextView
@@ -25,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/com_facebook_blue"
-        android:text="Nom de la botiga"
+        android:text="@string/form_verify_merchant_shop_name"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -37,14 +37,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Títol"
+        android:hint="@string/form_verify_merchant_title_hint"
         android:inputType="textPersonName" />
 
     <TextView
         android:id="@+id/form_verify_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Descripció"
+        android:text="@string/form_verify_merchant_description"
         android:textAlignment="center" />
 
     <EditText
@@ -53,14 +53,14 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.26"
         android:ems="10"
-        android:hint="Descripicó"
+        android:hint="@string/form_verify_merchant_description_hint"
         android:inputType="textMultiLine" />
 
     <TextView
         android:id="@+id/form_verify_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ubicació"
+        android:text="@string/form_verify_merchant_location"
         android:textAlignment="center" />
 
     <fragment
@@ -75,6 +75,6 @@
         android:id="@+id/btn_form_verify_publish"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Verificar-me" />
+        android:text="@string/form_verify_merchant_button" />
 
 </LinearLayout>

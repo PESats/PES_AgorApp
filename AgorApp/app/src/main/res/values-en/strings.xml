@@ -1,0 +1,80 @@
+<resources>
+    <string name="app_name">AgorApp</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="com.twitter.sdk.android.CONSUMER_KEY">uihuD7MlWyOX46SAluZDeZxNS</string>
+    <string name="com.twitter.sdk.android.CONSUMER_SECRET">96x570TCgJJuOWSKVKW6UsULWDJcyRn2Oac9kBeCSkFyerk1HC</string>
+
+    <string name="facebook_app_id">740588166129564</string>
+    <string name="fb_login_protocol_scheme">fb740588166129564</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Custom strings -->
+    <string name="main_menu">Main menu</string>
+
+    <string name="menu_profile">Profile</string>
+    <string name="menu_announcements">Announcements list</string>
+    <string name="menu_chat">Chat</string>
+
+    <string name="profile_wallet_title">Your wallet</string>
+    <string name="profile_wallet_subtitle">You currently have</string>
+    <string name="profile_wallet_coins">0 AgoraCoins</string>
+    <string name="profile_wallet_button">Exchange on MARKETPLACE</string>
+    <string name="profile_trophies_title">Trophies unlocked</string>
+    <string name="profile_verify_button">Verify yourself as a merchant</string>
+    <string name="profile_rating_title">Other users rating</string>
+    <string name="profile_rating_text">You haven\'t been rated yet</string>
+    <string name="profile_logout">LOGOUT</string>
+
+    <string name="marketplace_publish_button">Publish discount coupon</string>
+
+    <string name="form_publish_marketplace_title">Discount coupon</string>
+    <string name="form_publish_marketplace_shop">Shop name</string>
+    <string name="form_publish_marketplace_discount">Discount</string>
+    <string name="form_publish_marketplace_discount0">0%</string>
+    <string name="form_publish_marketplace_discount_button">Publish</string>
+
+    <string name="form_announcement_title_bar">Publish your announcement</string>
+    <string name="form_announcement_title">Título del anuncio</string>
+    <string name="form_announcement_title_hint">Título</string>
+    <string name="form_announcement_description">Descripción del anuncio</string>
+    <string name="form_announcement_description_hint">Descripción</string>
+    <string name="form_announcement_publish">Publicar</string>
+    <string name="form_announcement_location">Location</string>
+
+    <string name="form_verify_merchant_title">Merchant verification</string>
+    <string name="form_verify_merchant_shop_name">Shop name</string>
+    <string name="form_verify_merchant_title_hint">Name</string>
+    <string name="form_verify_merchant_description">Shop description</string>
+    <string name="form_verify_merchant_description_hint">Description</string>
+    <string name="form_verify_merchant_location">Location</string>
+    <string name="form_verify_merchant_button">Verify</string>
+
+    <string name="coupon_title">Discount coupon</string>
+    <string name="coupon_buy">BUY</string>
+    <string name="coupon_clients_button">Customers</string>
+    <string name="coupon_delete_button">Delete</string>
+
+    <string name="coupon_shop_name">Customers</string>
+    <string name="coupon_price">Price: </string>
+
+    <string name="announcement_delete_button">Delete</string>
+    <string name="announcement_comment_button">Comment</string>
+
+    <string name="chat_hint">Write something</string>
+
+    <string name="lang_cat">Catalan</string>
+    <string name="lang_eng">English</string>
+    <string name="lang_esp">Spanish</string>
+    <string name="start">Start</string>
+
+    <string name="dialog_server_ko_title">Warning</string>
+    <string name="dialog_server_ko_message">Server unreachabe</string>
+
+</resources>

@@ -6,11 +6,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -23,8 +21,7 @@ import pes.agorapp.JSONObjects.Coupon;
 import pes.agorapp.R;
 import pes.agorapp.customComponents.DialogServerKO;
 import pes.agorapp.globals.PreferencesAgorApp;
-import pes.agorapp.helpers.CouponAdapter;
-import pes.agorapp.helpers.ObjectsHelper;
+import pes.agorapp.adapters.CouponAdapter;
 import pes.agorapp.network.AgorAppApiManager;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -91,10 +88,8 @@ public class MarketplaceFragment extends Fragment implements View.OnClickListene
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Construct the data source
-        // Create the adapter to convert the array to views
         final CouponAdapter adapter = new CouponAdapter(getActivity(), coupons);
-        // Attach the adapter to a ListView
+
         final ListView listView = (ListView) view.findViewById(R.id.listCoupons);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -104,8 +99,6 @@ public class MarketplaceFragment extends Fragment implements View.OnClickListene
             }
         });
         listView.setAdapter(adapter);
-        //coupons = ObjectsHelper.getFakeCoupons();
-        //adapter.addAll(coupons);
 
         //CRIDA A LA API PER A MOSTRAR TOTS ELS VALS
         AgorAppApiManager

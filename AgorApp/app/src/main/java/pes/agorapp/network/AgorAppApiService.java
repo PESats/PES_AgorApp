@@ -6,6 +6,7 @@ import com.twitter.sdk.android.core.models.User;
 import java.util.ArrayList;
 
 import pes.agorapp.JSONObjects.Announcement;
+import pes.agorapp.JSONObjects.Bid;
 import pes.agorapp.JSONObjects.Botiga;
 import pes.agorapp.JSONObjects.Comment;
 import pes.agorapp.JSONObjects.Coupon;
@@ -36,12 +37,6 @@ public interface AgorAppApiService {
     @POST("users/logout")
     Call<UserAgorApp> logoutUser(
             @Body JsonObject user
-    );
-
-    @PUT("users")
-    Call<UserAgorApp> upgradeBotiguer(
-            @Query("user_id") int user_id,
-            @Query("active_token") String active_token
     );
 
     /* ANUNCIS */
@@ -120,38 +115,67 @@ public interface AgorAppApiService {
 
     @GET("coupons")
     Call<ArrayList<Coupon>> getCoupons(
-            @Query("user_id") int id,
-            @Query("active_token") String token
-    );
-
-    @GET("users/{user_id}/bought_coupons")
-    Call<ArrayList<Coupon>> getUserCoupons(
-            @Path("user_id") int id,
-            @Query("active_token") String token
-    );
-
-    @GET("users/{user_id}/bought_coupons/{id}")
-    Call<Coupon> getUserCoupon(
-            @Path("user_id") int id,
-            @Path("id") int coupon_id,
-            @Query("active_token") String token
-    );
-
-    @POST("users/{user_id}/bought_coupons/")
-    Call<Coupon> buyCoupon(
             @Query("user_id") int user_id,
-            @Query("active_token") String active_token,
-            @Query("id") int coupon_id
+            @Query("active_token") String active_token
     );
 
+    @GET("coupon/{id}")
+    Call<Coupon> getCoupon(
+            @Path("id") int id,
+            @Query("user_id") int user_id,
+            @Query("active_token") String active_token
+    );
 
-    /*
     @POST("coupons")
-    Call<ValDescompte> createValDescompte(
+    Call<Coupon> createCoupon(
             @Query("user_id") int user_id,
             @Query("active_token") String active_token,
-            @Body JsonObject valDescompte
+            @Body JsonObject coupon
     );
-    */
+
+    @DELETE("coupon/{id}")
+    Call<Coupon> deleteCoupon(
+            @Path("id") int id,
+            @Query("user_id") int user_id,
+            @Query("active_token") String active_token
+    );
+
+    @GET("users/{id}/bought_coupons")
+    Call<ArrayList<Coupon>> getBoughtCoupons(
+            @Path("id") int id,
+            @Query("active_token") String active_token
+    );
+
+    @GET("users/{id}/bought_coupons/{couponId}")
+    Call<Coupon> getBoughtCoupon(
+            @Path("id") int id,
+            @Path("couponId") int coupon_id,
+            @Query("user_id") int user_id,
+            @Query("active_token") String active_token
+    );
+
+    @POST("users/{id}/bought_coupons")
+    Call<Coupon> buyCoupon(
+            @Path("id") int id,
+            @Query("user_id") int user_id,
+            @Query("active_token") String active_token,
+            @Query("coupon_id") Integer coupon_id
+    );
+
+    @DELETE("users/{id}/bought_coupons/{couponId}")
+    Call<Coupon> spendCoupon(
+            @Path("id") int id,
+            @Path("couponId") int coupon_id,
+            @Query("user_id") int user_id,
+            @Query("active_token") String active_token
+    );
+
+    /* LICITACIONS (BIDS) */
+
+    @GET("bids")
+    Call<ArrayList<Bid>> getBids(
+            @Query("user_id") int user_id,
+            @Query("active_token") String active_token
+    );
 
 }

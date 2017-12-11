@@ -3,9 +3,6 @@ package pes.agorapp.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +17,7 @@ import pes.agorapp.JSONObjects.Coupon;
 import pes.agorapp.R;
 import pes.agorapp.customComponents.DialogServerKO;
 import pes.agorapp.globals.PreferencesAgorApp;
-import pes.agorapp.helpers.CouponsAdapter;
+import pes.agorapp.adapters.CouponsAdapter;
 import pes.agorapp.network.AgorAppApiManager;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -29,7 +26,7 @@ import retrofit2.Response;
 public class CouponListFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
-    List<Coupon>  coupons = new ArrayList<>();
+    List<Coupon> coupons = new ArrayList<>();
     private PreferencesAgorApp prefs;
 
 
@@ -89,6 +86,8 @@ public class CouponListFragment extends Fragment {
     public interface OnFragmentInteractionListener {
 
         void onMarketplaceOpen();
+
+        void onCouponSelected(Coupon coupon);
     }
 
     @Override
@@ -103,20 +102,19 @@ public class CouponListFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Coupon coupon = (Coupon) listView.getItemAtPosition(position);
-                //mListener.onCouponSelected(coupon);
+                Coupon coupon = (Coupon) listView.getItemAtPosition(position);
+                mListener.onCouponSelected(coupon);
             }
         });
         listView.setAdapter(adapter);
         AgorAppApiManager
                 .getService()
-                .getUserCoupons(Integer.valueOf(prefs.getId()), prefs.getActiveToken())
+                .getBoughtCoupons(Integer.valueOf(prefs.getId()), prefs.getActiveToken())
                 .enqueue(new retrofit2.Callback<ArrayList<Coupon>>() {
                     @Override
                     public void onResponse(Call<ArrayList<Coupon>> call, Response<ArrayList<Coupon>> response) {
                         coupons = response.body();
                         adapter.addAll(coupons);
-                        Log.d("this is my array", "arr: " + response.body().toString());
                     }
 
                     @Override
