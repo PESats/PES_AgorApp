@@ -35,7 +35,7 @@ public class CouponsAdapter extends ArrayAdapter<Coupon> {
         TextView disc = (TextView) convertView.findViewById(R.id.item_coupon_discount);
         TextView price = (TextView) convertView.findViewById(R.id.item_coupon_price);
         // Populate the data into the template view using the data object
-        estab.setText(coupon.getEstablishment());
+        estab.setText(coupon.getShopId());
         disc.setText(coupon.getDiscount());
         price.setText(coupon.getPrice());
 

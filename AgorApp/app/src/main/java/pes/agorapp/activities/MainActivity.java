@@ -17,7 +17,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,8 +33,6 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.gson.JsonObject;
-
-import java.util.ArrayList;
 
 import pes.agorapp.JSONObjects.Announcement;
 import pes.agorapp.JSONObjects.Chat;
@@ -368,7 +365,7 @@ public class MainActivity
         TextView tvDiscount = (TextView) dialogCoupon.findViewById(R.id.coupon_text_discount);
         TextView tvPrice = (TextView) dialogCoupon.findViewById(R.id.coupon_text_price);
 
-        tvBotiga.setText(coupon.getEstablishment());
+        tvBotiga.setText(String.valueOf(coupon.getShopId()));
 
         String discount = String.valueOf(coupon.getDiscount()) + "%";
         tvDiscount.setText(discount);
@@ -416,7 +413,7 @@ public class MainActivity
             }
         });
 
-        if (!String.valueOf(coupon.getUser_id()).equals(prefs.getId())) {
+        if (!String.valueOf(coupon.getShopId()).equals(prefs.getShopId())) {
             deleteButton.setVisibility(View.GONE);
             customersButton.setVisibility(View.GONE);
         }

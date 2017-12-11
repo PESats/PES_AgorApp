@@ -209,7 +209,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         TextView profileNameTextView = (TextView) view.findViewById(R.id.profile_name);
         profileNameTextView.setText(userName);
         String userType = "Ciutadà";
-        if (prefs.hasShop()) userType = "Comerciant verificat: " + prefs.getShopName();
+        if (prefs.hasShop()) userType = "Comerciant verificat: " + prefs.getShopId();
         TextView profileTypeTextView = (TextView) view.findViewById(R.id.profile_verified);
         profileTypeTextView.setText(userType);
     }

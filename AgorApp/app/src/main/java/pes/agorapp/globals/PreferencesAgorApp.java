@@ -167,6 +167,8 @@ public class PreferencesAgorApp {
         editor.remove(ACTIVE_TOKEN);
         editor.remove(COINS);
         editor.remove(SHOP_ID);
+        editor.remove(HAS_SHOP);
+        editor.remove(SHOP_NAME);
         editor.remove(LANGUAGE_SAVED);
         editor.remove(HAS_LANGUAGE);
         editor.apply();

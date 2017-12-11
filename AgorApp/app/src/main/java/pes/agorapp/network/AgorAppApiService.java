@@ -111,6 +111,13 @@ public interface AgorAppApiService {
             @Body JsonObject shop
     );
 
+    @GET("shops/{id}")
+    Call<Botiga> getShop(
+            @Path("id") int id,
+            @Query("user_id") int user_id,
+            @Query("active_token") String active_token
+    );
+
     /* CUPONS DE DESCOMPTE */
 
     @GET("coupons")

@@ -61,6 +61,27 @@
         android:max="100"
         android:textAlignment="center" />
 
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/form_verify_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Preu"
+        android:textAlignment="center" />
+
+    <SeekBar
+        android:id="@+id/seekBar_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/price_absolute"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/form_publish_marketplace_discount0"
+        android:max="1000"
+        android:textAlignment="center" />
+
     <Button
         android:layout_marginTop="10dp"
         android:id="@+id/btn_marketplace_publish"

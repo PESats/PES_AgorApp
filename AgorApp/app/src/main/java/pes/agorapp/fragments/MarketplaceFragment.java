@@ -13,6 +13,10 @@ import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.google.gson.JsonObject;
+
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,8 +39,9 @@ public class MarketplaceFragment extends Fragment implements View.OnClickListene
     private PreferencesAgorApp prefs;
     private Dialog dialogForm;
     private Button marketplace_publish;
-    private SeekBar sbDiscount;
-    private TextView disc;
+    private SeekBar sbDiscount, sbPrice;
+    private TextView disc, pri;
+    private Integer discount, price;
 
     public MarketplaceFragment() {
         // Required empty public constructor
@@ -139,6 +144,27 @@ public class MarketplaceFragment extends Fragment implements View.OnClickListene
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
                 disc.setText(String.valueOf(progress) + "%");
+                discount = progress;
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        sbPrice = (SeekBar) dialogForm.findViewById(R.id.seekBar_price);
+        pri = (TextView) dialogForm.findViewById(R.id.price_absolute);
+
+        sbPrice.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
+                pri.setText(String.valueOf(progress) + " AgoraCoins");
+                price = progress;
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
@@ -156,7 +182,32 @@ public class MarketplaceFragment extends Fragment implements View.OnClickListene
         publishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //
+
+                JsonObject json = new JsonObject();
+                json.addProperty("title", prefs.getShopName());
+                //json.addProperty("description", "no obligatori");
+                json.addProperty("price", price);
+                json.addProperty("discount", discount);
+                json.addProperty("shop_id", prefs.getShopId());
+
+                JsonObject jsonCoupon = new JsonObject();
+                jsonCoupon.add("coupon", json);
+
+                AgorAppApiManager
+                        .getService()
+                        .createCoupon(Integer.valueOf(prefs.getId()), prefs.getActiveToken(), jsonCoupon)
+                        .enqueue(new retrofit2.Callback<Coupon>() {
+                            @Override
+                            public void onResponse(Call<Coupon> call, Response<Coupon> response) {
+                                System.out.println(response.code());
+                                System.out.println(response.body().getPrice());
+                            }
+
+                            @Override
+                            public void onFailure(Call<Coupon> call, Throwable t) {
+                                new DialogServerKO(getActivity()).show();
+                            }
+                        });
             }
         });
     }
