@@ -45,6 +45,7 @@ public class MarketplaceFragment extends Fragment implements View.OnClickListene
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
+        prefs = new PreferencesAgorApp(getActivity());
         return inflater.inflate(R.layout.fragment_marketplace, container, false);
     }
 
@@ -98,12 +99,9 @@ public class MarketplaceFragment extends Fragment implements View.OnClickListene
         });
         listView.setAdapter(adapter);
 
-        Integer user_id = Integer.valueOf(prefs.getId());
-        String active_token = prefs.getActiveToken();
-
         AgorAppApiManager
                 .getService()
-                .getCoupons(user_id, active_token)
+                .getCoupons(Integer.valueOf(prefs.getId()), prefs.getActiveToken())
                 .enqueue(new retrofit2.Callback<ArrayList<Coupon>>() {
                     @Override
                     public void onResponse(Call<ArrayList<Coupon>> call, Response<ArrayList<Coupon>> response) {

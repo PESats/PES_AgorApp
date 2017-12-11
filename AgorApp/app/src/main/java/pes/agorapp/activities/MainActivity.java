@@ -17,6 +17,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,6 +34,8 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.gson.JsonObject;
+
+import java.util.ArrayList;
 
 import pes.agorapp.JSONObjects.Announcement;
 import pes.agorapp.JSONObjects.Chat;
@@ -356,7 +359,7 @@ public class MainActivity
     }
 
     @Override
-    public void onCouponSelected(Coupon coupon) {
+    public void onCouponSelected(final Coupon coupon) {
         Dialog dialogCoupon = new Dialog(this);
         dialogCoupon.setContentView(R.layout.show_coupon);
         dialogCoupon.show();
@@ -382,17 +385,40 @@ public class MainActivity
             }
         });
 
+        //Customers
+        Button customersButton = (Button) dialogCoupon.findViewById(R.id.btn_coupon_customers);
+        customersButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //popUpDeleteCoupon();
+            }
+        });
+
         //Buy
         Button buyButton = (Button) dialogCoupon.findViewById(R.id.btn_coupon_buy);
         buyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //crida API buy coupon
+                AgorAppApiManager
+                        .getService()
+                        .buyCoupon(Integer.valueOf(prefs.getId()), Integer.valueOf(prefs.getId()), prefs.getActiveToken(), coupon.getId())
+                        .enqueue(new retrofit2.Callback<Coupon>() {
+                            @Override
+                            public void onResponse(Call<Coupon> call, Response<Coupon> response) {
+                                //cupó comprat
+                            }
+
+                            @Override
+                            public void onFailure(Call<Coupon> call, Throwable t) {
+                                System.out.println("Something went wrong!");
+                            }
+                        });
             }
         });
 
         if (!String.valueOf(coupon.getUser_id()).equals(prefs.getId())) {
             deleteButton.setVisibility(View.GONE);
+            customersButton.setVisibility(View.GONE);
         }
     }
 

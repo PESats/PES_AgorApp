@@ -6,6 +6,7 @@ import com.twitter.sdk.android.core.models.User;
 import java.util.ArrayList;
 
 import pes.agorapp.JSONObjects.Announcement;
+import pes.agorapp.JSONObjects.Bid;
 import pes.agorapp.JSONObjects.Botiga;
 import pes.agorapp.JSONObjects.Comment;
 import pes.agorapp.JSONObjects.Coupon;
@@ -36,12 +37,6 @@ public interface AgorAppApiService {
     @POST("users/logout")
     Call<UserAgorApp> logoutUser(
             @Body JsonObject user
-    );
-
-    @PUT("users")
-    Call<UserAgorApp> upgradeBotiguer(
-            @Query("user_id") int user_id,
-            @Query("active_token") String active_token
     );
 
     /* ANUNCIS */
@@ -141,6 +136,45 @@ public interface AgorAppApiService {
     @DELETE("coupon/{id}")
     Call<Coupon> deleteCoupon(
             @Path("id") int id,
+            @Query("user_id") int user_id,
+            @Query("active_token") String active_token
+    );
+
+    @GET("users/{id}/bought_coupons")
+    Call<ArrayList<Coupon>> getBoughtCoupons(
+            @Path("id") int id,
+            @Query("user_id") int user_id,
+            @Query("active_token") String active_token
+    );
+
+    @GET("users/{id}/bought_coupons/{couponId}")
+    Call<Coupon> getBoughtCoupon(
+            @Path("id") int id,
+            @Path("couponId") int coupon_id,
+            @Query("user_id") int user_id,
+            @Query("active_token") String active_token
+    );
+
+    @POST("users/{id}/bought_coupons")
+    Call<Coupon> buyCoupon(
+            @Path("id") int id,
+            @Query("user_id") int user_id,
+            @Query("active_token") String active_token,
+            @Query("coupon_id") Integer coupon_id
+    );
+
+    @DELETE("users/{id}/bought_coupons/{couponId}")
+    Call<Coupon> spendCoupon(
+            @Path("id") int id,
+            @Path("couponId") int coupon_id,
+            @Query("user_id") int user_id,
+            @Query("active_token") String active_token
+    );
+
+    /* LICITACIONS (BIDS) */
+
+    @GET("bids")
+    Call<ArrayList<Bid>> getBids(
             @Query("user_id") int user_id,
             @Query("active_token") String active_token
     );
