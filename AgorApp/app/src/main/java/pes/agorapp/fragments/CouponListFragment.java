@@ -114,6 +114,7 @@ public class CouponListFragment extends Fragment {
                     @Override
                     public void onResponse(Call<ArrayList<Coupon>> call, Response<ArrayList<Coupon>> response) {
                         coupons = response.body();
+                        //System.out.println("descompte: " + coupons.get(0).getDiscount());
                         adapter.addAll(coupons);
                     }
 
