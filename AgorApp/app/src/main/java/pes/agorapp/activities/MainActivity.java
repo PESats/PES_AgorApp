@@ -18,6 +18,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,6 +33,7 @@ import pes.agorapp.JSONObjects.Chat;
 import pes.agorapp.JSONObjects.Comment;
 import pes.agorapp.JSONObjects.Coupon;
 import pes.agorapp.R;
+import pes.agorapp.customComponents.DialogServerKO;
 import pes.agorapp.fragments.AnnouncementFragment;
 import pes.agorapp.fragments.AnnouncementListFragment;
 import pes.agorapp.fragments.ChatFragment;
@@ -42,6 +44,9 @@ import pes.agorapp.fragments.MapFragment;
 import pes.agorapp.fragments.MarketplaceFragment;
 import pes.agorapp.fragments.ProfileFragment;
 import pes.agorapp.globals.PreferencesAgorApp;
+import pes.agorapp.network.AgorAppApiManager;
+import retrofit2.Call;
+import retrofit2.Response;
 
 
 public class MainActivity
@@ -269,7 +274,9 @@ public class MainActivity
         tvDiscount.setText(String.valueOf(coupon.getDiscount()) + "%");
         tvPrice.setText(String.valueOf(coupon.getPrice()) + " AgoraCoins");
 
-        PreferencesAgorApp prefs = new PreferencesAgorApp(this);
+        final PreferencesAgorApp prefs = new PreferencesAgorApp(this);
+        final int coupon_id = coupon.getId();
+
         //Delete
         Button deleteButton = (Button) dialogCoupon.findViewById(R.id.btn_coupon_delete);
         deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -305,6 +312,21 @@ public class MainActivity
             @Override
             public void onClick(View v) {
                 //crida API buy coupon
+                AgorAppApiManager
+                        .getService()
+                        .buyCoupon(Integer.valueOf(prefs.getId()), prefs.getActiveToken(), coupon_id)
+                        .enqueue(new retrofit2.Callback<Coupon>() {
+                            @Override
+                            public void onResponse(Call<Coupon> call, Response<Coupon> response) {
+                                //Coupon coupon_resp = response.body();
+                            }
+
+                            @Override
+                            public void onFailure(Call<Coupon> call, Throwable t) {
+                                System.out.println("Something went wrong!");
+                                new DialogServerKO(MainActivity.this).show();
+                            }
+                        });
             }
         });
 

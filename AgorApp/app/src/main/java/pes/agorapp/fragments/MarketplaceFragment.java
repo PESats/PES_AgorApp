@@ -14,15 +14,20 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import pes.agorapp.JSONObjects.Coupon;
 import pes.agorapp.R;
+import pes.agorapp.customComponents.DialogServerKO;
 import pes.agorapp.globals.PreferencesAgorApp;
 import pes.agorapp.helpers.CouponAdapter;
 import pes.agorapp.helpers.ObjectsHelper;
+import pes.agorapp.network.AgorAppApiManager;
+import retrofit2.Call;
+import retrofit2.Response;
 
 /**
  * Created by marc on 6/11/17.
@@ -30,7 +35,7 @@ import pes.agorapp.helpers.ObjectsHelper;
 public class MarketplaceFragment extends Fragment implements View.OnClickListener {
 
     private MarketplaceFragment.OnFragmentInteractionListener mListener;
-    List<Coupon> announcements = new ArrayList<>();
+    List<Coupon> coupons = new ArrayList<>();
     private PreferencesAgorApp prefs;
     private Dialog dialogForm;
     private Button marketplace_publish;
@@ -44,6 +49,7 @@ public class MarketplaceFragment extends Fragment implements View.OnClickListene
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
+        prefs = new PreferencesAgorApp(getActivity());
         return inflater.inflate(R.layout.fragment_marketplace, container, false);
     }
 
@@ -87,8 +93,7 @@ public class MarketplaceFragment extends Fragment implements View.OnClickListene
 
         // Construct the data source
         // Create the adapter to convert the array to views
-        List<Coupon> coupons = new ArrayList<>();
-        final CouponAdapter adapter = new CouponAdapter(getActivity(), announcements);
+        final CouponAdapter adapter = new CouponAdapter(getActivity(), coupons);
         // Attach the adapter to a ListView
         final ListView listView = (ListView) view.findViewById(R.id.listCoupons);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -99,10 +104,27 @@ public class MarketplaceFragment extends Fragment implements View.OnClickListene
             }
         });
         listView.setAdapter(adapter);
-        coupons = ObjectsHelper.getFakeCoupons();
-        adapter.addAll(coupons);
+        //coupons = ObjectsHelper.getFakeCoupons();
+        //adapter.addAll(coupons);
 
         //CRIDA A LA API PER A MOSTRAR TOTS ELS VALS
+        AgorAppApiManager
+                .getService()
+                .getCoupons(Integer.valueOf(prefs.getId()), prefs.getActiveToken())
+                .enqueue(new retrofit2.Callback<ArrayList<Coupon>>() {
+                    @Override
+                    public void onResponse(Call<ArrayList<Coupon>> call, Response<ArrayList<Coupon>> response) {
+                        coupons = response.body();
+                        adapter.addAll(coupons);
+                        Log.d("this is my array", "arr: " + response.body().toString());
+                    }
+
+                    @Override
+                    public void onFailure(Call<ArrayList<Coupon>> call, Throwable t) {
+                        System.out.println("Something went wrong!");
+                        new DialogServerKO(getActivity()).show();
+                    }
+                });
 
         view.findViewById(R.id.btn_marketplace_publish).setOnClickListener(this);
     }

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import pes.agorapp.JSONObjects.Announcement;
 import pes.agorapp.JSONObjects.Botiga;
 import pes.agorapp.JSONObjects.Comment;
+import pes.agorapp.JSONObjects.Coupon;
 import pes.agorapp.JSONObjects.UserAgorApp;
 
 import retrofit2.Call;
@@ -116,6 +117,33 @@ public interface AgorAppApiService {
     );
 
     /* CUPONS DE DESCOMPTE */
+
+    @GET("coupons")
+    Call<ArrayList<Coupon>> getCoupons(
+            @Query("user_id") int id,
+            @Query("active_token") String token
+    );
+
+    @GET("users/{user_id}/bought_coupons")
+    Call<ArrayList<Coupon>> getUserCoupons(
+            @Path("user_id") int id,
+            @Query("active_token") String token
+    );
+
+    @GET("users/{user_id}/bought_coupons/{id}")
+    Call<Coupon> getUserCoupon(
+            @Path("user_id") int id,
+            @Path("id") int coupon_id,
+            @Query("active_token") String token
+    );
+
+    @POST("users/{user_id}/bought_coupons/")
+    Call<Coupon> buyCoupon(
+            @Query("user_id") int user_id,
+            @Query("active_token") String active_token,
+            @Query("id") int coupon_id
+    );
+
 
     /*
     @POST("coupons")

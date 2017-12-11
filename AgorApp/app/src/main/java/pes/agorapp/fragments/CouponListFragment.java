@@ -108,19 +108,15 @@ public class CouponListFragment extends Fragment {
             }
         });
         listView.setAdapter(adapter);
-        /*AgorAppApiManager
+        AgorAppApiManager
                 .getService()
-                .getAnnouncements(Integer.valueOf(prefs.getId()), prefs.getActiveToken())
+                .getUserCoupons(Integer.valueOf(prefs.getId()), prefs.getActiveToken())
                 .enqueue(new retrofit2.Callback<ArrayList<Coupon>>() {
                     @Override
                     public void onResponse(Call<ArrayList<Coupon>> call, Response<ArrayList<Coupon>> response) {
-
-                        //Log.i("response code", String.valueOf(response.code()));
-                        //Log.d("this is my array", "arr: " + response.body().toString());
                         coupons = response.body();
                         adapter.addAll(coupons);
                         Log.d("this is my array", "arr: " + response.body().toString());
-
                     }
 
                     @Override
@@ -128,6 +124,6 @@ public class CouponListFragment extends Fragment {
                         System.out.println("Something went wrong!");
                         new DialogServerKO(getActivity()).show();
                     }
-                });*/
+                });
     }
 }
