@@ -16,6 +16,8 @@ import android.widget.TextView;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Objects;
+
 import pes.agorapp.JSONObjects.Chat;
 import pes.agorapp.JSONObjects.ChatMessage;
 import pes.agorapp.R;
@@ -116,6 +118,7 @@ public class ChatFragment extends Fragment {
                     messageText.setText(model.getMessageText());
                     messageUser.setText(model.getMessageUser());
 
+                    v.setBackgroundResource(Objects.equals(model.getMessageUser(), prefs.getUserName()) ? R.drawable.border : R.drawable.border_green);
                     // Format the date before showing it
                     messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)",
                             model.getMessageTime()));
