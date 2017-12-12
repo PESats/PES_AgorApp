@@ -54,8 +54,9 @@ public interface AgorAppApiService {
 
     @GET("anuncis/{id}")
     Call<Announcement> getAnnouncement(
-            @Path("user_id") int id,
-            @Path("active_token") String token
+            @Path("id") int idAnunci,
+            @Query("user_id") int idUser,
+            @Query("active_token") String token
     );
 
     @POST("anuncis")

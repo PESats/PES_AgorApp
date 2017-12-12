@@ -49,6 +49,7 @@ import pes.agorapp.fragments.CouponListFragment;
 import pes.agorapp.fragments.MapFragment;
 import pes.agorapp.fragments.MarketplaceFragment;
 import pes.agorapp.fragments.ProfileFragment;
+import pes.agorapp.fragments.SwapAnnouncementBid;
 import pes.agorapp.globals.PreferencesAgorApp;
 import pes.agorapp.network.AgorAppApiManager;
 import retrofit2.Call;
@@ -187,6 +188,11 @@ public class MainActivity
             fragmentTransaction.commit();
 //            chatListFragment.setSettings();
         } else if (id == R.id.nav_manage) {
+            /*SwapAnnouncementBid swapAnnouncementBidFragment = new SwapAnnouncementBid();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, swapAnnouncementBidFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();*/
             //printProfile();
         } else if (id == R.id.nav_share) {
             //printProfile();
@@ -209,7 +215,14 @@ public class MainActivity
 
     @Override
     public void onAnnouncementSelected(Announcement announcement) {
-        AnnouncementFragment newFragment = new AnnouncementFragment();
+        SwapAnnouncementBid swapAnnouncementBidFragment = new SwapAnnouncementBid();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, swapAnnouncementBidFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+        swapAnnouncementBidFragment.setAnnouncement(announcement);
+
+        /*AnnouncementFragment newFragment = new AnnouncementFragment();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
@@ -218,7 +231,7 @@ public class MainActivity
 
         transaction.commit();
 
-        newFragment.setAnnouncement(announcement);
+        newFragment.setAnnouncement(announcement);*/
     }
 
     @Override
