@@ -6,8 +6,8 @@
 
     <string name="action_settings">Settings</string>
 
-    <string name="com.twitter.sdk.android.CONSUMER_KEY">uihuD7MlWyOX46SAluZDeZxNS</string>
-    <string name="com.twitter.sdk.android.CONSUMER_SECRET">96x570TCgJJuOWSKVKW6UsULWDJcyRn2Oac9kBeCSkFyerk1HC</string>
+    <string name="com.twitter.sdk.android.CONSUMER_KEY">n8mQqGkYavPFFBMe4lfaHBie5</string>
+    <string name="com.twitter.sdk.android.CONSUMER_SECRET">uappMuJN7zvaU5zslqFIllHVy1y4rK6rl3ULvvbXFqtVlFJ3cQ</string>
 
     <string name="facebook_app_id">740588166129564</string>
     <string name="fb_login_protocol_scheme">fb740588166129564</string>
