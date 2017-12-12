@@ -368,6 +368,8 @@ public class LoginActivity extends AppCompatActivity
         prefs.setCoins(coins);
         prefs.setActiveToken(active_token);
         if (shop != null) prefs.setShop(shop.getId(), shop.getName());
+
+        prefs.checkPreferences();
     }
 
     private void loginok() {
