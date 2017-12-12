@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <TextView
+        android:id="@+id/item_bid_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Hola"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/item_separator"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/item_bid_title"
+        android:textSize="30sp"
+        android:text="|" />
+
+    <TextView
+        android:id="@+id/item_bid_coins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/item_separator"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        tools:text="200 coins" />
+
+    <TextView
+        android:id="@+id/item_separator2"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/item_bid_coins"
+        android:textSize="30sp"
+        android:text="|" />
+
+    <Button
+        android:id="@+id/item_bid_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/item_separator2"
+        android:textColor="@color/colorPrimary"
+        android:text="Aceptar" />
+
+</RelativeLayout>

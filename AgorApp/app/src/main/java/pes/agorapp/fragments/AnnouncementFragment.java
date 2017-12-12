@@ -46,6 +46,8 @@ public class AnnouncementFragment extends Fragment {
     List<Comment> comments = new ArrayList<>();
     private AlertDialog.Builder comment_dialog;
     private EditText new_comment;
+    private int idAnunci;
+    private View mView;
 
 
     public AnnouncementFragment() {
@@ -69,12 +71,39 @@ public class AnnouncementFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        prefs = new PreferencesAgorApp(getActivity());
+        if (getArguments() != null) {
+            idAnunci = getArguments().getInt("id");
+            inflateAnunci();
+        }
+    }
+
+    private void inflateAnunci() {
+        AgorAppApiManager
+                .getService()
+                .getAnnouncement(idAnunci, Integer.valueOf(prefs.getId()), prefs.getActiveToken())
+                .enqueue(new retrofit2.Callback<Announcement>() {
+                    @Override
+                    public void onResponse(Call<Announcement> call, Response<Announcement> response) {
+
+                        //Log.i("response code", String.valueOf(response.code()));
+                        //Log.d("this is my arra3y", "arr: " + response.body().toString());
+                        announcement = response.body();
+                        inflateAnnouncement();
+                    }
+
+                    @Override
+                    public void onFailure(Call<Announcement> call, Throwable t) {
+                        System.out.println("Something went wrong!");
+                        new DialogServerKO(getActivity()).show();
+                    }
+                });
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        prefs = new PreferencesAgorApp(getActivity());
+
         // Inflate the layout for this fragment
 
         return inflater.inflate(R.layout.fragment_announcement, container, false);
@@ -115,6 +144,7 @@ public class AnnouncementFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mView = view;
 
         prefs = new PreferencesAgorApp(getActivity());
 
@@ -168,17 +198,21 @@ public class AnnouncementFragment extends Fragment {
             }
         });
 
-        final TextView title = (TextView) view.findViewById(R.id.announcement_title);
+
+    }
+
+    void inflateAnnouncement() {
+        final TextView title = (TextView) mView.findViewById(R.id.announcement_title);
         title.setText(this.announcement.getTitle());
 
-        final TextView text = (TextView) view.findViewById(R.id.announcement_text);
+        final TextView text = (TextView) mView.findViewById(R.id.announcement_text);
         text.setText(this.announcement.getDescription());
 
-        final TextView author = (TextView) view.findViewById(R.id.announcement_author);
+        final TextView author = (TextView) mView.findViewById(R.id.announcement_author);
         author.setText(String.valueOf(this.announcement.getUser().getId()));
 
         //buttons
-        Button buttonDelete = (Button) view.findViewById(R.id.announcement_delete);
+        Button buttonDelete = (Button) mView.findViewById(R.id.announcement_delete);
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -208,13 +242,12 @@ public class AnnouncementFragment extends Fragment {
         // Create the adapter to convert the array to views
         final CommentsAdapter adapter = new CommentsAdapter(getActivity(), comments);
         // Attach the adapter to a ListView
-        final ListView listView = (ListView) view.findViewById(R.id.comments_list);
+        final ListView listView = (ListView) mView.findViewById(R.id.comments_list);
         listView.setAdapter(adapter);
         //comments = announcement.getComments();
         AgorAppApiManager
                 .getService()
                 .getComments(announcement.getId(), Integer.valueOf(prefs.getId()), prefs.getActiveToken())
-                //.getAnnouncements(16, "aujEXUFZaWPotQhujtd9cMzL")
                 .enqueue(new retrofit2.Callback<ArrayList<Comment>>() {
                     @Override
                     public void onResponse(Call<ArrayList<Comment>> call, Response<ArrayList<Comment>> response) {
@@ -233,9 +266,5 @@ public class AnnouncementFragment extends Fragment {
                         new DialogServerKO(getActivity()).show();
                     }
                 });
-    }
-
-    public void setAnnouncement(Announcement anAnnouncement) {
-        this.announcement = anAnnouncement;
     }
 }
