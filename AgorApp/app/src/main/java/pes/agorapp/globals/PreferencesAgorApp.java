@@ -157,28 +157,14 @@ public class PreferencesAgorApp {
     }
 
     public void deleteSession(){
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.remove(NAME);
-        editor.remove(ID);
-        editor.remove(IMAGE_URL);
-        editor.remove(EMAIL);
-        editor.remove(PLATFORM_LOGIN);
-        editor.remove(LEVEL);
-        editor.remove(ACTIVE_TOKEN);
-        editor.remove(COINS);
-        editor.remove(SHOP_ID);
-        editor.remove(HAS_SHOP);
-        editor.remove(SHOP_NAME);
-        editor.remove(LANGUAGE_SAVED);
-        editor.remove(HAS_LANGUAGE);
-        editor.apply();
+        prefs.edit().clear().apply();
     }
 
     public void checkPreferences(){
-        Log.i("Id: ", getId() + "");
-        Log.i("Name: ", getUserName() + "");
-        Log.i("Email: ", getEmail() + "");
-        Log.i("user_level", getLevel()+"");
+        Log.i("Id: ", getId() + " ");
+        Log.i("Name: ", getUserName() + " ");
+        Log.i("Email: ", getEmail() + " ");
+        Log.i("user_level", getLevel()+ " ");
         Log.i("version", getAppVersion());
         Log.i("platform", getPlatform());
         Log.i("Token", getActiveToken());
