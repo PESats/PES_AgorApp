@@ -16,7 +16,7 @@ import java.util.List;
 import pes.agorapp.JSONObjects.Bid;
 import pes.agorapp.JSONObjects.Chat;
 import pes.agorapp.R;
-import pes.agorapp.helpers.ChatsAdapter;
+import pes.agorapp.adapters.ChatsAdapter;
 import pes.agorapp.helpers.ObjectsHelper;
 
 
@@ -74,7 +74,7 @@ public class ChatListFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        chats = requestChats();
+        requestChats();
         adapter = new ChatsAdapter(getActivity(), chats);
         // Attach the adapter to a ListView
         final ListView listView = (ListView) getView().findViewById(R.id.listChats);
@@ -88,10 +88,9 @@ public class ChatListFragment extends Fragment {
         listView.setAdapter(adapter);
     }
 
-    private List<Chat> requestChats() {
-        List<Chat> chats = new ArrayList<>();
+    private void requestChats() {
         List<Bid> bids = ObjectsHelper.getFakeBids();
-
+        chats.clear();
         for (Bid bid : bids) {
           Chat chat = new Chat();
           chat.setUser(bid.getUser());
@@ -101,6 +100,5 @@ public class ChatListFragment extends Fragment {
 
           chats.add(chat);
         }
-        return chats;
     }
 }

@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -18,28 +17,45 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.AutocompleteFilter;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.gson.JsonObject;
 
 import pes.agorapp.JSONObjects.Announcement;
 import pes.agorapp.JSONObjects.Chat;
 import pes.agorapp.JSONObjects.Comment;
 import pes.agorapp.JSONObjects.Coupon;
+import pes.agorapp.JSONObjects.Location;
 import pes.agorapp.R;
+import pes.agorapp.customComponents.DialogServerKO;
 import pes.agorapp.fragments.AnnouncementFragment;
 import pes.agorapp.fragments.AnnouncementListFragment;
 import pes.agorapp.fragments.ChatFragment;
 import pes.agorapp.fragments.ChatListFragment;
-import pes.agorapp.fragments.FormAnnouncementFragment;
+import pes.agorapp.fragments.CouponListFragment;
 import pes.agorapp.fragments.MapFragment;
 import pes.agorapp.fragments.MarketplaceFragment;
 import pes.agorapp.fragments.ProfileFragment;
+import pes.agorapp.fragments.SwapAnnouncementBid;
 import pes.agorapp.globals.PreferencesAgorApp;
+import pes.agorapp.network.AgorAppApiManager;
+import retrofit2.Call;
+import retrofit2.Response;
 
 
 public class MainActivity
@@ -49,7 +65,12 @@ public class MainActivity
         AnnouncementListFragment.OnFragmentInteractionListener,
         MapFragment.OnFragmentInteractionListener,
         ChatListFragment.OnFragmentInteractionListener,
-        MarketplaceFragment.OnFragmentInteractionListener {
+        MarketplaceFragment.OnFragmentInteractionListener,
+        CouponListFragment.OnFragmentInteractionListener{
+
+    private PreferencesAgorApp prefs;
+    private Location locAnn;
+    private Dialog dialogForm, dialogCoupon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,12 +78,14 @@ public class MainActivity
 
         setContentView(R.layout.activity_main);
 
+        prefs = new PreferencesAgorApp(this);
+
         checkPermissions();
 
         MapFragment mapFragment = new MapFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, mapFragment);
-        //fragmentTransaction.addToBackStack(null);
+
         fragmentTransaction.commit();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -120,12 +143,8 @@ public class MainActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -155,6 +174,14 @@ public class MainActivity
             fragmentTransaction.replace(R.id.fragment_container, listFragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
+        } else if (id == R.id.coupons_list) {
+            CouponListFragment listFragment = new CouponListFragment();
+            listFragment.setArguments(getIntent().getExtras());
+            //CAL REFACTORING!!!
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, listFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
         } else if (id == R.id.nav_chat) {
             ChatListFragment chatListFragment = new ChatListFragment();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -163,6 +190,11 @@ public class MainActivity
             fragmentTransaction.commit();
 //            chatListFragment.setSettings();
         } else if (id == R.id.nav_manage) {
+            /*SwapAnnouncementBid swapAnnouncementBidFragment = new SwapAnnouncementBid();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, swapAnnouncementBidFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();*/
             //printProfile();
         } else if (id == R.id.nav_share) {
             //printProfile();
@@ -185,31 +217,125 @@ public class MainActivity
 
     @Override
     public void onAnnouncementSelected(Announcement announcement) {
-        // Call the other fragment
-        // Create fragment and give it an argument specifying the article it should show
-        AnnouncementFragment newFragment = new AnnouncementFragment();
+        SwapAnnouncementBid swapAnnouncementBidFragment = new SwapAnnouncementBid();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, swapAnnouncementBidFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+        swapAnnouncementBidFragment.setAnnouncement(announcement);
+
+        /*AnnouncementFragment newFragment = new AnnouncementFragment();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        // Replace whatever is in the fragment_container view with this fragment,
-        // and add the transaction to the back stack so the user can navigate back
         transaction.replace(R.id.fragment_container, newFragment, "anuncement");
         transaction.addToBackStack(null);
 
-        // Commit the transaction
         transaction.commit();
 
-        newFragment.setAnnouncement(announcement);
+        newFragment.setAnnouncement(announcement);*/
     }
 
     @Override
     public void createNewAnnouncement() {
-        FormAnnouncementFragment formAnnouncementFragment = new FormAnnouncementFragment();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, formAnnouncementFragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+
+        dialogForm = new Dialog(this);
+        dialogForm.setContentView(R.layout.form_announcement);
+        dialogForm.show();
+
+        final EditText etTitle = (EditText) dialogForm.findViewById(R.id.form_announcement_titleEdit);
+        final EditText etDesc = (EditText) dialogForm.findViewById(R.id.form_announcement_descriptionEdit);
+        final SeekBar sbReward = (SeekBar) dialogForm.findViewById(R.id.form_announcement_rewardEdit); //Limited value of seekbar to be max=1000
+        final TextView rew = (TextView) dialogForm.findViewById(R.id.form_announcement_reward);
+
+        Button btn_form_announcement_publish = (Button) dialogForm.findViewById(R.id.btn_form_announcement_publish);
+        btn_form_announcement_publish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String title = etTitle.getText().toString();
+                String desc = etDesc.getText().toString();
+                String reward = String.valueOf(sbReward.getProgress());
+
+                JsonObject jsonAnn = new JsonObject();
+                jsonAnn.addProperty("title",title);
+                jsonAnn.addProperty("description",desc);
+                jsonAnn.addProperty("reward",reward);
+                jsonAnn.addProperty("latitude",locAnn.getLatitude());
+                jsonAnn.addProperty("longitude", locAnn.getLongitude());
+
+                final JsonObject ann = new JsonObject();
+                ann.add("anunci",jsonAnn);
+
+                int user_id = Integer.valueOf(prefs.getId());
+                String active_token = prefs.getActiveToken();
+
+                AgorAppApiManager
+                        .getService()
+                        .createAnnouncement(user_id,active_token,ann)
+                        .enqueue(new retrofit2.Callback<Announcement>() {
+                            @Override
+                            public void onResponse(Call<Announcement> call, Response<Announcement> response) {
+                                Announcement announcement = response.body();
+                                //Toast.makeText(getActivity(), String.valueOf(locAnn.getLatitude()), Toast.LENGTH_LONG).show();
+                                //Toast.makeText(getActivity(), announcement.getDescription(), Toast.LENGTH_LONG).show();
+                                //Falta implementar el que ve a continuacio
+                            }
+
+                            @Override
+                            public void onFailure(Call<Announcement> call, Throwable t) {
+                                System.out.println("Unable to create the announcement!");
+                                new DialogServerKO(MainActivity.this).show();
+                            }
+                        });
+            }
+        });
+
+        sbReward.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
+                rew.setText("Recompensa oferta: " + String.valueOf(progress) + " AgoraPoints");
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        PlaceAutocompleteFragment autocompFrag = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+
+        AutocompleteFilter typeFilter = new AutocompleteFilter.Builder().setTypeFilter(AutocompleteFilter.TYPE_FILTER_ADDRESS).build();
+        autocompFrag.setFilter(typeFilter);
+
+        autocompFrag.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+                //Log.i(TAG, "Place: " + place.getName());//get place details here
+                locAnn = new Location(place.getLatLng().latitude,place.getLatLng().longitude);
+
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+            }
+        });
+
+        dialogForm.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                android.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.remove(getFragmentManager().findFragmentByTag("place_verify_form"));
+                ft.commit();
+            }
+        });
     }
+
 
     @Override
     public void onCommentSelected(Comment comment) {
@@ -245,37 +371,38 @@ public class MainActivity
     }
 
     @Override
-    public void onCouponSelected(Coupon coupon) {
-        Dialog dialogCoupon = new Dialog(this);
+    public void onCouponSelected(final Coupon coupon) {
+        dialogCoupon = new Dialog(this);
         dialogCoupon.setContentView(R.layout.show_coupon);
         dialogCoupon.show();
-        PreferencesAgorApp prefs = new PreferencesAgorApp(this);
+
+        TextView tvBotiga = (TextView) dialogCoupon.findViewById(R.id.coupon_text_establishment);
+        TextView tvDiscount = (TextView) dialogCoupon.findViewById(R.id.coupon_text_discount);
+        TextView tvPrice = (TextView) dialogCoupon.findViewById(R.id.coupon_text_price);
+
+        tvBotiga.setText(String.valueOf(coupon.getShopId()));
+
+        String discount = String.valueOf(coupon.getDiscount()) + "%";
+        tvDiscount.setText(discount);
+
+        String price = String.valueOf(coupon.getPrice()) + " AgoraCoins";
+        tvPrice.setText(price);
+
         //Delete
-        Button deleteButton = (Button) dialogCoupon.findViewById(R.id.btn_coupon_delete);
+        final Button deleteButton = (Button) dialogCoupon.findViewById(R.id.btn_coupon_delete);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popUpDeleteCoupon();
+                popUpDeleteCoupon(coupon.getId());
             }
         });
 
-        //Edit
-        Button editButton = (Button) dialogCoupon.findViewById(R.id.btn_coupon_edit);
-        editButton.setOnClickListener(new View.OnClickListener() {
+        //Customers
+        Button customersButton = (Button) dialogCoupon.findViewById(R.id.btn_coupon_customers);
+        customersButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dialog dialogFormEdit = new Dialog(MainActivity.this);
-                dialogFormEdit.setContentView(R.layout.form_publish_marketplace);
-                dialogFormEdit.show();
-                //Podem utilitzar el mateix formulari per crear que per editar el val
-                Button confirmEditButton = (Button) dialogFormEdit.findViewById(R.id.btn_marketplace_publish);
-
-                confirmEditButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //crida API edit coupon
-                    }
-                });
+                //popUpDeleteCoupon();
             }
         });
 
@@ -284,53 +411,90 @@ public class MainActivity
         buyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //crida API buy coupon
+                AgorAppApiManager
+                        .getService()
+                        .buyCoupon(Integer.valueOf(prefs.getId()), Integer.valueOf(prefs.getId()), prefs.getActiveToken(), coupon.getId())
+                        .enqueue(new retrofit2.Callback<Coupon>() {
+                            @Override
+                            public void onResponse(Call<Coupon> call, Response<Coupon> response) {
+                                //cupó comprat
+                            }
+
+                            @Override
+                            public void onFailure(Call<Coupon> call, Throwable t) {
+                                System.out.println("Something went wrong!");
+                            }
+                        });
             }
         });
 
-        if (!String.valueOf(coupon.getUser_id()).equals(prefs.getId())) {
-            deleteButton.setVisibility(View.INVISIBLE);
-            editButton.setVisibility(View.INVISIBLE);
+        if (!coupon.getShopId().equals(prefs.getShopId())) {
+            //System.out.println(coupon.getShopId());
+            //System.out.println(prefs.getShopId());
+            deleteButton.setVisibility(View.GONE);
+            customersButton.setVisibility(View.GONE);
         }
     }
 
-    private void popUpDeleteCoupon() {
-        AlertDialog.Builder adb = new AlertDialog.Builder(this);
-
-        adb.setTitle("Segur que vols esborrar aquest xec?");
+    private void popUpDeleteCoupon(final Integer couponId) {
+        final android.app.AlertDialog aDialog = new android.app.AlertDialog.Builder(MainActivity.this).create();
+        aDialog.setTitle("Segur que vols esborrar aquest xec?");
 
         Drawable icon = getResources().getDrawable(android.R.drawable.ic_dialog_alert);
         icon.setTint(getColor(R.color.colorButtons));
-        adb.setIcon(icon);
+        aDialog.setIcon(icon);
 
-        adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        aDialog.setButton(Dialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getApplicationContext(), "Oferta esborrada (manca crida API)", Toast.LENGTH_LONG).show();
+                AgorAppApiManager
+                        .getService()
+                        .deleteCoupon(couponId, Integer.valueOf(prefs.getId()), prefs.getActiveToken())
+                        .enqueue(new retrofit2.Callback<Coupon>() {
+                            @Override
+                            public void onResponse(Call<Coupon> call, Response<Coupon> response) {
+                                dialogCoupon.dismiss();
+
+
+                                final android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(MainActivity.this).create();
+                                alertDialog.setTitle("Cupó esborrat");
+                                alertDialog.setMessage("Has esborrat el cupó del sistema");
+                                alertDialog.setIcon(R.drawable.ic_info_black_24dp);
+
+                                alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        alertDialog.dismiss();
+                                    }
+                                });
+
+                                alertDialog.show();
+                            }
+
+                            @Override
+                            public void onFailure(Call<Coupon> call, Throwable t) {
+                                System.out.println("Something went wrong!");
+                            }
+                        });
             }
         });
 
-        adb.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        aDialog.setButton(Dialog.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
-        adb.show();
+
+        aDialog.show();
     }
 
     @Override
     public void onChatSelected(Chat chat) {
-        // Call the other fragment
-        // Create fragment and give it an argument specifying the article it should show
         ChatFragment newFragment = new ChatFragment();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        // Replace whatever is in the fragment_container view with this fragment,
-        // and add the transaction to the back stack so the user can navigate back
         transaction.replace(R.id.fragment_container, newFragment, "chat");
         transaction.addToBackStack(null);
 
-        // Commit the transaction
         transaction.commit();
         newFragment.setChat(chat);
     }

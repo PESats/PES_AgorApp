@@ -1,4 +1,4 @@
-package pes.agorapp.helpers;
+package pes.agorapp.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,16 +11,14 @@ import java.util.List;
 
 import pes.agorapp.JSONObjects.Coupon;
 import pes.agorapp.R;
-import pes.agorapp.globals.PreferencesAgorApp;
 
 /**
- * Created by Nil on 25/11/2017.
+ * Created by Nil on 05-Dec-17.
  */
 
-public class CouponAdapter extends ArrayAdapter<Coupon> {
-    private PreferencesAgorApp prefs;
+public class CouponsAdapter extends ArrayAdapter<Coupon> {
 
-    public CouponAdapter(Context context, List<Coupon> coupons) {
+    public CouponsAdapter(Context context, List<Coupon> coupons) {
         super(context, 0, coupons);
     }
 
@@ -31,22 +29,16 @@ public class CouponAdapter extends ArrayAdapter<Coupon> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_coupon, parent, false);
         }
 
-        TextView establishment = (TextView) convertView.findViewById(R.id.item_coupon_establishment);
-        establishment.setText(coupon.getEstablishment());
+        TextView estab = (TextView) convertView.findViewById(R.id.item_coupon_establishment);
+        estab.setText("shopName not found");
 
-        TextView textPrice = (TextView) convertView.findViewById(R.id.item_coupon_text);
-        textPrice.setText("Preu: ");
+        TextView disc = (TextView) convertView.findViewById(R.id.item_coupon_discount);
+        disc.setText("discount not found al json");
 
         TextView price = (TextView) convertView.findViewById(R.id.item_coupon_price);
         String priceValue = String.valueOf(coupon.getPrice())+" AgoraCoins";
-        price.setText(priceValue);
-
-        TextView discount = (TextView) convertView.findViewById(R.id.item_coupon_discount);
-        String discountValue = String.valueOf(coupon.getDiscount())+"%";
-        discount.setText(discountValue);
+        price.setText("no hi ha price al json");
 
         return convertView;
     }
-
-
 }

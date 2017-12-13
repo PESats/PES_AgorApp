@@ -5,17 +5,17 @@ package pes.agorapp.JSONObjects;
  */
 
 public class Bid {
-    private int reward;
+    private int ammount;
     private boolean accepted;
     private UserAgorApp user;
-    private int announcementId;
+    private Announcement announcement;
     private int id;
 
-    public Bid(int reward, boolean accepted, UserAgorApp user, int announcementId, int id) {
-        this.reward = reward;
+    public Bid(int ammount, boolean accepted, UserAgorApp user, Announcement announcement, int id) {
+        this.ammount = ammount;
         this.accepted = accepted;
         this.user = user;
-        this.announcementId = announcementId;
+        this.announcement = announcement;
         this.id = id;
     }
 
@@ -28,11 +28,11 @@ public class Bid {
     }
 
     public int getReward() {
-        return reward;
+        return ammount;
     }
 
     public void setReward(int reward) {
-        this.reward = reward;
+        this.ammount = ammount;
     }
 
     public boolean isAccepted() {
@@ -51,11 +51,4 @@ public class Bid {
         this.user = user;
     }
 
-    public int getAnnouncementId() {
-        return announcementId;
-    }
-
-    public void setAnnouncementId(int announcementId) {
-        this.announcementId = announcementId;
-    }
 }

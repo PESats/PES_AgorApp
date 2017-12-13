@@ -5,7 +5,6 @@ import android.content.IntentSender;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -48,6 +47,7 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 
+import pes.agorapp.JSONObjects.Botiga;
 import pes.agorapp.JSONObjects.UserAgorApp;
 import pes.agorapp.JSONObjects.UserFacebook;
 import pes.agorapp.R;
@@ -70,9 +70,9 @@ public class LoginActivity extends AppCompatActivity
     private String userName;
     private String url_image;
     private String platform_name;
+    private String nameShop;
     private ConnectionResult mConnectionResult;
     private CallbackManager callbackManagerFacebook;
-    private static String TAG = "LoginActivity";
     private static final int REQUEST_CODE_RESOLVE_ERR = 9000;
     private static final int RC_SIGN_IN_GOOGLE = 1988;
     private static final int RC_SIGN_IN_TWITTER = TwitterAuthConfig.DEFAULT_AUTH_REQUEST_CODE;
@@ -103,6 +103,8 @@ public class LoginActivity extends AppCompatActivity
             initTwitterComponents();
             initFacebookComponents();
         }
+        //System.out.println(prefs.getActiveToken());
+        //System.out.println(prefs.getId());
     }
 
 
@@ -143,7 +145,6 @@ public class LoginActivity extends AppCompatActivity
                 }
             }
         });
-
 
         Bundle parameters = new Bundle();
         parameters.putString("fields", "id,name,link,email,picture");
@@ -276,9 +277,6 @@ public class LoginActivity extends AppCompatActivity
 
                         email = user.screenName;
 
-                        //Log.d("UserName Google:",user.name);
-                        //Log.d("Image Google: ",user.profileImageUrl);
-
                         createUserDB(user.name, user.profileImageUrl, "Twitter");
                     }
 
@@ -297,9 +295,6 @@ public class LoginActivity extends AppCompatActivity
                     } else {
                         url_image_profile = "www.imatgedummy.com";
                     }
-
-                    //Log.d("UserName Google:", acct.getDisplayName());
-                    //Log.d("Image Google: ", url_image_profile);
 
                     Toast.makeText(getApplicationContext(), url_image_profile, Toast.LENGTH_LONG).show();
 
@@ -346,12 +341,12 @@ public class LoginActivity extends AppCompatActivity
                     @Override
                     public void onResponse(Call<UserAgorApp> call, Response<UserAgorApp> response) {
 
-                        //Log.i("response code", String.valueOf(response.code()));
-
                         String id = response.body().getId();
                         String token = response.body().getActiveToken();
                         Integer coins = response.body().getCoins();
-                        saveUserInPreferences(id, token, coins);
+                        Botiga shop = response.body().getShop();
+
+                        saveUserInPreferences(id, token, coins, shop);
 
                         loginok();
                     }
@@ -364,7 +359,7 @@ public class LoginActivity extends AppCompatActivity
                 });
     }
 
-    private void saveUserInPreferences(String id, String active_token, Integer coins) {
+    private void saveUserInPreferences(String id, String active_token, Integer coins, Botiga shop) {
         prefs.setId(id);
         prefs.setPlatform(platform_name);
         prefs.setUsername(userName);
@@ -372,7 +367,9 @@ public class LoginActivity extends AppCompatActivity
         prefs.setImageUrl(url_image);
         prefs.setCoins(coins);
         prefs.setActiveToken(active_token);
-        prefs.setMerchant(false);
+        if (shop != null) prefs.setShop(shop.getId(), shop.getName());
+
+        prefs.checkPreferences();
     }
 
     private void loginok() {
@@ -392,8 +389,12 @@ public class LoginActivity extends AppCompatActivity
     @Override
     public void onResume() {
         super.onResume();
-
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
 
+    @Override
+    public void onStop() {
+        prefs.deleteLanguage();
+        super.onStop();
     }
 }

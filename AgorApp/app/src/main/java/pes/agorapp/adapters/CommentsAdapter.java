@@ -1,4 +1,4 @@
-package pes.agorapp.helpers;
+package pes.agorapp.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;

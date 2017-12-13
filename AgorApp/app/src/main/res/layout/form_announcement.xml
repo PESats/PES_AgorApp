@@ -3,14 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:minWidth="260dp">
+
+    <TextView
+        android:layout_marginBottom="15dp"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp"
+        android:textStyle="bold"
+        android:textSize="17dp"
+        android:textColor="@color/tw__solid_white"
+        android:id="@+id/form_announcement_title_bar"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/form_announcement_title_bar"
+        android:textAlignment="center" />
 
     <TextView
         android:id="@+id/form_announcement_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/com_facebook_blue"
-        android:text="Títol"
+        android:text="@string/form_announcement_title"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -23,25 +38,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Títol"
+        android:hint="@string/form_announcement_title_hint"
         android:inputType="textPersonName" />
-
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="192dp" />
-
-    <fragment
-        android:id="@+id/place_autocomplete_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
-        />
 
     <TextView
         android:id="@+id/form_announcement_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Descripció"
+        android:text="@string/form_announcement_description"
         android:textAlignment="center" />
 
     <EditText
@@ -50,8 +54,23 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.26"
         android:ems="10"
-        android:hint="Descripicó"
+        android:hint="@string/form_announcement_description_hint"
         android:inputType="textMultiLine" />
+
+    <TextView
+        android:id="@+id/form_announcement_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/form_announcement_location"
+        android:textAlignment="center" />
+
+    <fragment
+        android:tag="place_verify_form"
+        android:id="@+id/place_autocomplete_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+        />
 
     <TextView
         android:id="@+id/form_announcement_reward"
@@ -70,6 +89,6 @@
         android:id="@+id/btn_form_announcement_publish"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Publicar" />
+        android:text="@string/form_announcement_publish" />
 
 </LinearLayout>

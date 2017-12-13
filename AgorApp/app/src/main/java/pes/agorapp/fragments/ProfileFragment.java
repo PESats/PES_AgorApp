@@ -24,7 +24,6 @@ import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
-import com.twitter.sdk.android.core.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +38,7 @@ import pes.agorapp.customComponents.DialogServerKO;
 import pes.agorapp.globals.PreferencesAgorApp;
 import pes.agorapp.customComponents.MyGridView;
 import pes.agorapp.helpers.ObjectsHelper;
-import pes.agorapp.helpers.TrophiesAdapter;
+import pes.agorapp.adapters.TrophiesAdapter;
 import pes.agorapp.network.AgorAppApiManager;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -61,7 +60,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                              ViewGroup container,
                              Bundle savedInstanceState) {
         prefs = new PreferencesAgorApp(getActivity());
-        Toast.makeText(getActivity(), prefs.getUserName(), Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), prefs.getId(), Toast.LENGTH_LONG).show();
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
@@ -99,6 +98,23 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     }
                 });
 
+                PlaceAutocompleteFragment autocompFrag = (PlaceAutocompleteFragment) getActivity().getFragmentManager().findFragmentByTag("place_verify_form");
+
+                AutocompleteFilter typeFilter = new AutocompleteFilter.Builder().setTypeFilter(AutocompleteFilter.TYPE_FILTER_ADDRESS).build();
+                autocompFrag.setFilter(typeFilter);
+
+                autocompFrag.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+                    @Override
+                    public void onPlaceSelected(Place place) {
+                        locationBotiga = new Location(place.getLatLng().latitude,place.getLatLng().longitude);
+                    }
+
+                    @Override
+                    public void onError(Status status) {
+                        //Log.i(TAG, "An error occurred: " + status);
+                    }
+                });
+
                 dialogForm.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
@@ -122,66 +138,34 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     private void upgradeAndCreateBotiga(EditText etNameBotiga, EditText etDescriptionBotiga) {
-        PlaceAutocompleteFragment autocompFrag = (PlaceAutocompleteFragment) getActivity().getFragmentManager().findFragmentByTag("place_verify_form");
-        //We only want the addresses, so we declare a filter to make sure of it
-        AutocompleteFilter typeFilter = new AutocompleteFilter.Builder().setTypeFilter(AutocompleteFilter.TYPE_FILTER_ADDRESS).build();
-        autocompFrag.setFilter(typeFilter);
-
-        autocompFrag.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-            @Override
-            public void onPlaceSelected(Place place) {
-                //Log.i(TAG, "Place: " + place.getName());//get place details here
-                locationBotiga = new Location(place.getLatLng().latitude,place.getLatLng().longitude);
-            }
-
-            @Override
-            public void onError(Status status) {
-                //Log.i(TAG, "An error occurred: " + status);
-            }
-        });
-
         final int user_id = Integer.valueOf(prefs.getId());
         final String active_token = prefs.getActiveToken();
 
         String nameBotiga = etNameBotiga.getText().toString();
         String descriptionBotiga = etDescriptionBotiga.getText().toString();
 
+        JsonObject json = new JsonObject();
+        json.addProperty("name", nameBotiga);
+        json.addProperty("description", descriptionBotiga);
+        json.addProperty("latitude", locationBotiga.getLatitude());
+        json.addProperty("longitude", locationBotiga.getLongitude());
+        json.addProperty("user_id", prefs.getId());
+
         JsonObject jsonBotiga = new JsonObject();
-        jsonBotiga.addProperty("name", nameBotiga);
-        jsonBotiga.addProperty("description", descriptionBotiga);
-        jsonBotiga.addProperty("latitude", locationBotiga.getLatitude());
-        jsonBotiga.addProperty("longitude", locationBotiga.getLongitude());
+        jsonBotiga.add("shop", json);
 
         AgorAppApiManager
                 .getService()
-                .createBotiga(user_id, active_token, jsonBotiga)
+                .createShop(user_id, active_token, jsonBotiga)
                 .enqueue(new retrofit2.Callback<Botiga>() {
                     @Override
                     public void onResponse(Call<Botiga> call, Response<Botiga> response) {
                         Toast.makeText(getActivity(), response.body().getDescription(), Toast.LENGTH_LONG).show();
-                        upgradeUser(user_id, active_token);
+                        prefs.setShop(response.body().getId(), response.body().getName());
                     }
 
                     @Override
                     public void onFailure(Call<Botiga> call, Throwable t) {
-                        new DialogServerKO(getActivity()).show();
-                    }
-                });
-    }
-
-    private void upgradeUser(int user_id, String active_token) {
-        AgorAppApiManager
-                .getService()
-                .upgradeBotiguer(user_id, active_token)
-                .enqueue(new retrofit2.Callback<UserAgorApp>() {
-                    @Override
-                    public void onResponse(Call<UserAgorApp> call, Response<UserAgorApp> response) {
-                        Toast.makeText(getActivity(), response.body().getId(), Toast.LENGTH_LONG).show();
-                        dialogForm.dismiss();
-                    }
-
-                    @Override
-                    public void onFailure(Call<UserAgorApp> call, Throwable t) {
                         new DialogServerKO(getActivity()).show();
                     }
                 });
@@ -195,12 +179,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private void printOrHideVerifyButton(View view) {
         /*amaguem el botó si ja està verificat*/
-        if (prefs.isMerchant()) {
+        if (prefs.hasShop()) {
             Button verifyButton = (Button) view.findViewById(R.id.profile_btn_verify);
-            verifyButton.setVisibility(View.INVISIBLE);
+            verifyButton.setVisibility(View.GONE);
         } else {
             TextView userType = (TextView) view.findViewById(R.id.profile_verified);
-            userType.setVisibility(View.INVISIBLE);
+            userType.setVisibility(View.GONE);
         }
     }
 
@@ -225,7 +209,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         TextView profileNameTextView = (TextView) view.findViewById(R.id.profile_name);
         profileNameTextView.setText(userName);
         String userType = "Ciutadà";
-        if (prefs.isMerchant()) userType = "Botiguer verificat";
+        if (prefs.hasShop()) userType = "Comerciant verificat: " + prefs.getShopId();
         TextView profileTypeTextView = (TextView) view.findViewById(R.id.profile_verified);
         profileTypeTextView.setText(userType);
     }

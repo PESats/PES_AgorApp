@@ -62,9 +62,6 @@ dependencies {
     compile 'com.android.support:percent:25.3.1'
     compile 'com.google.android.gms:play-services-places:10.0.1'
 
-    //Like faker gem on ruby
-    compile group: 'com.github.javafaker', name: 'javafaker', version: '0.14'
-
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

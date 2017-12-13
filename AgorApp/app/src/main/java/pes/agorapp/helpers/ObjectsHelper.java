@@ -1,7 +1,5 @@
 package pes.agorapp.helpers;
 
-import com.github.javafaker.Faker;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,7 +19,6 @@ import pes.agorapp.JSONObjects.UserAgorApp;
 
 public class ObjectsHelper {
 
-    private static Faker faker = new Faker();
     private static Random random = new Random();
 
     public static Announcement getFakeAnnouncement() {
@@ -82,17 +79,17 @@ public class ObjectsHelper {
 
     public static List<Coupon> getFakeCoupons() {
         List<Coupon> coupons = new ArrayList<>();
-        coupons.add(new Coupon(1, "1", "Pepito e hijos", 300, 75));
-        coupons.add(new Coupon(2, "12", "Bar mec mec", 150, 10));
-        coupons.add(new Coupon(3, "6", "Bar piticlin", 400, 25));
-        coupons.add(new Coupon(4, "5", "Llibreria bup bup", 700, 45));
+        coupons.add(new Coupon(1, "1", 1, 300, 75, null));
+        coupons.add(new Coupon(2, "12", 1, 150, 10, null));
+        coupons.add(new Coupon(3, "6", 1, 400, 25, null));
+        coupons.add(new Coupon(4, "5", 1, 700, 45, null));
         return coupons;
     }
 
     public static UserAgorApp getFakeUser() {
         UserAgorApp user = new UserAgorApp();
-        user.setName(faker.superhero().name());
-        user.setEmail(faker.internet().emailAddress());
+        user.setName("jonathan");
+        user.setEmail("fake@mail.com");
         user.setCoins(random.nextInt(1000));
         user.setId(String.valueOf(random.nextInt(10)));
 
@@ -102,7 +99,7 @@ public class ObjectsHelper {
     public static UserAgorApp getFakeUser(String name) {
         UserAgorApp user = new UserAgorApp();
         user.setName(name);
-        user.setEmail(faker.internet().emailAddress());
+        user.setEmail("fake@email.com");
         user.setCoins(random.nextInt(1000));
         user.setId(String.valueOf(random.nextInt(10)));
 
@@ -118,29 +115,43 @@ public class ObjectsHelper {
     }
 
     public static String getFakeMessage() {
-        return faker.chuckNorris().fact();
+        return "Fakeee message";
     }
 
     public static Date getFakeDate() {
-        return faker.date().between(new Date(2017,3,1,0,0),
-                new Date(2017,12,1,0,0));
+        return new Date(2017,3,1,0,0);
     }
 
     public static List<Bid> getFakeBids() {
         List<Bid> bids = new ArrayList<>();
         bids.add(
-                new Bid(250, true, getFakeUser("Gandalf"), 1, 1)
+                new Bid(250, true, getFakeUser("Gandalf"), new Announcement(), 1)
         );
 
         bids.add(
-                new Bid(300, true, getFakeUser("Boromir"), 2, 2)
+                new Bid(300, true, getFakeUser("Boromir"), new Announcement(), 2)
         );
 
         bids.add(
-                new Bid(350, true, getFakeUser("Aragorn"), 3, 3)
+                new Bid(350, true, getFakeUser("Aragorn"), new Announcement(), 3)
         );
         return bids;
     }
 
+    public static List<Bid> getFakeBidsAsAnnouncer() {
+        //esta to mal
+        List<Bid> bids = new ArrayList<>();
+        UserAgorApp marc = new UserAgorApp();
+        marc.setId("13");
+        marc.setName("Marc");
+
+        Announcement announcement = new Announcement();
+        announcement.setUser(marc);
+        announcement.setId(4000);
+        bids.add(
+                new Bid(400, true, new UserAgorApp(), announcement, 4)
+        );
+        return bids;
+    }
 
 }

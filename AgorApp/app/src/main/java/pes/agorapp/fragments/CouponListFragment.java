@@ -3,8 +3,6 @@ package pes.agorapp.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,29 +13,29 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import pes.agorapp.JSONObjects.Announcement;
+import pes.agorapp.JSONObjects.Coupon;
 import pes.agorapp.R;
 import pes.agorapp.customComponents.DialogServerKO;
 import pes.agorapp.globals.PreferencesAgorApp;
-import pes.agorapp.adapters.AnnouncementsAdapter;
+import pes.agorapp.adapters.CouponsAdapter;
 import pes.agorapp.network.AgorAppApiManager;
 import retrofit2.Call;
 import retrofit2.Response;
 
 
-public class AnnouncementListFragment extends Fragment {
+public class CouponListFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
-    List<Announcement> announcements = new ArrayList<>();
+    List<Coupon> coupons = new ArrayList<>();
     private PreferencesAgorApp prefs;
 
 
-    public AnnouncementListFragment() {
+    public CouponListFragment() {
         // Required empty public constructor
     }
 
-    public static AnnouncementListFragment newInstance(String param1, String param2) {
-        AnnouncementListFragment fragment = new AnnouncementListFragment();
+    public static CouponListFragment newInstance(String param1, String param2) {
+        CouponListFragment fragment = new CouponListFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -55,7 +53,7 @@ public class AnnouncementListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         prefs = new PreferencesAgorApp(getActivity());
-        return inflater.inflate(R.layout.fragment_announcement_list, container, false);
+        return inflater.inflate(R.layout.fragment_coupon_list, container, false);
     }
 
     @Override
@@ -86,48 +84,42 @@ public class AnnouncementListFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        void onAnnouncementSelected(Announcement announcement);
-        void createNewAnnouncement();
+
         void onMarketplaceOpen();
+
+        void onCouponSelected(Coupon coupon);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab_list);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mListener.createNewAnnouncement();
-            }
-        });
 
-        final AnnouncementsAdapter adapter = new AnnouncementsAdapter(getActivity(), announcements);
-
-        final ListView listView = (ListView) view.findViewById(R.id.listViewAnnouncement);
+        // Construct the data source
+        // Create the adapter to convert the array to views
+        final CouponsAdapter adapter = new CouponsAdapter(getActivity(), coupons);
+        // Attach the adapter to a ListView
+        final ListView listView = (ListView) view.findViewById(R.id.listViewCoupon);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Announcement announcement = (Announcement) listView.getItemAtPosition(position);
-                mListener.onAnnouncementSelected(announcement);
+                Coupon coupon = (Coupon) listView.getItemAtPosition(position);
+                mListener.onCouponSelected(coupon);
             }
         });
         listView.setAdapter(adapter);
         AgorAppApiManager
                 .getService()
-                .getAnnouncements(Integer.valueOf(prefs.getId()), prefs.getActiveToken())
-                .enqueue(new retrofit2.Callback<ArrayList<Announcement>>() {
+                .getBoughtCoupons(Integer.valueOf(prefs.getId()), prefs.getActiveToken())
+                .enqueue(new retrofit2.Callback<ArrayList<Coupon>>() {
                     @Override
-                    public void onResponse(Call<ArrayList<Announcement>> call, Response<ArrayList<Announcement>> response) {
-
-                        announcements = response.body();
-                        adapter.addAll(announcements);
-                        Log.d("this is my array", "arr: " + response.body().toString());
-
+                    public void onResponse(Call<ArrayList<Coupon>> call, Response<ArrayList<Coupon>> response) {
+                        coupons = response.body();
+                        //System.out.println("descompte: " + coupons.get(0).getDiscount());
+                        adapter.addAll(coupons);
                     }
 
                     @Override
-                    public void onFailure(Call<ArrayList<Announcement>> call, Throwable t) {
+                    public void onFailure(Call<ArrayList<Coupon>> call, Throwable t) {
                         System.out.println("Something went wrong!");
                         new DialogServerKO(getActivity()).show();
                     }
