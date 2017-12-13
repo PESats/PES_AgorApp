@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.twitter.sdk.android.core.models.User;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import pes.agorapp.JSONObjects.Announcement;
 import pes.agorapp.JSONObjects.Bid;
@@ -186,4 +187,10 @@ public interface AgorAppApiService {
             @Query("active_token") String active_token
     );
 
+    @GET("users/{user_id}/bids")
+    Call<ArrayList<Bid>> getBidsWithFilters(
+            @Path("user_id") int user_id,
+            @Query("active_token") String active_token,
+            @Query("filter_mode") String filter_mode
+    );
 }
