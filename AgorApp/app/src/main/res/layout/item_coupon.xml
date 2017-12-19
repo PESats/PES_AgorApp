@@ -35,7 +35,7 @@ android:padding="5dp">
 
     <TextView
         android:textStyle="bold"
-        android:textColor="@color/colorButtons"
+        android:textColor="@color/secondaryColor"
         android:id="@+id/item_coupon_discount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

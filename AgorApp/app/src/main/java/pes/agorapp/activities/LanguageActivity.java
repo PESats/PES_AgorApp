@@ -48,7 +48,7 @@ public class LanguageActivity extends Activity {
 
     private void initComponents() {
         img_greenTick = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_check_24dp, null);
-        img_greenTick.setTint(getResources().getColor(R.color.colorButtons));
+        img_greenTick.setTint(getResources().getColor(R.color.secondaryColor));
         img_flag_cat = ResourcesCompat.getDrawable(getResources(), R.drawable.catalunya_flag, null);;
         img_flag_esp = ResourcesCompat.getDrawable(getResources(), R.drawable.espana_flag, null);;
         img_flag_eng = ResourcesCompat.getDrawable(getResources(), R.drawable.england_flag, null);;

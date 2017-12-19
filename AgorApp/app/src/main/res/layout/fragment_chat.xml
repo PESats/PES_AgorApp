@@ -15,7 +15,7 @@
         android:focusable="true"
         android:src="@drawable/ic_menu_send"
         android:tint="@android:color/white"
-        app:backgroundTint="@color/colorButtons"
+        app:backgroundTint="@color/secondaryColor"
         app:fabSize="mini" />
 
     <android.support.design.widget.TextInputLayout
