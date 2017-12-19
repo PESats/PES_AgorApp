@@ -3,6 +3,7 @@ package pes.agorapp.network;
 import com.google.gson.JsonObject;
 import com.twitter.sdk.android.core.models.User;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import pes.agorapp.JSONObjects.Announcement;
@@ -105,11 +106,11 @@ public interface AgorAppApiService {
 
     /* BOTIGUES */
 
-    @POST("shops")
-    Call<Botiga> createShop(
+    @GET("shops")
+    Call<ArrayList<Botiga>> getShops(
+            @Path("id") int id,
             @Query("user_id") int user_id,
-            @Query("active_token") String active_token,
-            @Body JsonObject shop
+            @Query("active_token") String active_token
     );
 
     @GET("shops/{id}")
@@ -117,6 +118,13 @@ public interface AgorAppApiService {
             @Path("id") int id,
             @Query("user_id") int user_id,
             @Query("active_token") String active_token
+    );
+
+    @POST("shops")
+    Call<Botiga> createShop(
+            @Query("user_id") int user_id,
+            @Query("active_token") String active_token,
+            @Body JsonObject shop
     );
 
     /* CUPONS DE DESCOMPTE */
@@ -163,7 +171,7 @@ public interface AgorAppApiService {
     );
 
     @POST("users/{id}/bought_coupons")
-    Call<Coupon> buyCoupon(
+    Call<UserAgorApp> buyCoupon(
             @Path("id") int id,
             @Query("user_id") int user_id,
             @Query("active_token") String active_token,
