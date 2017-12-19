@@ -23,6 +23,6 @@
         android:layout_width="match_parent"
         android:layout_marginTop="1dp"
         android:layout_marginBottom="10dp"
-        android:background="@color/colorButtons"
+        android:background="@color/secondaryColor"
         android:textColor="@color/tw__solid_white" />
 </RelativeLayout>
