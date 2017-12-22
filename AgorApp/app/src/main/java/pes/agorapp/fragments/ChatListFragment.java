@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +18,19 @@ import pes.agorapp.JSONObjects.Bid;
 import pes.agorapp.JSONObjects.Chat;
 import pes.agorapp.R;
 import pes.agorapp.adapters.ChatsAdapter;
+import pes.agorapp.customComponents.DialogServerKO;
+import pes.agorapp.globals.PreferencesAgorApp;
 import pes.agorapp.helpers.ObjectsHelper;
+import pes.agorapp.network.AgorAppApiManager;
+import retrofit2.Call;
+import retrofit2.Response;
 
 
 public class ChatListFragment extends Fragment {
     private List<Chat> chats = new ArrayList<>();
+    private List<Bid> bids = new ArrayList<>();
 
+    private PreferencesAgorApp prefs;
     private OnFragmentInteractionListener mListener;
     private ChatsAdapter adapter;
 
@@ -44,6 +52,7 @@ public class ChatListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        prefs = new PreferencesAgorApp(getActivity());
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_chat_list, container, false);
     }
@@ -89,16 +98,32 @@ public class ChatListFragment extends Fragment {
     }
 
     private void requestChats() {
-        List<Bid> bids = ObjectsHelper.getFakeBids();
-        chats.clear();
-        for (Bid bid : bids) {
-          Chat chat = new Chat();
-          chat.setUser(bid.getUser());
-          chat.setLastMessage(ObjectsHelper.getFakeMessage());
-          chat.setLastMessageDate(ObjectsHelper.getFakeDate());
-          chat.setBid(bid);
+        AgorAppApiManager
+                .getService()
+                .getBidsWithFilters(Integer.valueOf(prefs.getId()), prefs.getActiveToken(), "selected")
+                .enqueue(new retrofit2.Callback<ArrayList<Bid>>() {
+                    @Override
+                    public void onResponse(Call<ArrayList<Bid>> call, Response<ArrayList<Bid>> response) {
+                        bids = response.body();
 
-          chats.add(chat);
-        }
+                        chats.clear();
+                        for (Bid bid : bids) {
+                            Chat chat = new Chat();
+                            chat.setUser(bid.getUser());
+                            chat.setLastMessage(ObjectsHelper.getFakeMessage());
+                            chat.setLastMessageDate(ObjectsHelper.getFakeDate());
+                            chat.setBid(bid);
+
+                            chats.add(chat);
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onFailure(Call<ArrayList<Bid>> call, Throwable t) {
+                        System.out.println("Something went wrong!");
+                        new DialogServerKO(getActivity()).show();
+                    }
+                });
     }
 }

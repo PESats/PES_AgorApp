@@ -116,6 +116,7 @@ public class CouponListFragment extends Fragment {
                         coupons = response.body();
                         //System.out.println("descompte: " + coupons.get(0).getDiscount());
                         adapter.addAll(coupons);
+                        //adapter.notifyDataSetChanged();
                     }
 
                     @Override

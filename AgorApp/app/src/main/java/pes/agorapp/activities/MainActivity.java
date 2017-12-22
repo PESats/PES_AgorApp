@@ -476,7 +476,7 @@ public class MainActivity
         aDialog.setTitle("Segur que vols esborrar aquest xec?");
 
         Drawable icon = getResources().getDrawable(android.R.drawable.ic_dialog_alert);
-        icon.setTint(getColor(R.color.colorButtons));
+        icon.setTint(getColor(R.color.secondaryColor));
         aDialog.setIcon(icon);
 
         aDialog.setButton(Dialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {

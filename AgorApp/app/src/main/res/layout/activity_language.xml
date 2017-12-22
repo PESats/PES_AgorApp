@@ -67,7 +67,7 @@
             android:id="@+id/btn_enter_lang"
             android:text="@string/start"
             android:textStyle="bold"
-            android:backgroundTint="@color/colorButtons"
+            android:backgroundTint="@color/secondaryColor"
             android:textColor="@color/tw__solid_white"
             android:enabled="true"
             android:layout_weight="1"
