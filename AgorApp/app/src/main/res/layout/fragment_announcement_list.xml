@@ -5,20 +5,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="pes.agorapp.fragments.AnnouncementListFragment">
 
-    <ListView
-        android:id="@+id/listViewAnnouncement"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="30dp"
-        android:layout_marginRight="60dp"
-        app:srcCompat="@drawable/ic_add_black_24dp"
+        android:layout_marginRight="30dp"
         android:tint="@color/tw__composer_white"
-        app:backgroundTint="@color/secondaryColor" />
+        app:backgroundTint="@color/secondaryColor"
+        app:srcCompat="@drawable/ic_add_black_24dp" />
+
+    <ListView
+        android:id="@+id/listViewAnnouncement"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </FrameLayout>
