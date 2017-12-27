@@ -41,6 +41,7 @@ import pes.agorapp.JSONObjects.Chat;
 import pes.agorapp.JSONObjects.Comment;
 import pes.agorapp.JSONObjects.Coupon;
 import pes.agorapp.JSONObjects.Location;
+import pes.agorapp.JSONObjects.UserAgorApp;
 import pes.agorapp.R;
 import pes.agorapp.customComponents.DialogServerKO;
 import pes.agorapp.fragments.AnnouncementFragment;
@@ -414,14 +415,48 @@ public class MainActivity
                 AgorAppApiManager
                         .getService()
                         .buyCoupon(Integer.valueOf(prefs.getId()), Integer.valueOf(prefs.getId()), prefs.getActiveToken(), coupon.getId())
-                        .enqueue(new retrofit2.Callback<Coupon>() {
+                        .enqueue(new retrofit2.Callback<UserAgorApp>() {
                             @Override
-                            public void onResponse(Call<Coupon> call, Response<Coupon> response) {
-                                //cupó comprat
+                            public void onResponse(Call<UserAgorApp> call, Response<UserAgorApp> response) {
+                                if (response.code() == 200) {
+                                    Integer newCoins = response.body().getCoins();
+                                    prefs.setCoins(newCoins);
+
+                                    dialogCoupon.dismiss();
+
+                                    final android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(MainActivity.this).create();
+                                    alertDialog.setTitle("Cupó comprat");
+                                    alertDialog.setMessage("El cupó s'ha afegit als teus cupons comprats");
+                                    alertDialog.setIcon(R.drawable.ic_info_black_24dp);
+
+                                    alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            alertDialog.dismiss();
+                                        }
+                                    });
+
+                                    alertDialog.show();
+                                } else if (response.code() == 400) {
+                                    //not enough money dude
+                                    dialogCoupon.dismiss();
+
+                                    final android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(MainActivity.this).create();
+                                    alertDialog.setTitle("Not enough money dude");
+                                    alertDialog.setMessage("És trist demanar, però més trist és robar cupons virtuals d'una app falsa");
+                                    alertDialog.setIcon(R.drawable.ic_info_black_24dp);
+
+                                    alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            alertDialog.dismiss();
+                                        }
+                                    });
+
+                                    alertDialog.show();
+                                }
                             }
 
                             @Override
-                            public void onFailure(Call<Coupon> call, Throwable t) {
+                            public void onFailure(Call<UserAgorApp> call, Throwable t) {
                                 System.out.println("Something went wrong!");
                             }
                         });
@@ -453,7 +488,6 @@ public class MainActivity
                             @Override
                             public void onResponse(Call<Coupon> call, Response<Coupon> response) {
                                 dialogCoupon.dismiss();
-
 
                                 final android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(MainActivity.this).create();
                                 alertDialog.setTitle("Cupó esborrat");

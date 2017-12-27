@@ -27,7 +27,7 @@ import pes.agorapp.JSONObjects.Coupon;
 import pes.agorapp.R;
 import pes.agorapp.customComponents.DialogServerKO;
 import pes.agorapp.globals.PreferencesAgorApp;
-import pes.agorapp.adapters.CouponAdapter;
+import pes.agorapp.adapters.CouponsAdapter;
 import pes.agorapp.network.AgorAppApiManager;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -96,7 +96,7 @@ public class MarketplaceFragment extends Fragment implements View.OnClickListene
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final CouponAdapter adapter = new CouponAdapter(getActivity(), coupons);
+        final CouponsAdapter adapter = new CouponsAdapter(getActivity(), coupons);
 
         final ListView listView = (ListView) view.findViewById(R.id.listCoupons);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -108,7 +108,6 @@ public class MarketplaceFragment extends Fragment implements View.OnClickListene
         });
         listView.setAdapter(adapter);
 
-        //CRIDA A LA API PER A MOSTRAR TOTS ELS VALS
         AgorAppApiManager
                 .getService()
                 .getCoupons(Integer.valueOf(prefs.getId()), prefs.getActiveToken())

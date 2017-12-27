@@ -13,7 +13,7 @@ import pes.agorapp.JSONObjects.Coupon;
 import pes.agorapp.R;
 
 /**
- * Created by Nil on 05-Dec-17.
+ * Created by Nil on 25/11/2017.
  */
 
 public class CouponsAdapter extends ArrayAdapter<Coupon> {
@@ -29,16 +29,22 @@ public class CouponsAdapter extends ArrayAdapter<Coupon> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_coupon, parent, false);
         }
 
-        TextView estab = (TextView) convertView.findViewById(R.id.item_coupon_establishment);
-        estab.setText("shopName not found");
+        TextView establishment = (TextView) convertView.findViewById(R.id.item_coupon_establishment);
+        establishment.setText(coupon.getBotiga().getName());
 
-        TextView disc = (TextView) convertView.findViewById(R.id.item_coupon_discount);
-        disc.setText("discount not found al json");
+        TextView textPrice = (TextView) convertView.findViewById(R.id.item_coupon_text);
+        textPrice.setText("Preu: ");
 
         TextView price = (TextView) convertView.findViewById(R.id.item_coupon_price);
         String priceValue = String.valueOf(coupon.getPrice())+" AgoraCoins";
-        price.setText("no hi ha price al json");
+        price.setText(priceValue);
+
+        TextView discount = (TextView) convertView.findViewById(R.id.item_coupon_discount);
+        String discountValue = String.valueOf(coupon.getDiscount())+"%";
+        discount.setText(discountValue);
 
         return convertView;
     }
+
+
 }
