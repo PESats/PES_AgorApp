@@ -128,7 +128,10 @@ public class MarketplaceFragment extends Fragment implements View.OnClickListene
 
         view.findViewById(R.id.btn_marketplace_publish).setOnClickListener(this);
 
-        if (!prefs.hasShop()) view.findViewById(R.id.btn_marketplace_publish).setVisibility(View.GONE);
+        if (!prefs.hasShop()) {
+            view.findViewById(R.id.btn_marketplace_publish).setVisibility(View.GONE);
+            view.findViewById(R.id.text_marketplace_publish).setVisibility(View.GONE);
+        }
     }
 
     @Override

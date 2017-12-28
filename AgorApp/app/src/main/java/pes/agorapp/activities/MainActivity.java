@@ -253,41 +253,70 @@ public class MainActivity
         btn_form_announcement_publish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String title = etTitle.getText().toString();
                 String desc = etDesc.getText().toString();
                 String reward = String.valueOf(sbReward.getProgress());
 
-                JsonObject jsonAnn = new JsonObject();
-                jsonAnn.addProperty("title",title);
-                jsonAnn.addProperty("description",desc);
-                jsonAnn.addProperty("reward",reward);
-                jsonAnn.addProperty("latitude",locAnn.getLatitude());
-                jsonAnn.addProperty("longitude", locAnn.getLongitude());
+                if (!validateForm(title, desc, reward, locAnn)) {
+                    //dialogForm.dismiss();
+                    final android.app.AlertDialog alertDialogValidate = new android.app.AlertDialog.Builder(MainActivity.this).create();
+                    alertDialogValidate.setTitle("Error");
+                    alertDialogValidate.setMessage("S'han d'omplir tots els camps");
+                    alertDialogValidate.setIcon(R.drawable.ic_warning_black_24dp);
 
-                final JsonObject ann = new JsonObject();
-                ann.add("anunci",jsonAnn);
+                    alertDialogValidate.setButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            alertDialogValidate.dismiss();
+                        }
+                    });
 
-                int user_id = Integer.valueOf(prefs.getId());
-                String active_token = prefs.getActiveToken();
+                    alertDialogValidate.show();
+                }
+                else {
+                    JsonObject jsonAnn = new JsonObject();
+                    jsonAnn.addProperty("title", title);
+                    jsonAnn.addProperty("description", desc);
+                    jsonAnn.addProperty("reward", reward);
+                    jsonAnn.addProperty("latitude", locAnn.getLatitude());
+                    jsonAnn.addProperty("longitude", locAnn.getLongitude());
 
-                AgorAppApiManager
-                        .getService()
-                        .createAnnouncement(user_id,active_token,ann)
-                        .enqueue(new retrofit2.Callback<Announcement>() {
-                            @Override
-                            public void onResponse(Call<Announcement> call, Response<Announcement> response) {
-                                Announcement announcement = response.body();
-                                //Toast.makeText(getActivity(), String.valueOf(locAnn.getLatitude()), Toast.LENGTH_LONG).show();
-                                //Toast.makeText(getActivity(), announcement.getDescription(), Toast.LENGTH_LONG).show();
-                                //Falta implementar el que ve a continuacio
-                            }
+                    final JsonObject ann = new JsonObject();
+                    ann.add("anunci", jsonAnn);
 
-                            @Override
-                            public void onFailure(Call<Announcement> call, Throwable t) {
-                                System.out.println("Unable to create the announcement!");
-                                new DialogServerKO(MainActivity.this).show();
-                            }
-                        });
+                    int user_id = Integer.valueOf(prefs.getId());
+                    String active_token = prefs.getActiveToken();
+
+                    AgorAppApiManager
+                            .getService()
+                            .createAnnouncement(user_id, active_token, ann)
+                            .enqueue(new retrofit2.Callback<Announcement>() {
+                                @Override
+                                public void onResponse(Call<Announcement> call, Response<Announcement> response) {
+                                    Announcement announcement = response.body();
+                                    dialogForm.dismiss();
+
+                                    final android.app.AlertDialog alertDialogAnnouncementCreated = new android.app.AlertDialog.Builder(MainActivity.this).create();
+                                    alertDialogAnnouncementCreated.setTitle("Anunci creat");
+                                    alertDialogAnnouncementCreated.setMessage("Anunci afegit correctament");
+                                    alertDialogAnnouncementCreated.setIcon(R.drawable.ic_info_black_24dp);
+
+                                    alertDialogAnnouncementCreated.setButton("OK", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            alertDialogAnnouncementCreated.dismiss();
+                                        }
+                                    });
+
+                                    alertDialogAnnouncementCreated.show();
+                                }
+
+                                @Override
+                                public void onFailure(Call<Announcement> call, Throwable t) {
+                                    System.out.println("Unable to create the announcement!");
+                                    new DialogServerKO(MainActivity.this).show();
+                                }
+                            });
+                }
             }
         });
 
@@ -337,6 +366,9 @@ public class MainActivity
         });
     }
 
+    private Boolean validateForm(String title, String desc, String reward, Location locAnn) {
+        return !(title.equals("") || desc.equals("") || reward.equals("") || locAnn==null);
+    }
 
     @Override
     public void onCommentSelected(Comment comment) {

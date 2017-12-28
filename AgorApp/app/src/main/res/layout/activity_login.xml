@@ -35,6 +35,8 @@
             android:layout_weight=".5"/>
 
         <com.google.android.gms.common.SignInButton
+            android:layout_marginTop="80dp"
+            android:layout_gravity="center"
             android:id="@+id/sign_in_button_google"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,6 +48,8 @@
             app:layout_constraintVertical_bias="0.25" />
 
         <com.twitter.sdk.android.core.identity.TwitterLoginButton
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center"
             android:id="@+id/sign_in_button_twitter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,6 +61,8 @@
             app:layout_constraintVertical_bias="0.39999998" />
 
         <com.facebook.login.widget.LoginButton
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center"
             android:id="@+id/sign_in_button_facebook"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

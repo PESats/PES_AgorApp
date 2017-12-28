@@ -4,14 +4,15 @@
     android:layout_height="match_parent"
     tools:context="pes.agorapp.fragments.MarketplaceFragment">
 
-    <ListView
-        android:id="@+id/listCoupons"
+    <TextView
+        android:id="@+id/text_marketplace_publish"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/btn_marketplace_publish"
-        android:layout_marginTop="15dp"/>
+        android:layout_height="wrap_content"
+        android:text="Com a comerciant verificat, pots publicar cupons per a la teva botiga *** "
+        android:gravity="center_horizontal"/>
 
     <Button
+        android:layout_below="@+id/text_marketplace_publish"
         android:textStyle="bold"
         android:textAllCaps="false"
         android:layout_height="wrap_content"
@@ -25,4 +26,26 @@
         android:layout_marginBottom="10dp"
         android:background="@color/secondaryColor"
         android:textColor="@color/tw__solid_white" />
+
+    <TextView
+        android:layout_below="@+id/btn_marketplace_publish"
+        android:id="@+id/listCouponsHeader"
+        android:textStyle="bold"
+        android:textSize="17dp"
+        android:background="@color/primaryColor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Cupons disponibles"
+        android:gravity="center_horizontal"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp" />
+
+    <ListView
+        android:id="@+id/listCoupons"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/listCouponsHeader"
+        android:layout_marginTop="15dp"/>
+
 </RelativeLayout>

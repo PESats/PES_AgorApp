@@ -144,31 +144,66 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         String nameBotiga = etNameBotiga.getText().toString();
         String descriptionBotiga = etDescriptionBotiga.getText().toString();
 
-        JsonObject json = new JsonObject();
-        json.addProperty("name", nameBotiga);
-        json.addProperty("description", descriptionBotiga);
-        json.addProperty("latitude", locationBotiga.getLatitude());
-        json.addProperty("longitude", locationBotiga.getLongitude());
-        json.addProperty("user_id", prefs.getId());
+        if (!validateForm(nameBotiga, descriptionBotiga, locationBotiga)) {
+            //dialogForm.dismiss();
+            final android.app.AlertDialog alertDialogValidate = new android.app.AlertDialog.Builder(getActivity()).create();
+            alertDialogValidate.setTitle("Error");
+            alertDialogValidate.setMessage("S'han d'omplir tots els camps");
+            alertDialogValidate.setIcon(R.drawable.ic_warning_black_24dp);
 
-        JsonObject jsonBotiga = new JsonObject();
-        jsonBotiga.add("shop", json);
+            alertDialogValidate.setButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    alertDialogValidate.dismiss();
+                }
+            });
 
-        AgorAppApiManager
-                .getService()
-                .createShop(user_id, active_token, jsonBotiga)
-                .enqueue(new retrofit2.Callback<Botiga>() {
-                    @Override
-                    public void onResponse(Call<Botiga> call, Response<Botiga> response) {
-                        Toast.makeText(getActivity(), response.body().getDescription(), Toast.LENGTH_LONG).show();
-                        prefs.setShop(response.body().getId(), response.body().getName());
-                    }
+            alertDialogValidate.show();
+        } else {
+            JsonObject json = new JsonObject();
+            json.addProperty("name", nameBotiga);
+            json.addProperty("description", descriptionBotiga);
+            json.addProperty("latitude", locationBotiga.getLatitude());
+            json.addProperty("longitude", locationBotiga.getLongitude());
+            json.addProperty("user_id", prefs.getId());
 
-                    @Override
-                    public void onFailure(Call<Botiga> call, Throwable t) {
-                        new DialogServerKO(getActivity()).show();
-                    }
-                });
+            JsonObject jsonBotiga = new JsonObject();
+            jsonBotiga.add("shop", json);
+
+            AgorAppApiManager
+                    .getService()
+                    .createShop(user_id, active_token, jsonBotiga)
+                    .enqueue(new retrofit2.Callback<Botiga>() {
+                        @Override
+                        public void onResponse(Call<Botiga> call, Response<Botiga> response) {
+                            Toast.makeText(getActivity(), response.body().getDescription(), Toast.LENGTH_LONG).show();
+                            prefs.setShop(response.body().getId(), response.body().getName());
+
+                            dialogForm.dismiss();
+
+                            final android.app.AlertDialog alertDialogAnnouncementCreated = new android.app.AlertDialog.Builder(getActivity()).create();
+                            alertDialogAnnouncementCreated.setTitle("Cupó creat");
+                            alertDialogAnnouncementCreated.setMessage("Cupó afegit correctament");
+                            alertDialogAnnouncementCreated.setIcon(R.drawable.ic_info_black_24dp);
+
+                            alertDialogAnnouncementCreated.setButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    alertDialogAnnouncementCreated.dismiss();
+                                }
+                            });
+
+                            alertDialogAnnouncementCreated.show();
+                        }
+
+                        @Override
+                        public void onFailure(Call<Botiga> call, Throwable t) {
+                            new DialogServerKO(getActivity()).show();
+                        }
+                    });
+        }
+    }
+
+    private boolean validateForm(String nameBotiga, String descriptionBotiga, Location locationBotiga) {
+        return !(nameBotiga.equals("") || descriptionBotiga.equals("") || locationBotiga==null);
     }
 
     private void printProfile(View view) {
@@ -209,7 +244,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         TextView profileNameTextView = (TextView) view.findViewById(R.id.profile_name);
         profileNameTextView.setText(userName);
         String userType = "Ciutadà";
-        if (prefs.hasShop()) userType = "Comerciant verificat: " + prefs.getShopId();
+        if (prefs.hasShop()) userType = "Comerciant verificat: " + prefs.getShopName();
         TextView profileTypeTextView = (TextView) view.findViewById(R.id.profile_verified);
         profileTypeTextView.setText(userType);
     }

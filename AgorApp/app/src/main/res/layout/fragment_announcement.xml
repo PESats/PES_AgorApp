@@ -38,6 +38,7 @@
             android:layout_below="@+id/announcement_author"
             android:gravity="center"
             android:text="Ayuudame con la casa" />
+
         <Button
             android:textColor="@color/tw__solid_white"
             android:text="@string/announcement_delete_button"
