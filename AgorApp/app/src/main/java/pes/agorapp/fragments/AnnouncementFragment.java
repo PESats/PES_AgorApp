@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.JsonObject;
+import com.twitter.sdk.android.tweetcomposer.TweetComposer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -198,6 +199,19 @@ public class AnnouncementFragment extends Fragment {
             }
         });
 
+        final Button buttonShareTwitter = (Button) view.findViewById(R.id.btn_share_twitter);
+        buttonShareTwitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TweetComposer.Builder builder = new TweetComposer.Builder(getActivity())
+                        .text("Anunci d'ajuda a #AgorApp: "
+                                + announcement.getTitle()
+                                + " ofereixen una recompensa de "
+                                + announcement.getReward()
+                                + " AgoraCoins!");
+                builder.show();
+            }
+        });
 
     }
 
