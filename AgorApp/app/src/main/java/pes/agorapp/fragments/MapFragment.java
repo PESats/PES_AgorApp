@@ -29,6 +29,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import pes.agorapp.JSONObjects.Announcement;
 import pes.agorapp.R;
@@ -50,7 +52,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
     private double lng;
     private OnFragmentInteractionListener mListener;
     private PreferencesAgorApp prefs;
-    ArrayList<Announcement> anuncis;
+    private ArrayList<Announcement> anuncis;
+    private List<Map.Entry<Integer, Marker>> markers;
 
     public MapFragment() {
         // Required empty public constructor
@@ -172,8 +175,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
                             mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                                 @Override
                                 public void onInfoWindowClick(Marker marker) {
-                                    Announcement announcement = anuncis.get(Integer.valueOf(marker.getTitle()));
-                                    mListener.onAnnouncementSelected(announcement);
+                                    for (Announcement anunci : anuncis) {
+                                        if(marker.getPosition().latitude == anunci.getLatitude() &&
+                                                marker.getPosition().longitude == anunci.getLongitude()) {
+                                            mListener.onAnnouncementSelected(anunci);
+                                        }
+                                    }
                                 }
                             });
                         }
