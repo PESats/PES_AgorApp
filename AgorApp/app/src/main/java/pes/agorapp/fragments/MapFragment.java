@@ -58,6 +58,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
 
     public interface OnFragmentInteractionListener {
         void onAnnouncementSelected(Announcement announcement);
+
         void createNewAnnouncement();
     }
 
@@ -150,27 +151,29 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
                 .enqueue(new retrofit2.Callback<ArrayList<Announcement>>() {
                     @Override
                     public void onResponse(Call<ArrayList<Announcement>> call, Response<ArrayList<Announcement>> response) {
-                        //Log.i("response code", String.valueOf(response.code()));
-                        // Log.d("this is my arra3y", "arr: " + response.body().toString());
                         anuncis = response.body();
                         for (Announcement anunci : anuncis) {
-                            //Log.d("anunci " + anunci.getId(), "Latitude: " + anunci.getLatitude() + " Longitude " + anunci.getLongitude());
                             LatLng coords = new LatLng(anunci.getLatitude(), anunci.getLongitude());
                             mMap.addMarker(new MarkerOptions()
                                     .position(coords)
-                                    .title(Integer.toString(anuncis.indexOf(anunci)))
+                                    .title(anunci.getTitle())
+                                    .snippet(String.valueOf(anunci.getReward()) + " AgoraCoins")
                             );
 
                             mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
 
                                 @Override
                                 public boolean onMarkerClick(Marker marker) {
-                                    //if(marker.getTitle().equals("BARNA")) // if marker source is clicked
-                                    //Toast.makeText(getActivity(), marker.getTitle(), Toast.LENGTH_SHORT).show();// display toast
-                                    Announcement announcement = anuncis.get(Integer.valueOf(marker.getTitle()));
-                                    //Log.d("",announcement.toString());
-                                    mListener.onAnnouncementSelected(announcement);
+                                    marker.showInfoWindow();
                                     return true;
+                                }
+                            });
+
+                            mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                                @Override
+                                public void onInfoWindowClick(Marker marker) {
+                                    Announcement announcement = anuncis.get(Integer.valueOf(marker.getTitle()));
+                                    mListener.onAnnouncementSelected(announcement);
                                 }
                             });
                         }
