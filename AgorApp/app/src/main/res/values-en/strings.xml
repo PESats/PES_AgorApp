@@ -102,5 +102,8 @@
     <string name="rewardOffered">Reward offered</string>
     <string name="announcementCreated">Announcement created</string>
     <string name="announcementCreatedSubtitle">Announcement correctly added</string>
+    <string name="announcementDeleted">Announcement deleted</string>
+    <string name="announcementDeletedSubtitle">The announcement has been correctly deleted</string>
+    <string name="announcementDeletePopUp">Are you sure you want to delete this announcement?</string>
 
 </resources>

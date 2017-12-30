@@ -102,5 +102,8 @@
     <string name="rewardOffered">Recompensa ofrecida</string>
     <string name="announcementCreated">Anuncio creado</string>
     <string name="announcementCreatedSubtitle">Anuncio añadido correctamente</string>
+    <string name="announcementDeleted">Anuncio eliminado</string>
+    <string name="announcementDeletedSubtitle">El anuncio ha sido eliminado correctamente</string>
+    <string name="announcementDeletePopUp">¿Seguro que quieres eliminar este anuncio?</string>
 
 </resources>

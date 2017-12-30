@@ -40,6 +40,7 @@ public class AnnouncementsAdapter extends ArrayAdapter<Announcement> {
         String month = String.valueOf(announcement.getCreated_at().getMonth());
         String hours = String.valueOf(announcement.getCreated_at().getHours());
         String minutes = String.valueOf(announcement.getCreated_at().getMinutes());
+        if (lessThanTen(minutes)) minutes = "0" + minutes;
         String dateCreated = day + "/" + month + " " + hours + ":" + minutes;
 
         title.setText(announcement.getTitle());
@@ -48,5 +49,17 @@ public class AnnouncementsAdapter extends ArrayAdapter<Announcement> {
 
         // Return the completed view to render on screen
         return convertView;
+    }
+
+    private boolean lessThanTen(String minutes) {
+        return minutes.equals("0")
+                || minutes.equals("1")
+                || minutes.equals("2")
+                || minutes.equals("3")
+                || minutes.equals("5")
+                || minutes.equals("6")
+                || minutes.equals("7")
+                || minutes.equals("8")
+                || minutes.equals("9");
     }
 }

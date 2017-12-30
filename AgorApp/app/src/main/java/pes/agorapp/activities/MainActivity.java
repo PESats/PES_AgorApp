@@ -217,9 +217,9 @@ public class MainActivity
             fragmentTransaction.replace(R.id.fragment_container, marketplaceFragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_settings) {
             //printProfile();
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_logout) {
             //printProfile();
         }
 

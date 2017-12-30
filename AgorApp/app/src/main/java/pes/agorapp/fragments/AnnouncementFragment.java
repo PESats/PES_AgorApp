@@ -1,5 +1,6 @@
 package pes.agorapp.fragments;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
@@ -7,6 +8,8 @@ import android.graphics.drawable.ScaleDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -25,7 +28,9 @@ import java.util.List;
 
 import pes.agorapp.JSONObjects.Announcement;
 import pes.agorapp.JSONObjects.Comment;
+import pes.agorapp.JSONObjects.Coupon;
 import pes.agorapp.R;
+import pes.agorapp.activities.MainActivity;
 import pes.agorapp.customComponents.DialogServerKO;
 import pes.agorapp.globals.PreferencesAgorApp;
 import pes.agorapp.adapters.CommentsAdapter;
@@ -234,22 +239,7 @@ public class AnnouncementFragment extends Fragment {
             public void onClick(View v) {
                 //Toast.makeText(AnnouncementsAdapter.super.getContext(), "Esborrar: " + announcement.getId(), Toast.LENGTH_LONG).show();
 
-                JsonObject ann = new JsonObject();
-                ann.addProperty("user_id",prefs.getId());
-                ann.addProperty("active_token",prefs.getActiveToken());
-
-                AgorAppApiManager.getService().deleteAnnouncement(announcement.getId(),Integer.valueOf(prefs.getId()), prefs.getActiveToken()).enqueue(new retrofit2.Callback<Announcement>() {
-                    @Override
-                    public void onResponse(Call<Announcement> call, Response<Announcement> response) {
-                        Integer code = response.code();
-                        //Falta implementar el que ve a continuacio
-                    }
-
-                    @Override
-                    public void onFailure(Call<Announcement> call, Throwable t) {
-
-                    }
-                });
+                popUpDeleteAnnouncement(announcement.getId());
 
             }});
         if (!String.valueOf(announcement.getUser().getId()).equals(prefs.getId())) {
@@ -282,5 +272,51 @@ public class AnnouncementFragment extends Fragment {
                         new DialogServerKO(getActivity()).show();
                     }
                 });
+    }
+
+    private void popUpDeleteAnnouncement(final int announcementId) {
+        final android.app.AlertDialog aDialog = new android.app.AlertDialog.Builder(getActivity()).create();
+        aDialog.setTitle(getString(R.string.announcementDeletePopUp));
+
+        Drawable icon = getResources().getDrawable(android.R.drawable.ic_dialog_alert);
+        icon.setTint(getResources().getColor(R.color.secondaryColor));
+        aDialog.setIcon(icon);
+
+        aDialog.setButton(Dialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                AgorAppApiManager
+                        .getService()
+                        .deleteCoupon(announcementId, Integer.valueOf(prefs.getId()), prefs.getActiveToken())
+                        .enqueue(new retrofit2.Callback<Coupon>() {
+                            @Override
+                            public void onResponse(Call<Coupon> call, Response<Coupon> response) {
+                                //dialogCoupon.dismiss();
+
+                                final android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(getActivity()).create();
+                                alertDialog.setTitle(getString(R.string.announcementDeleted));
+                                alertDialog.setMessage(getString(R.string.announcementDeletedSubtitle));
+                                alertDialog.setIcon(R.drawable.ic_info_black_24dp);
+
+                                alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        alertDialog.dismiss();
+                                    }
+                                });
+
+                                alertDialog.show();
+
+                                getActivity().getSupportFragmentManager().popBackStack();
+                                //getActivity().onBackPressed();
+                            }
+
+                            @Override
+                            public void onFailure(Call<Coupon> call, Throwable t) {
+                                System.out.println("Something went wrong!");
+                            }
+                        });
+            }
+        });
+
+        aDialog.show();
     }
 }

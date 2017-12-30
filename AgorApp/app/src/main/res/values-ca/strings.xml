@@ -102,5 +102,8 @@
     <string name="rewardOffered">Recompensa oferta</string>
     <string name="announcementCreated">Anunci creat</string>
     <string name="announcementCreatedSubtitle">Anunci afegit correctament</string>
+    <string name="announcementDeleted">Anunci esborrat</string>
+    <string name="announcementDeletedSubtitle">L\'anunci s\'ha eliminat correctament</string>
+    <string name="announcementDeletePopUp">Segur que vols esborrar aquest anunci?</string>
 
 </resources>
