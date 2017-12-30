@@ -76,5 +76,31 @@
 
     <string name="dialog_server_ko_title">Información</string>
     <string name="dialog_server_ko_message">No se puede acceder al servidor</string>
+    <string name="menu_home">Inicio</string>
+    <string name="menu_coupons">Cupones comprados</string>
+    <string name="menu_marketplace">Marketplace</string>
+    <string name="profile_rating_avg_text">Puntuación media: </string>
+    <string name="close_session">Cerrar sesión</string>
+    <string name="close_session_subtitle">¿Estás seguro?</string>
+    <string name="normalCitizen">Ciudadano</string>
+    <string name="verifiedMerchant">Comerciante verificado</string>
+    <string name="errorAlert">Error</string>
+    <string name="allFieldsForm">No se pueden dejar campos vacíos</string>
+    <string name="couponCreated">Cupó creado</string>
+    <string name="couponCreatedSubtitle">Cupón añadido correctamente en tu negocio</string>
+    <string name="shopCreated">Negocio creado</string>
+    <string name="shopCreatedSubtitle">Te has verificado correctamente como comerciante</string>
+    <string name="addComment">Añadir comentario</string>
+    <string name="cancelForm">Cancelar</string>
+    <string name="twText1">Anuncio de ayuda en #AgorApp</string>
+    <string name="twText2">ofrecen una recompensa de</string>
+    <string name="couponDeleted">Cupón eliminado</string>
+    <string name="couponDeletedSubtitle">Has eliminado el cupón del sistema</string>
+    <string name="couponDeletePopUp">¿Seguro que quieres eliminar este cupón?</string>
+    <string name="couponBought">Cupón comprado</string>
+    <string name="couponBoughtSubtitle">El cupón se ha añadido a tu lista de cupones comprados</string>
+    <string name="rewardOffered">Recompensa ofrecida</string>
+    <string name="announcementCreated">Anuncio creado</string>
+    <string name="announcementCreatedSubtitle">Anuncio añadido correctamente</string>
 
 </resources>

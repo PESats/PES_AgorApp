@@ -344,9 +344,10 @@ public class LoginActivity extends AppCompatActivity
                         String id = response.body().getId();
                         String token = response.body().getActiveToken();
                         Integer coins = response.body().getCoins();
+                        Float evaluation = response.body().getAverage_evaluation();
                         Botiga shop = response.body().getShop();
 
-                        saveUserInPreferences(id, token, coins, shop);
+                        saveUserInPreferences(id, token, coins, evaluation, shop);
 
                         loginok();
                     }
@@ -359,13 +360,14 @@ public class LoginActivity extends AppCompatActivity
                 });
     }
 
-    private void saveUserInPreferences(String id, String active_token, Integer coins, Botiga shop) {
+    private void saveUserInPreferences(String id, String active_token, Integer coins, Float evaluation, Botiga shop) {
         prefs.setId(id);
         prefs.setPlatform(platform_name);
         prefs.setUsername(userName);
         prefs.setEmail(email);
         prefs.setImageUrl(url_image);
         prefs.setCoins(coins);
+        prefs.setRating(evaluation);
         prefs.setActiveToken(active_token);
         if (shop != null) prefs.setShop(shop.getId(), shop.getName());
 

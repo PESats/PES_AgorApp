@@ -134,7 +134,7 @@
                         android:scaleY=".8"
                         android:numStars="5"
                         android:id="@+id/profile_ratingBar"
-                        android:clickable="false"
+                        android:isIndicator="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"/>

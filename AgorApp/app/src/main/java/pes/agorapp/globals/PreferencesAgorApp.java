@@ -17,7 +17,6 @@ public class PreferencesAgorApp {
     private static String NAME = "name";
     private static String EMAIL = "email";
     private static String IMAGE_URL = "image_url";
-    private static String LEVEL = "user_level";
     private static String VERSION_APP = "versionApp";
     private static String PLATFORM_LOGIN = "platform_login";
     private static String ACTIVE_TOKEN = "active_token";
@@ -27,6 +26,7 @@ public class PreferencesAgorApp {
     private static String HAS_SHOP = "hasShop";
     private static String LANGUAGE_SAVED = "languageToSave";
     private static String HAS_LANGUAGE = "hasLanguage";
+    private static String RATING = "user_rating";
 
     public PreferencesAgorApp(Context activity) {
         prefs = activity.getSharedPreferences(NAME_PREFERENCES, Context.MODE_PRIVATE);
@@ -96,12 +96,12 @@ public class PreferencesAgorApp {
         prefs.edit().putString(ACTIVE_TOKEN, active_token).apply();
     }
 
-    public int getLevel() {
-        return prefs.getInt(LEVEL, 1);
+    public float getRating() {
+        return prefs.getFloat(RATING, 0f);
     }
 
-    public void setLevel(int user_level) {
-        prefs.edit().putInt(LEVEL, user_level).apply();
+    public void setRating(float user_rating) {
+        prefs.edit().putFloat(RATING, user_rating).apply();
     }
 
     public int getCoins() {
@@ -123,14 +123,6 @@ public class PreferencesAgorApp {
         editor.putInt(SHOP_ID, shopId);
         editor.putString(SHOP_NAME, shopName);
         editor.putBoolean(HAS_SHOP, true);
-        editor.apply();
-    }
-
-    public void deleteShop() {
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.remove(SHOP_ID);
-        editor.remove(SHOP_NAME);
-        editor.putBoolean(HAS_SHOP, false);
         editor.apply();
     }
 
@@ -164,7 +156,7 @@ public class PreferencesAgorApp {
         Log.i("Id: ", getId() + " ");
         Log.i("Name: ", getUserName() + " ");
         Log.i("Email: ", getEmail() + " ");
-        Log.i("user_level", getLevel()+ " ");
+        Log.i("user_level", getRating()+ " ");
         Log.i("version", getAppVersion());
         Log.i("platform", getPlatform());
         Log.i("Token", getActiveToken());

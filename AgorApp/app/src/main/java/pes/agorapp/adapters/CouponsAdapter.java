@@ -18,8 +18,8 @@ import pes.agorapp.R;
 
 public class CouponsAdapter extends ArrayAdapter<Coupon> {
 
-    public CouponsAdapter(Context context, List<Coupon> coupons) {
-        super(context, 0, coupons);
+    public CouponsAdapter(Context context, int resource, List<Coupon> coupons) {
+        super(context, resource, coupons);
     }
 
     @Override

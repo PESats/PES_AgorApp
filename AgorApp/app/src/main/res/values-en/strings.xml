@@ -76,5 +76,31 @@
 
     <string name="dialog_server_ko_title">Warning</string>
     <string name="dialog_server_ko_message">Server unreachabe</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_coupons">Bought coupons</string>
+    <string name="menu_marketplace">Marketplace</string>
+    <string name="profile_rating_avg_text">Average rating: </string>
+    <string name="close_session">Close session</string>
+    <string name="close_session_subtitle">Are you sure?</string>
+    <string name="normalCitizen">Citizen</string>
+    <string name="verifiedMerchant">Verified merchant</string>
+    <string name="errorAlert">Error</string>
+    <string name="allFieldsForm">No field can be left empty</string>
+    <string name="couponCreated">Coupon created</string>
+    <string name="couponCreatedSubtitle">Coupon added correctly to your business</string>
+    <string name="shopCreated">Shop created</string>
+    <string name="shopCreatedSubtitle">You have been successfully verified as merchant</string>
+    <string name="addComment">Add comment</string>
+    <string name="cancelForm">Cancel</string>
+    <string name="twText1">Help announcement at #AgorApp</string>
+    <string name="twText2">reward offered of</string>
+    <string name="couponDeleted">Coupon deleted</string>
+    <string name="couponDeletedSubtitle">You have successfully deleted the coupon out of the system</string>
+    <string name="couponDeletePopUp">Are you sure you want to delete this coupon?</string>
+    <string name="couponBought">Coupon bought</string>
+    <string name="couponBoughtSubtitle">The coupon has been added to your list</string>
+    <string name="rewardOffered">Reward offered</string>
+    <string name="announcementCreated">Announcement created</string>
+    <string name="announcementCreatedSubtitle">Announcement correctly added</string>
 
 </resources>

@@ -76,5 +76,31 @@
 
     <string name="dialog_server_ko_title">Informació</string>
     <string name="dialog_server_ko_message">No es pot accedir al servidor</string>
+    <string name="menu_home">Inici</string>
+    <string name="menu_coupons">Cupons comprats</string>
+    <string name="menu_marketplace">Marketplace</string>
+    <string name="profile_rating_avg_text">Puntuació mitjana: </string>
+    <string name="close_session">Tancar sessió</string>
+    <string name="close_session_subtitle">N\'estàs segur?</string>
+    <string name="normalCitizen">Ciutadà</string>
+    <string name="verifiedMerchant">Comerciant verificat</string>
+    <string name="errorAlert">Error</string>
+    <string name="allFieldsForm">S\'han d\'omplir tots els camps</string>
+    <string name="couponCreated">Cupó creat</string>
+    <string name="couponCreatedSubtitle">Cupó afegit correctament a la teva botiga</string>
+    <string name="shopCreated">Botiga creada</string>
+    <string name="shopCreatedSubtitle">T\'has verificat correctament com a botiguer</string>
+    <string name="addComment">Afegir comentari</string>
+    <string name="cancelForm">Cancelar</string>
+    <string name="twText1">Anunci d\'ajuda a #AgorApp</string>
+    <string name="twText2">ofereixen una recompensa de</string>
+    <string name="couponDeleted">Cupó esborrat</string>
+    <string name="couponDeletedSubtitle">Has esborrat el cupó del sistema</string>
+    <string name="couponDeletePopUp">Segur que vols esborrar aquest cupó?</string>
+    <string name="couponBought">Cupó comprat</string>
+    <string name="couponBoughtSubtitle">El cupó s\'ha afegit als teus cupons comprats</string>
+    <string name="rewardOffered">Recompensa oferta</string>
+    <string name="announcementCreated">Anunci creat</string>
+    <string name="announcementCreatedSubtitle">Anunci afegit correctament</string>
 
 </resources>

@@ -150,12 +150,12 @@ public class AnnouncementFragment extends Fragment {
         prefs = new PreferencesAgorApp(getActivity());
 
         comment_dialog = new AlertDialog.Builder(getActivity());
-        comment_dialog.setTitle("Nuevo comentario");
+        comment_dialog.setTitle(getString(R.string.addComment));
         new_comment = new EditText(getContext());
         //if (new_comment.getParent() != null)
             //((EditText)new_comment.getParent()).removeView(new_comment);
         comment_dialog.setView(new_comment);
-        comment_dialog.setPositiveButton("Enviar", new DialogInterface.OnClickListener() {
+        comment_dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 //Toast.makeText(getContext(), new_comment.getText().toString(), Toast.LENGTH_LONG);
@@ -183,7 +183,7 @@ public class AnnouncementFragment extends Fragment {
 
             }
         });
-        comment_dialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+        comment_dialog.setNegativeButton(getString(R.string.cancelForm), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
@@ -204,9 +204,9 @@ public class AnnouncementFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 TweetComposer.Builder builder = new TweetComposer.Builder(getActivity())
-                        .text("Anunci d'ajuda a #AgorApp: "
+                        .text(getString(R.string.twText1) + ": "
                                 + announcement.getTitle()
-                                + " ofereixen una recompensa de "
+                                + " " + getString(R.string.twText2) + " "
                                 + announcement.getReward()
                                 + " AgoraCoins!");
                 builder.show();

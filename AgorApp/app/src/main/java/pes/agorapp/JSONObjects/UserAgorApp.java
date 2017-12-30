@@ -15,12 +15,13 @@ public class UserAgorApp {
     private String created_at;
     private String updated_at;
     private Integer coins;
+    private Float average_evaluation;
     private Botiga shop;
 
     public UserAgorApp(String name, String image_url, String id,
                        String active_token, String platform_name,
                        String email, String created_at, String updated_at,
-                       Integer coins, Botiga shop) {
+                       Integer coins, Float average_evaluation, Botiga shop) {
         this.name = name;
         this.image_url = image_url;
         this.id = id;
@@ -30,6 +31,7 @@ public class UserAgorApp {
         this.created_at = created_at;
         this.updated_at = updated_at;
         this.coins = coins;
+        this.average_evaluation = average_evaluation;
         this.shop = shop;
     }
 
@@ -86,4 +88,12 @@ public class UserAgorApp {
     public Botiga getShop() { return shop; }
 
     public void setShop(Botiga shop) { this.shop = shop; }
+
+    public Float getAverage_evaluation() {
+        return average_evaluation;
+    }
+
+    public void setAverage_evaluation(Float average_evaluation) {
+        this.average_evaluation = average_evaluation;
+    }
 }

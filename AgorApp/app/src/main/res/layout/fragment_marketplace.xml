@@ -5,6 +5,57 @@
     tools:context="pes.agorapp.fragments.MarketplaceFragment">
 
     <TextView
+        android:textStyle="bold"
+        android:textSize="17dp"
+        android:background="@color/primaryLightColor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/profile_wallet_title"
+        android:id="@+id/marketplace_wallet_title"
+        android:gravity="center_horizontal"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp" />
+
+    <TextView
+        android:layout_below="@+id/marketplace_wallet_title"
+        android:textSize="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/profile_wallet_subtitle"
+        android:id="@+id/marketplace_wallet_subtitle"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_below="@+id/marketplace_wallet_subtitle"
+        android:textColor="@color/secondaryColor"
+        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/profile_wallet_coins"
+        android:id="@+id/marketplace_wallet_coins"
+        android:gravity="center_horizontal"
+        android:layout_margin="10dp" />
+
+    <TextView
+        android:layout_below="@+id/marketplace_wallet_coins"
+        android:id="@+id/merchantHeader"
+        android:textStyle="bold"
+        android:textSize="17dp"
+        android:background="@color/primaryLightColor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Botiguer verificat"
+        android:gravity="center_horizontal"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp" />
+
+    <TextView
+        android:layout_below="@+id/merchantHeader"
         android:id="@+id/text_marketplace_publish"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,7 +83,7 @@
         android:id="@+id/listCouponsHeader"
         android:textStyle="bold"
         android:textSize="17dp"
-        android:background="@color/primaryColor"
+        android:background="@color/primaryLightColor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"

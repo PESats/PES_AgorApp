@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pes.agorapp.JSONObjects.Coupon;
+import pes.agorapp.JSONObjects.UserAgorApp;
 import pes.agorapp.R;
 import pes.agorapp.customComponents.DialogServerKO;
 import pes.agorapp.globals.PreferencesAgorApp;
@@ -45,6 +47,8 @@ public class MarketplaceFragment extends Fragment implements View.OnClickListene
     private SeekBar sbDiscount, sbPrice;
     private TextView disc, pri;
     private Integer discount, price;
+    private CouponsAdapter adapter;
+    private ListView listView;
 
     public MarketplaceFragment() {
         // Required empty public constructor
@@ -96,9 +100,9 @@ public class MarketplaceFragment extends Fragment implements View.OnClickListene
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final CouponsAdapter adapter = new CouponsAdapter(getActivity(), coupons);
+        adapter = new CouponsAdapter(getActivity(), R.id.listCoupons, coupons);
 
-        final ListView listView = (ListView) view.findViewById(R.id.listCoupons);
+        listView = (ListView) view.findViewById(R.id.listCoupons);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -131,7 +135,35 @@ public class MarketplaceFragment extends Fragment implements View.OnClickListene
         if (!prefs.hasShop()) {
             view.findViewById(R.id.btn_marketplace_publish).setVisibility(View.GONE);
             view.findViewById(R.id.text_marketplace_publish).setVisibility(View.GONE);
+            view.findViewById(R.id.merchantHeader).setVisibility(View.GONE);
         }
+
+        updateCoinsAndRating();
+        printCoins(view);
+    }
+
+    private void printCoins(View view) {
+        String walletText = prefs.getCoins() + " AgoraCoins";
+        TextView wallet = (TextView) view.findViewById(R.id.marketplace_wallet_coins);
+        wallet.setText(walletText);
+    }
+
+    private void updateCoinsAndRating() {
+        AgorAppApiManager
+                .getService()
+                .getUser(Integer.valueOf(prefs.getId()), Integer.valueOf(prefs.getId()), prefs.getActiveToken())
+                .enqueue(new retrofit2.Callback<UserAgorApp>() {
+                    @Override
+                    public void onResponse(Call<UserAgorApp> call, Response<UserAgorApp> response) {
+                        prefs.setCoins(response.body().getCoins());
+                        prefs.setRating(response.body().getAverage_evaluation());
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserAgorApp> call, Throwable t) {
+                        new DialogServerKO(getActivity()).show();
+                    }
+                });
     }
 
     @Override
@@ -224,8 +256,8 @@ public class MarketplaceFragment extends Fragment implements View.OnClickListene
                                 dialogForm.dismiss();
 
                                 final AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-                                alertDialog.setTitle("Cupó creat");
-                                alertDialog.setMessage("Has afegit un nou cupó per al teu local " + prefs.getShopName());
+                                alertDialog.setTitle(getString(R.string.couponCreated));
+                                alertDialog.setMessage(getString(R.string.couponCreatedSubtitle) + " " + prefs.getShopName());
                                 alertDialog.setIcon(R.drawable.ic_info_black_24dp);
 
                                 alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
@@ -235,6 +267,14 @@ public class MarketplaceFragment extends Fragment implements View.OnClickListene
                                 });
 
                                 alertDialog.show();
+                                /*
+                                listView.setAdapter(null);
+                                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                                ft.detach(MarketplaceFragment.this).attach(MarketplaceFragment.this).commit();
+                                */
+                                listView.invalidate();
+                                //coupons.add(response.body());
+                                //adapter.notifyDataSetChanged();
                             }
 
                             @Override

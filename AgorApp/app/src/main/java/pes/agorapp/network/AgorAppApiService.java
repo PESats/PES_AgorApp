@@ -31,6 +31,13 @@ public interface AgorAppApiService {
 
     /* USUARI */
 
+    @GET("users/{id}")
+    Call<UserAgorApp> getUser(
+            @Path("id") int id,
+            @Query("user_id") int idUser,
+            @Query("active_token") String token
+    );
+
     @POST("users/login")
     Call<UserAgorApp> createUser(
             @Body JsonObject user

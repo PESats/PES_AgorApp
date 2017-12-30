@@ -96,7 +96,7 @@ public class CouponListFragment extends Fragment {
 
         // Construct the data source
         // Create the adapter to convert the array to views
-        final CouponsAdapter adapter = new CouponsAdapter(getActivity(), coupons);
+        final CouponsAdapter adapter = new CouponsAdapter(getActivity(), R.id.listViewCoupon, coupons);
         // Attach the adapter to a ListView
         final ListView listView = (ListView) view.findViewById(R.id.listViewCoupon);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

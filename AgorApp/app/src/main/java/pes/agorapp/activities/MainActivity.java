@@ -3,22 +3,21 @@ package pes.agorapp.activities;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -97,7 +96,11 @@ public class MainActivity
         logo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "logo", Toast.LENGTH_LONG).show();
+                Intent intent = getIntent();
+                finish();
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+                //Toast.makeText(getApplicationContext(), "logo", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -160,43 +163,60 @@ public class MainActivity
 
         int id = item.getItemId();
 
-        if (id == R.id.profile) {
+        if (id == R.id.nav_home) {
+            Intent intent = getIntent();
+            finish();
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(intent);
+        } else if (id == R.id.nav_profile) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
             ProfileFragment profileFragment = new ProfileFragment();
-            //CAL REFACTORING!!!
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, profileFragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
-        } else if (id == R.id.announcement_list) {
+        } else if (id == R.id.nav_announcement_list) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
             AnnouncementListFragment listFragment = new AnnouncementListFragment();
             listFragment.setArguments(getIntent().getExtras());
-            //CAL REFACTORING!!!
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, listFragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
-        } else if (id == R.id.coupons_list) {
+        } else if (id == R.id.nav_coupons_list) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
             CouponListFragment listFragment = new CouponListFragment();
             listFragment.setArguments(getIntent().getExtras());
-            //CAL REFACTORING!!!
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, listFragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         } else if (id == R.id.nav_chat) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
             ChatListFragment chatListFragment = new ChatListFragment();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, chatListFragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
 //            chatListFragment.setSettings();
-        } else if (id == R.id.nav_manage) {
-            /*SwapAnnouncementBid swapAnnouncementBidFragment = new SwapAnnouncementBid();
+        } else if (id == R.id.nav_marketplace) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+            MarketplaceFragment marketplaceFragment = new MarketplaceFragment();
+            marketplaceFragment.setArguments(getIntent().getExtras());
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, swapAnnouncementBidFragment);
+            fragmentTransaction.replace(R.id.fragment_container, marketplaceFragment);
             fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();*/
-            //printProfile();
+            fragmentTransaction.commit();
         } else if (id == R.id.nav_share) {
             //printProfile();
         } else if (id == R.id.nav_send) {
@@ -261,8 +281,8 @@ public class MainActivity
                 if (!validateForm(title, desc, reward, locAnn)) {
                     //dialogForm.dismiss();
                     final android.app.AlertDialog alertDialogValidate = new android.app.AlertDialog.Builder(MainActivity.this).create();
-                    alertDialogValidate.setTitle("Error");
-                    alertDialogValidate.setMessage("S'han d'omplir tots els camps");
+                    alertDialogValidate.setTitle(getString(R.string.errorAlert));
+                    alertDialogValidate.setMessage(getString(R.string.allFieldsForm));
                     alertDialogValidate.setIcon(R.drawable.ic_warning_black_24dp);
 
                     alertDialogValidate.setButton("OK", new DialogInterface.OnClickListener() {
@@ -297,8 +317,8 @@ public class MainActivity
                                     dialogForm.dismiss();
 
                                     final android.app.AlertDialog alertDialogAnnouncementCreated = new android.app.AlertDialog.Builder(MainActivity.this).create();
-                                    alertDialogAnnouncementCreated.setTitle("Anunci creat");
-                                    alertDialogAnnouncementCreated.setMessage("Anunci afegit correctament");
+                                    alertDialogAnnouncementCreated.setTitle(getString(R.string.announcementCreated));
+                                    alertDialogAnnouncementCreated.setMessage(getString(R.string.announcementCreatedSubtitle));
                                     alertDialogAnnouncementCreated.setIcon(R.drawable.ic_info_black_24dp);
 
                                     alertDialogAnnouncementCreated.setButton("OK", new DialogInterface.OnClickListener() {
@@ -323,7 +343,7 @@ public class MainActivity
         sbReward.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
-                rew.setText("Recompensa oferta: " + String.valueOf(progress) + " AgoraPoints");
+                rew.setText(getString(R.string.rewardOffered) + ": " + String.valueOf(progress) + " AgoraCoins");
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
@@ -457,8 +477,8 @@ public class MainActivity
                                     dialogCoupon.dismiss();
 
                                     final android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(MainActivity.this).create();
-                                    alertDialog.setTitle("Cupó comprat");
-                                    alertDialog.setMessage("El cupó s'ha afegit als teus cupons comprats");
+                                    alertDialog.setTitle(getString(R.string.couponBought));
+                                    alertDialog.setMessage(getString(R.string.couponBoughtSubtitle));
                                     alertDialog.setIcon(R.drawable.ic_info_black_24dp);
 
                                     alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
@@ -468,6 +488,17 @@ public class MainActivity
                                     });
 
                                     alertDialog.show();
+
+                                    updateCoinsAndRating();
+
+                                    FragmentManager fragmentManager = getSupportFragmentManager();
+                                    fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                                    MarketplaceFragment marketplaceFragment = new MarketplaceFragment();
+                                    marketplaceFragment.setArguments(getIntent().getExtras());
+                                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                                    fragmentTransaction.replace(R.id.fragment_container, marketplaceFragment);
+                                    fragmentTransaction.addToBackStack(null);
+                                    fragmentTransaction.commit();
                                 } else if (response.code() == 400) {
                                     //not enough money dude
                                     dialogCoupon.dismiss();
@@ -503,9 +534,27 @@ public class MainActivity
         }
     }
 
+    private void updateCoinsAndRating() {
+        AgorAppApiManager
+                .getService()
+                .getUser(Integer.valueOf(prefs.getId()), Integer.valueOf(prefs.getId()), prefs.getActiveToken())
+                .enqueue(new retrofit2.Callback<UserAgorApp>() {
+                    @Override
+                    public void onResponse(Call<UserAgorApp> call, Response<UserAgorApp> response) {
+                        prefs.setCoins(response.body().getCoins());
+                        prefs.setRating(response.body().getAverage_evaluation());
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserAgorApp> call, Throwable t) {
+                        new DialogServerKO(MainActivity.this).show();
+                    }
+                });
+    }
+
     private void popUpDeleteCoupon(final Integer couponId) {
         final android.app.AlertDialog aDialog = new android.app.AlertDialog.Builder(MainActivity.this).create();
-        aDialog.setTitle("Segur que vols esborrar aquest xec?");
+        aDialog.setTitle(getString(R.string.couponDeletePopUp));
 
         Drawable icon = getResources().getDrawable(android.R.drawable.ic_dialog_alert);
         icon.setTint(getColor(R.color.secondaryColor));
@@ -522,8 +571,8 @@ public class MainActivity
                                 dialogCoupon.dismiss();
 
                                 final android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(MainActivity.this).create();
-                                alertDialog.setTitle("Cupó esborrat");
-                                alertDialog.setMessage("Has esborrat el cupó del sistema");
+                                alertDialog.setTitle(getString(R.string.couponDeleted));
+                                alertDialog.setMessage(getString(R.string.couponDeletedSubtitle));
                                 alertDialog.setIcon(R.drawable.ic_info_black_24dp);
 
                                 alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
