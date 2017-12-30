@@ -26,8 +26,16 @@
             android:id="@+id/nav_marketplace"
             android:icon="@drawable/ic_shopping_cart_black_24dp"
             android:title="@string/menu_marketplace" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="Configuració" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_exit_to_app_black_24dp"
+            android:title="Sortir" />
     </group>
-
+<!--
     <item android:title="Communicate">
         <menu>
             <item
@@ -40,5 +48,5 @@
                 android:title="mec mec" />
         </menu>
     </item>
-
+-->
 </menu>
