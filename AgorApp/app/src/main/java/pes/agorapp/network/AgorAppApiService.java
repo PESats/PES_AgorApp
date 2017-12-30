@@ -109,7 +109,6 @@ public interface AgorAppApiService {
 
     @GET("shops")
     Call<ArrayList<Botiga>> getShops(
-            @Path("id") int id,
             @Query("user_id") int user_id,
             @Query("active_token") String active_token
     );
