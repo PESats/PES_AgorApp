@@ -6,33 +6,13 @@
     android:orientation="vertical"
     android:padding="5dp">
 
-    <LinearLayout
-        android:id="@+id/item_announcement_show"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/item_title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:textStyle="bold"
         tools:text="Marketing Strategist" />
-
-        <TextView
-            android:id="@+id/item_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Hola"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_weight=".75"/>
-
-        <TextView
-            android:id="@+id/item_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:textSize="15sp"
-            android:text="date"
-            android:layout_weight=".25"/>
-
-    </LinearLayout>
 
     <TextView
         android:id="@+id/item_text"
