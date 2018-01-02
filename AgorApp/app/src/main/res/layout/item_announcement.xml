@@ -10,7 +10,9 @@
         android:id="@+id/item_announcement_show"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="1">
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:text="Marketing Strategist" />
 
         <TextView
             android:id="@+id/item_title"
@@ -36,8 +38,10 @@
         android:id="@+id/item_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/item_announcement_show"
+        android:layout_below="@id/item_title"
+        android:textColor="@color/secondaryColor"
         android:textSize="15sp"
-        tools:text="Que tal" />
+        android:textStyle="bold"
+        tools:text="500 AgoraCoins" />
 
 </RelativeLayout>

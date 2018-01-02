@@ -33,7 +33,7 @@ public class AnnouncementsAdapter extends ArrayAdapter<Announcement> {
         // Lookup view for data population
         TextView title = (TextView) convertView.findViewById(R.id.item_title);
         TextView text = (TextView) convertView.findViewById(R.id.item_text);
-        TextView date = (TextView) convertView.findViewById(R.id.item_date);
+        //TextView date = (TextView) convertView.findViewById(R.id.item_date);
         // Populate the data into the template view using the data object
 
         String day = String.valueOf(announcement.getCreated_at().getDay());
@@ -44,8 +44,8 @@ public class AnnouncementsAdapter extends ArrayAdapter<Announcement> {
         String dateCreated = day + "/" + month + " " + hours + ":" + minutes;
 
         title.setText(announcement.getTitle());
-        text.setText(announcement.getDescription());
-        date.setText(dateCreated);
+        text.setText(String.valueOf(announcement.getReward()) + " AgoraCoins");
+        //date.setText(announcement.getCreated_at().toString());
 
         // Return the completed view to render on screen
         return convertView;

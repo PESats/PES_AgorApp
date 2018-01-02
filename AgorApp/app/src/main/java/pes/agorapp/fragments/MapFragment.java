@@ -24,13 +24,18 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import pes.agorapp.JSONObjects.Announcement;
+import pes.agorapp.JSONObjects.Botiga;
 import pes.agorapp.R;
 import pes.agorapp.customComponents.DialogServerKO;
 import pes.agorapp.globals.PreferencesAgorApp;
@@ -50,7 +55,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
     private double lng;
     private OnFragmentInteractionListener mListener;
     private PreferencesAgorApp prefs;
-    ArrayList<Announcement> anuncis;
+    private ArrayList<Announcement> anuncis;
+    private List<Map.Entry<Integer, Marker>> markers;
 
     public MapFragment() {
         // Required empty public constructor
@@ -58,6 +64,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
 
     public interface OnFragmentInteractionListener {
         void onAnnouncementSelected(Announcement announcement);
+
         void createNewAnnouncement();
     }
 
@@ -135,42 +142,83 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
             coord = new LatLng(lat, lng);
         }
         setMarkers();
+        setShopMarkers();
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(coord, 15);
         mMap.animateCamera(cameraUpdate);
     }
 
-    private void setMarkers() {
-        //TODO: Fer cirda api i pintar marker per cada un
-        Log.d("AQUI:", prefs.getId() + " " + prefs.getActiveToken());
-        //Integer.valueOf(prefs.getId())
-
+    private void setShopMarkers() {
         AgorAppApiManager
                 .getService()
-                .getAnnouncements(Integer.valueOf(prefs.getId()), prefs.getActiveToken())
-                .enqueue(new retrofit2.Callback<ArrayList<Announcement>>() {
+                .getShops(Integer.valueOf(prefs.getId()), prefs.getActiveToken())
+                .enqueue(new retrofit2.Callback<ArrayList<Botiga>>() {
                     @Override
-                    public void onResponse(Call<ArrayList<Announcement>> call, Response<ArrayList<Announcement>> response) {
-                        //Log.i("response code", String.valueOf(response.code()));
-                        // Log.d("this is my arra3y", "arr: " + response.body().toString());
-                        anuncis = response.body();
-                        for (Announcement anunci : anuncis) {
-                            //Log.d("anunci " + anunci.getId(), "Latitude: " + anunci.getLatitude() + " Longitude " + anunci.getLongitude());
-                            LatLng coords = new LatLng(anunci.getLatitude(), anunci.getLongitude());
+                    public void onResponse(Call<ArrayList<Botiga>> call, Response<ArrayList<Botiga>> response) {
+                        for (Botiga botiga : response.body()) {
+                            LatLng coords = new LatLng(botiga.getLatitude(), botiga.getLongitude());
                             mMap.addMarker(new MarkerOptions()
                                     .position(coords)
-                                    .title(Integer.toString(anuncis.indexOf(anunci)))
+                                    .title(botiga.getName())
+                                    .snippet(botiga.getDescription())
+                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.shop_icon))
                             );
 
                             mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
 
                                 @Override
                                 public boolean onMarkerClick(Marker marker) {
-                                    //if(marker.getTitle().equals("BARNA")) // if marker source is clicked
-                                    //Toast.makeText(getActivity(), marker.getTitle(), Toast.LENGTH_SHORT).show();// display toast
-                                    Announcement announcement = anuncis.get(Integer.valueOf(marker.getTitle()));
-                                    //Log.d("",announcement.toString());
-                                    mListener.onAnnouncementSelected(announcement);
+                                    marker.showInfoWindow();
                                     return true;
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ArrayList<Botiga>> call, Throwable t) {
+                        System.out.println("Something went wrong!");
+                        new DialogServerKO(getActivity()).show();
+                    }
+                });
+    }
+
+    private void setMarkers() {
+        //TODO: Fer cirda api i pintar marker per cada un
+        AgorAppApiManager
+                .getService()
+                .getAnnouncements(Integer.valueOf(prefs.getId()), prefs.getActiveToken())
+                .enqueue(new retrofit2.Callback<ArrayList<Announcement>>() {
+                    @Override
+                    public void onResponse(Call<ArrayList<Announcement>> call, Response<ArrayList<Announcement>> response) {
+                        anuncis = response.body();
+                        for (Announcement anunci : anuncis) {
+                            LatLng coords = new LatLng(anunci.getLatitude(), anunci.getLongitude());
+                            mMap.addMarker(new MarkerOptions()
+                                    .position(coords)
+                                    .title(anunci.getTitle())
+                                    .snippet(String.valueOf(anunci.getReward()) + " AgoraCoins")
+                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.announcement_marker))
+                            );
+
+                            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+
+                                @Override
+                                public boolean onMarkerClick(Marker marker) {
+                                    marker.showInfoWindow();
+                                    return true;
+                                }
+                            });
+
+                            mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                                @Override
+                                public void onInfoWindowClick(Marker marker) {
+                                    for (Announcement anunci : anuncis) {
+                                        // Get announcement by position
+                                        if (marker.getPosition().latitude == anunci.getLatitude() &&
+                                                marker.getPosition().longitude == anunci.getLongitude()) {
+                                            mListener.onAnnouncementSelected(anunci);
+                                        }
+                                    }
                                 }
                             });
                         }
@@ -182,8 +230,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
                         new DialogServerKO(getActivity()).show();
                     }
                 });
-
-
     }
 
 
