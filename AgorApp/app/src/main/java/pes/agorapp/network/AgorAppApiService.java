@@ -12,6 +12,7 @@ import pes.agorapp.JSONObjects.Bid;
 import pes.agorapp.JSONObjects.Botiga;
 import pes.agorapp.JSONObjects.Comment;
 import pes.agorapp.JSONObjects.Coupon;
+import pes.agorapp.JSONObjects.Trophy;
 import pes.agorapp.JSONObjects.UserAgorApp;
 
 import retrofit2.Call;
@@ -206,5 +207,19 @@ public interface AgorAppApiService {
             @Path("user_id") int user_id,
             @Query("active_token") String active_token,
             @Query("filter_mode") String filter_mode
+    );
+
+    /* TROFEUS */
+    @GET("badges")
+    Call<ArrayList<Trophy>> getTrophies(
+            @Query("user_id") int user_id,
+            @Query("active_token") String active_token
+    );
+
+    @GET("users/{user_id}/badges")
+    Call<ArrayList<Trophy>> getUserTrophies(
+            @Path("user_id") int id,
+            @Query("user_id") int user_id,
+            @Query("active_token") String active_token
     );
 }

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -31,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pes.agorapp.JSONObjects.Botiga;
+import pes.agorapp.JSONObjects.Coupon;
 import pes.agorapp.JSONObjects.Location;
 import pes.agorapp.JSONObjects.Trophy;
 import pes.agorapp.JSONObjects.UserAgorApp;
@@ -53,9 +55,11 @@ import retrofit2.Response;
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private AnnouncementListFragment.OnFragmentInteractionListener mListener;
+    private OnFragmentInteractionListener mListenerProfile;
     private PreferencesAgorApp prefs;
     private Location locationBotiga;
     private Dialog dialogForm;
+    List<Trophy> trophies = new ArrayList<>();
 
     public ProfileFragment() {}
 
@@ -127,13 +131,38 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         //info d'usuari i imatge
         printProfile(view);
-
-        List<Trophy> trophies = new ArrayList<>();
-        TrophiesAdapter adapter = new TrophiesAdapter(getActivity(), trophies);
+        final TrophiesAdapter adapter = new TrophiesAdapter(getActivity(), trophies);
         final MyGridView gridView = (MyGridView) view.findViewById(R.id.gridview);
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Trophy trophy = (Trophy) gridView.getItemAtPosition(position);
+                mListenerProfile.onTrophySelected(trophy);
+            }
+        });
+
         gridView.setAdapter(adapter);
-        trophies = ObjectsHelper.getFakeTrophies();
-        adapter.addAll(trophies);
+
+        final int user_id = Integer.valueOf(prefs.getId());
+        final String active_token = prefs.getActiveToken();
+
+        AgorAppApiManager
+                .getService()
+                .getTrophies(user_id, active_token)
+                .enqueue(new retrofit2.Callback<ArrayList<Trophy>>() {
+                    @Override
+                    public void onResponse(Call<ArrayList<Trophy>> call, Response<ArrayList<Trophy>> response) {
+                        trophies = response.body();
+                        adapter.addAll(trophies);
+                        //adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onFailure(Call<ArrayList<Trophy>> call, Throwable t) {
+                        new DialogServerKO(getActivity()).show();
+                    }
+                });
     }
 
     private void upgradeAndCreateBotiga(EditText etNameBotiga, EditText etDescriptionBotiga, final View view) {
@@ -301,6 +330,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         super.onAttach(context);
         if (context instanceof AnnouncementListFragment.OnFragmentInteractionListener) {
             mListener = (AnnouncementListFragment.OnFragmentInteractionListener) context;
+            mListenerProfile = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -311,6 +341,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        mListenerProfile = null;
+    }
+
+    public interface OnFragmentInteractionListener {
+        void onTrophySelected(Trophy trophy);
     }
 
     @Override

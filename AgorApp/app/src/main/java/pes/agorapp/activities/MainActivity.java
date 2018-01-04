@@ -40,6 +40,7 @@ import pes.agorapp.JSONObjects.Chat;
 import pes.agorapp.JSONObjects.Comment;
 import pes.agorapp.JSONObjects.Coupon;
 import pes.agorapp.JSONObjects.Location;
+import pes.agorapp.JSONObjects.Trophy;
 import pes.agorapp.JSONObjects.UserAgorApp;
 import pes.agorapp.R;
 import pes.agorapp.customComponents.DialogServerKO;
@@ -66,11 +67,12 @@ public class MainActivity
         MapFragment.OnFragmentInteractionListener,
         ChatListFragment.OnFragmentInteractionListener,
         MarketplaceFragment.OnFragmentInteractionListener,
-        CouponListFragment.OnFragmentInteractionListener{
+        CouponListFragment.OnFragmentInteractionListener,
+        ProfileFragment.OnFragmentInteractionListener{
 
     private PreferencesAgorApp prefs;
     private Location locAnn;
-    private Dialog dialogForm, dialogCoupon;
+    private Dialog dialogForm, dialogCoupon, dialogTrophy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -532,6 +534,24 @@ public class MainActivity
             deleteButton.setVisibility(View.GONE);
             customersButton.setVisibility(View.GONE);
         }
+    }
+
+
+
+    @Override
+    public void onTrophySelected(final Trophy trophy) {
+        dialogTrophy = new Dialog(this);
+        dialogTrophy.setContentView(R.layout.show_trophy);
+        dialogTrophy.show();
+
+        TextView title = (TextView) dialogTrophy.findViewById(R.id.trophy_title);
+        TextView description = (TextView) dialogTrophy.findViewById(R.id.trophy_description);
+
+        title.setText(String.valueOf(trophy.getTitle()));
+
+        String desc = String.valueOf(trophy.getDescription());
+        description.setText(desc);
+
     }
 
     private void updateCoinsAndRating() {

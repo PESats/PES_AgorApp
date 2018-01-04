@@ -106,6 +106,10 @@ public class CouponListFragment extends Fragment {
                 mListener.onCouponSelected(coupon);
             }
         });
+        /*For debugging/postman purposes
+        String idd = prefs.getId();
+        String tokk = prefs.getActiveToken();
+        */
         listView.setAdapter(adapter);
         AgorAppApiManager
                 .getService()
