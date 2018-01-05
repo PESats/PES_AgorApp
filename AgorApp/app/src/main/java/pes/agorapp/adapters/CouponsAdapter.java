@@ -43,6 +43,12 @@ public class CouponsAdapter extends ArrayAdapter<Coupon> {
         String discountValue = String.valueOf(coupon.getDiscount())+"%";
         discount.setText(discountValue);
 
+
+        if (coupon.getPrice() == 0) {
+            textPrice.setVisibility(View.GONE);
+            price.setVisibility(View.GONE);
+        }
+
         return convertView;
     }
 
