@@ -105,5 +105,10 @@
     <string name="announcementDeleted">Anunci esborrat</string>
     <string name="announcementDeletedSubtitle">L\'anunci s\'ha eliminat correctament</string>
     <string name="announcementDeletePopUp">Segur que vols esborrar aquest anunci?</string>
+    <string name="couponBuyDialog">Segur que vols gastar el val de descompte?</string>
+    <string name="couponBuyDialogTitle">Descompte</string>
+    <string name="yes">Si</string>
+    <string name="no">No</string>
+
 
 </resources>

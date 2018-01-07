@@ -190,7 +190,6 @@ public interface AgorAppApiService {
     Call<Coupon> spendCoupon(
             @Path("id") int id,
             @Path("couponId") int coupon_id,
-            @Query("user_id") int user_id,
             @Query("active_token") String active_token
     );
 
