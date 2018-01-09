@@ -1,6 +1,7 @@
 package pes.agorapp.adapters;
 
 import android.content.Context;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,11 +33,10 @@ public class ChatsAdapter extends ArrayAdapter<Chat> {
         }
         // Lookup view for data population
         TextView name = (TextView) convertView.findViewById(R.id.item_chat_name);
-        TextView date = (TextView) convertView.findViewById(R.id.item_chat_date);
+        TextView title = (TextView) convertView.findViewById(R.id.item_chat_announcement);
         // Populate the data into the template view using the data object
         name.setText(chat.getUser().getName());
-        date.setText(chat.getLastMessageDate().toString());
-
+        title.setText(chat.getBid().getAnunci().getTitle());
         // Return the completed view to render on screen
         return convertView;
     }

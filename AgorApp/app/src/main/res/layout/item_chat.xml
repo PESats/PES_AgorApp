@@ -7,28 +7,28 @@
     android:padding="5dp">
 
     <TextView
+        android:id="@+id/item_chat_announcement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:text="Hola" />
+
+    <TextView
         android:id="@+id/item_chat_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Hola"
+        android:layout_below="@+id/item_chat_announcement"
         android:textSize="20sp"
-        android:textStyle="bold"/>
+        tools:text="Hola" />
 
-<!--    <TextView
-        android:id="@+id/item_chat_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/item_title"
-        android:textSize="15sp"
-        tools:text="Que tal" />
--->
-    <TextView
-        android:id="@+id/item_chat_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/item_chat_name"
-        android:textSize="15sp"
-        android:text="date" />
+    <!--    <TextView
+            android:id="@+id/item_chat_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/item_title"
+            android:textSize="15sp"
+            tools:text="Que tal" />
+    -->
 
 </RelativeLayout>

@@ -98,6 +98,7 @@ public class ChatListFragment extends Fragment {
     }
 
     private void requestChats() {
+        chats.clear();
         AgorAppApiManager
                 .getService()
                 .getBidsWithFilters(Integer.valueOf(prefs.getId()), prefs.getActiveToken(), "selected")
@@ -105,8 +106,32 @@ public class ChatListFragment extends Fragment {
                     @Override
                     public void onResponse(Call<ArrayList<Bid>> call, Response<ArrayList<Bid>> response) {
                         bids = response.body();
+                        for (Bid bid : bids) {
+                            Chat chat = new Chat();
+                            chat.setUser(bid.getUser());
+                            chat.setLastMessage(ObjectsHelper.getFakeMessage());
+                            chat.setLastMessageDate(ObjectsHelper.getFakeDate());
+                            chat.setBid(bid);
 
-                        chats.clear();
+                            chats.add(chat);
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onFailure(Call<ArrayList<Bid>> call, Throwable t) {
+                        System.out.println("Something went wrong!");
+                        new DialogServerKO(getActivity()).show();
+                    }
+                });
+
+        AgorAppApiManager
+                .getService()
+                .getBidsWithFilters(Integer.valueOf(prefs.getId()), prefs.getActiveToken(), "accepted")
+                .enqueue(new retrofit2.Callback<ArrayList<Bid>>() {
+                    @Override
+                    public void onResponse(Call<ArrayList<Bid>> call, Response<ArrayList<Bid>> response) {
+                        bids = response.body();
                         for (Bid bid : bids) {
                             Chat chat = new Chat();
                             chat.setUser(bid.getUser());

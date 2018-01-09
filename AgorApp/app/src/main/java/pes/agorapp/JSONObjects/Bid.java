@@ -51,4 +51,11 @@ public class Bid {
         this.user = user;
     }
 
+    public Announcement getAnunci() {
+        return anunci;
+    }
+
+    public void setAnunci(Announcement anunci) {
+        this.anunci = anunci;
+    }
 }
