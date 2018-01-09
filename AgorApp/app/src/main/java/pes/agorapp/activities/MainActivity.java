@@ -83,7 +83,7 @@ public class MainActivity
 
         prefs = new PreferencesAgorApp(this);
 
-        checkPermissions();
+
 
         mapFragment = new MapFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -115,6 +115,8 @@ public class MainActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        checkPermissions();
     }
 
     private void checkPermissions() {
@@ -128,7 +130,7 @@ public class MainActivity
                 ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         101);
             }
-            mapFragment.setMarkers();
+            //mapFragment.setMarkers();
         }
     }
 
