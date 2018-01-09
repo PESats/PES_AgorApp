@@ -14,7 +14,7 @@
         android:textSize="17dp"
         android:textColor="@color/tw__solid_white"
         android:id="@+id/form_verify"
-        android:background="@color/colorPrimary"
+        android:background="@color/primaryColor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/form_valorate_title"

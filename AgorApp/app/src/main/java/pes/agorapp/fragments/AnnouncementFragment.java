@@ -229,7 +229,7 @@ public class AnnouncementFragment extends Fragment {
             }
         });
 
-        final Button buttonShareTwitter = (Button) view.findViewById(R.id.btn_share_twitter);
+        final Button buttonShareTwitter = (Button) mView.findViewById(R.id.btn_share_twitter);
         buttonShareTwitter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -243,9 +243,6 @@ public class AnnouncementFragment extends Fragment {
             }
         });
 
-    }
-
-    void inflateAnnouncement() {
         final TextView title = (TextView) mView.findViewById(R.id.announcement_title);
         title.setText(this.announcement.getTitle());
 
