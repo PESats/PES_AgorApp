@@ -6,14 +6,14 @@ package pes.agorapp.JSONObjects;
 
 public class Trophy {
     private int id;
-    private String title;
+    private String name;
     private String description;
 
     public Trophy() {}
 
-    public Trophy(int id, String title, String description) {
+    public Trophy(int id, String name, String description) {
         this.id = id;
-        this.title = title;
+        this.name = name;
         this.description = description;
     }
 
@@ -21,9 +21,9 @@ public class Trophy {
 
     public void setId(int id) { this.id = id; }
 
-    public String getTitle() { return title; }
+    public String getTitle() { return name; }
 
-    public void setTitle(String title) { this.title = title; }
+    public void setTitle(String title) { this.name = title; }
 
     public String getDescription() { return description; }
 
