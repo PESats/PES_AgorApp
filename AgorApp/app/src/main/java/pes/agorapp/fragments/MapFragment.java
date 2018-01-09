@@ -64,7 +64,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
 
     public interface OnFragmentInteractionListener {
         void onAnnouncementSelected(Announcement announcement);
-
         void createNewAnnouncement();
     }
 
@@ -142,7 +141,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
             coord = new LatLng(lat, lng);
         }
         setMarkers();
-        setShopMarkers();
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(coord, 15);
         mMap.animateCamera(cameraUpdate);
     }
@@ -182,7 +180,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
                 });
     }
 
-    private void setMarkers() {
+    public void setMarkers() {
         //TODO: Fer cirda api i pintar marker per cada un
         AgorAppApiManager
                 .getService()
@@ -191,37 +189,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
                     @Override
                     public void onResponse(Call<ArrayList<Announcement>> call, Response<ArrayList<Announcement>> response) {
                         anuncis = response.body();
+                        mMap.clear();
                         for (Announcement anunci : anuncis) {
-                            LatLng coords = new LatLng(anunci.getLatitude(), anunci.getLongitude());
-                            mMap.addMarker(new MarkerOptions()
-                                    .position(coords)
-                                    .title(anunci.getTitle())
-                                    .snippet(String.valueOf(anunci.getReward()) + " AgoraCoins")
-                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.announcement_marker))
-                            );
-
-                            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-
-                                @Override
-                                public boolean onMarkerClick(Marker marker) {
-                                    marker.showInfoWindow();
-                                    return true;
-                                }
-                            });
-
-                            mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-                                @Override
-                                public void onInfoWindowClick(Marker marker) {
-                                    for (Announcement anunci : anuncis) {
-                                        // Get announcement by position
-                                        if (marker.getPosition().latitude == anunci.getLatitude() &&
-                                                marker.getPosition().longitude == anunci.getLongitude()) {
-                                            mListener.onAnnouncementSelected(anunci);
-                                        }
-                                    }
-                                }
-                            });
+                            buildMarker(anunci);
                         }
+                        setShopMarkers();
                     }
 
                     @Override
@@ -230,6 +202,38 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
                         new DialogServerKO(getActivity()).show();
                     }
                 });
+    }
+
+    public void buildMarker(Announcement anunci) {
+        LatLng coords = new LatLng(anunci.getLatitude(), anunci.getLongitude());
+        mMap.addMarker(new MarkerOptions()
+                .position(coords)
+                .title(anunci.getTitle())
+                .snippet(String.valueOf(anunci.getReward()) + " AgoraCoins")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.announcement_marker))
+        );
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                marker.showInfoWindow();
+                return true;
+            }
+        });
+
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                for (Announcement anunci : anuncis) {
+                    // Get announcement by position
+                    if (marker.getPosition().latitude == anunci.getLatitude() &&
+                            marker.getPosition().longitude == anunci.getLongitude()) {
+                        mListener.onAnnouncementSelected(anunci);
+                    }
+                }
+            }
+        });
     }
 
 

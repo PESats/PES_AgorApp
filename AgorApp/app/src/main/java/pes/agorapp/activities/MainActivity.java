@@ -73,6 +73,7 @@ public class MainActivity
     private PreferencesAgorApp prefs;
     private Location locAnn;
     private Dialog dialogForm, dialogCoupon, dialogTrophy;
+    private MapFragment mapFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +85,7 @@ public class MainActivity
 
         checkPermissions();
 
-        MapFragment mapFragment = new MapFragment();
+        mapFragment = new MapFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, mapFragment);
 
@@ -127,6 +128,7 @@ public class MainActivity
                 ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         101);
             }
+            mapFragment.setMarkers();
         }
     }
 
@@ -330,6 +332,7 @@ public class MainActivity
                                     });
 
                                     alertDialogAnnouncementCreated.show();
+                                    mapFragment.setMarkers();
                                 }
 
                                 @Override
