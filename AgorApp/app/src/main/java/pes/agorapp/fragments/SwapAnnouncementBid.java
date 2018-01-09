@@ -27,6 +27,7 @@ public class SwapAnnouncementBid extends Fragment {
     }
 
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +54,7 @@ public class SwapAnnouncementBid extends Fragment {
 
         Adapter adapter = new Adapter(getChildFragmentManager());
         adapter.addFragment(new AnnouncementFragment(), "Anuncis", announcement);
-        adapter.addFragment(new BidsFragment(), "Ofertes", null);
+        adapter.addFragment(new BidsFragment(), "Ofertes", announcement);
         viewPager.setAdapter(adapter);
 
 
@@ -97,11 +98,9 @@ public class SwapAnnouncementBid extends Fragment {
         }
 
         public void addFragment(Fragment fragment, String title, Announcement announcement) {
-            if (announcement != null) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("id", announcement.getId());
-                fragment.setArguments(bundle);
-            }
+            Bundle bundle = new Bundle();
+            bundle.putInt("id", announcement.getId());
+            fragment.setArguments(bundle);
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }
@@ -111,5 +110,7 @@ public class SwapAnnouncementBid extends Fragment {
             return mFragmentTitleList.get(position);
         }
     }
+
+
 
 }

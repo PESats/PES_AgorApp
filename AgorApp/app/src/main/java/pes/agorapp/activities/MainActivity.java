@@ -219,7 +219,7 @@ public class MainActivity
     public void onAnnouncementSelected(Announcement announcement) {
         SwapAnnouncementBid swapAnnouncementBidFragment = new SwapAnnouncementBid();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, swapAnnouncementBidFragment);
+        fragmentTransaction.replace(R.id.fragment_container, swapAnnouncementBidFragment, "swap");
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
         swapAnnouncementBidFragment.setAnnouncement(announcement);
@@ -343,12 +343,13 @@ public class MainActivity
     }
 
     @Override
-    public void onNecessaryReload() {
+    public void onNecessaryReload(Announcement announcement) {
         // Reload current fragment
         Fragment frg = null;
-        frg = getSupportFragmentManager().findFragmentByTag("anuncement");
+        frg = getSupportFragmentManager().findFragmentByTag("swap");
         final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.detach(frg);
+        //frg.setAnnouncement(announcement);
         ft.attach(frg);
         ft.commit();
     }

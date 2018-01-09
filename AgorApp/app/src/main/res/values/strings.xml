@@ -14,6 +14,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="button_cancel">Cancelar</string>
 
     <!-- Custom strings -->
     <string name="main_menu">Menú principal</string>
@@ -33,6 +34,17 @@
     <string name="profile_logout">LOGOUT</string>
 
     <string name="marketplace_publish_button">Publicar xec de descompte</string>
+
+    <string name="form_new_comment_title">Nou comentari</string>
+    <string name="form_new_comment_text">Escriu el teu comentari aqui</string>
+    <string name="form_new_comment_button_accept">Comentar</string>
+
+    <string name="form_new_bid_title">Nova licitació</string>
+    <string name="form_new_bid_text">Coins:</string>
+    <string name="form_new_bid_button_accept">Licitar</string>
+
+    <string name="form_valorate_title">Valorar el servei</string>
+    <string name="form_valorate_button_accept">Valorar</string>
 
     <string name="form_publish_marketplace_title">Xec de descompte</string>
     <string name="form_publish_marketplace_shop">Nom de la botiga</string>

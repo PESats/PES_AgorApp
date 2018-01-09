@@ -1,5 +1,6 @@
 package pes.agorapp.fragments;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.google.gson.JsonObject;
@@ -44,7 +46,7 @@ public class AnnouncementFragment extends Fragment {
     private Announcement announcement;
     PreferencesAgorApp prefs;
     List<Comment> comments = new ArrayList<>();
-    private AlertDialog.Builder comment_dialog;
+    private Dialog comment_dialog;
     private EditText new_comment;
     private int idAnunci;
     private View mView;
@@ -138,7 +140,7 @@ public class AnnouncementFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         void onCommentSelected(Comment comment);
-        void onNecessaryReload();
+        void onNecessaryReload(Announcement announcement);
     }
 
     @Override
@@ -148,18 +150,27 @@ public class AnnouncementFragment extends Fragment {
 
         prefs = new PreferencesAgorApp(getActivity());
 
-        comment_dialog = new AlertDialog.Builder(getActivity());
-        comment_dialog.setTitle("Nuevo comentario");
-        new_comment = new EditText(getContext());
-        //if (new_comment.getParent() != null)
-            //((EditText)new_comment.getParent()).removeView(new_comment);
-        comment_dialog.setView(new_comment);
-        comment_dialog.setPositiveButton("Enviar", new DialogInterface.OnClickListener() {
+
+
+
+    }
+
+    void inflateDialog() {
+        comment_dialog = new Dialog(getActivity());
+
+        comment_dialog.setContentView(R.layout.form_new_comment);
+        comment_dialog.show();
+
+        final EditText commentText = (EditText) comment_dialog.findViewById((R.id.form_new_comment_comment));
+
+        Button publishButton = (Button) comment_dialog.findViewById(R.id.form_new_comment_button_new_comment);
+
+        publishButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                //Toast.makeText(getContext(), new_comment.getText().toString(), Toast.LENGTH_LONG);
+            public void onClick(View v) {
+
                 JsonObject jsonUser = new JsonObject();
-                jsonUser.addProperty("text", new_comment.getText().toString());
+                jsonUser.addProperty("text", commentText.getText().toString());
 
                 JsonObject json = new JsonObject();
                 json.add("comentari", jsonUser);
@@ -169,39 +180,48 @@ public class AnnouncementFragment extends Fragment {
                         .enqueue(new retrofit2.Callback<Comment>() {
                             @Override
                             public void onResponse(Call<Comment> call, Response<Comment> response) {
-                                mListener.onNecessaryReload();
+                                //mListener.onNecessaryReload(announcement);
+                                comment_dialog.dismiss();
+                                inflateAnnouncement();
+
+                                //comment_dialog.d
                             }
 
                             @Override
                             public void onFailure(Call<Comment> call, Throwable t) {
                                 System.out.println("Something went wrong!");
                                 new DialogServerKO(getActivity()).show();
-                                mListener.onNecessaryReload();
+                                //mListener.onNecessaryReload(announcement);
                             }
                         });
 
+
             }
         });
-        comment_dialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+
+        Button cancelButton = (Button) comment_dialog.findViewById(R.id.form_new_comment_button_cancel);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
+            public void onClick(View view) {
+                comment_dialog.dismiss();
             }
         });
-        comment_dialog.create();
-
-        final Button button = (Button) view.findViewById(R.id.new_comment_announcement);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Code here executes on main thread after user presses button
-                comment_dialog.show();
-            }
-        });
-
-
     }
 
     void inflateAnnouncement() {
+
+        comment_dialog = new Dialog(getActivity());
+        comment_dialog.setTitle("Nuevo comentario");
+        new_comment = new EditText(getContext());
+
+        final Button button = (Button) mView.findViewById(R.id.new_comment_announcement);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Code here executes on main thread after user presses button
+                inflateDialog();
+            }
+        });
+
         final TextView title = (TextView) mView.findViewById(R.id.announcement_title);
         title.setText(this.announcement.getTitle());
 
@@ -255,6 +275,7 @@ public class AnnouncementFragment extends Fragment {
                         //Log.i("response code", String.valueOf(response.code()));
                         //Log.d("this is my array", "arr: " + response.body().toString());
                         comments = response.body();
+                        adapter.clear();
                         adapter.addAll(comments);
                         Log.d("this is my array", "arr: " + response.body().toString());
 
