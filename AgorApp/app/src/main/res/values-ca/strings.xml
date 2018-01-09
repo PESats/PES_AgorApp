@@ -111,4 +111,24 @@
     <string name="no">No</string>
 
 
+    <!-- JONA -->
+
+    <string name="button_cancel">Cancel·lar</string>
+
+    <string name="form_new_bid_title">Nova licitació</string>
+    <string name="form_new_bid_text">Quantitat a licitar</string>
+    <string name="form_new_bid_button_accept">Licitar</string>
+
+    <string name="form_valorate_title">Valora la feina feta</string>
+    <string name="form_valorate_button_accept">Valorar</string>
+
+    <string name="form_new_comment_title">Nou comentari</string>
+    <string name="form_new_comment_text">Escriu el teu comentari aquí</string>
+    <string name="form_new_comment_button_accept">Comentar</string>
+
+
+
+
+
+
 </resources>

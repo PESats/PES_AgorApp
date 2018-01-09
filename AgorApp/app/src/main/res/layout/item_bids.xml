@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="Hola"
-        android:textSize="30sp" />
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/item_separator"
@@ -28,9 +28,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/item_separator"
-        android:textSize="30sp"
+        android:textSize="20sp"
         android:textStyle="bold"
-        tools:text="200 coins" />
+        tools:text="200 coins"
+        android:layout_gravity="center"/>
 
     <TextView
         android:id="@+id/item_separator2"
@@ -43,11 +44,18 @@
         android:text="|" />
 
     <Button
-        android:id="@+id/item_bid_button"
+        android:id="@+id/item_bid_button_accept"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/item_separator2"
         android:textColor="@color/primaryColor"
         android:text="Aceptar" />
+    <Button
+        android:id="@+id/item_bid_button_pay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/item_separator2"
+        android:textColor="@color/tw__composer_black"
+        android:text="Pagar" />
 
 </RelativeLayout>

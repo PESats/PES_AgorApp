@@ -92,6 +92,15 @@ public interface AgorAppApiService {
             @Query("active_token") String active_token
     );
 
+    /* BIDS */
+
+    @GET("anuncis/{id}/bids")
+    Call<ArrayList<Bid>> getBidsAnnouncement(
+            @Path("id") int idAnunci,
+            @Query("user_id") int idUser,
+            @Query("active_token") String token
+    );
+
     /* COMENTARIS */
 
     @GET("anuncis/{announcementId}/comentaris")
@@ -221,4 +230,25 @@ public interface AgorAppApiService {
             @Query("user_id") int user_id,
             @Query("active_token") String active_token
     );
+    @POST("/users/{id}/bids")
+    Call<Bid> newBid(
+            @Path("id") int id,
+            @Body JsonObject bid
+    );
+
+    @PUT("/users/{userId}/anuncis/{anunciId}/select")
+    Call<Bid> acceptBid(
+            @Path("userId") int userId,
+            @Path("anunciId") int anunciId,
+            @Body JsonObject json
+    );
+
+    @PUT("/users/{userId}/anuncis/{anunciId}/complete")
+    Call<Bid> payBid(
+            @Path("userId") int userId,
+            @Path("anunciId") int anunciId,
+            @Body JsonObject json
+    );
+
+
 }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:minWidth="260dp">
+
+    <TextView
+        android:layout_marginBottom="15dp"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp"
+        android:textStyle="bold"
+        android:textSize="17dp"
+        android:textColor="@color/tw__solid_white"
+        android:id="@+id/form_verify"
+        android:background="@color/primaryColor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/form_new_comment_title"
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/form_new_comment_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/com_facebook_blue"
+        android:hint="@string/form_new_comment_text"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+        <Button
+            android:id="@+id/form_new_comment_button_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_cancel" />
+        <Button
+            android:id="@+id/form_new_comment_button_new_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/form_new_comment_button_accept" />
+
+    </LinearLayout>
+
+</LinearLayout>

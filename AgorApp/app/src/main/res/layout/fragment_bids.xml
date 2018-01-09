@@ -5,10 +5,10 @@
     tools:context="pes.agorapp.fragments.BidsFragment">
 
     <ImageButton
-        android:id="@+id/bids_delete_button"
+        android:id="@+id/bids_new_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/delete_button"
+        android:background="@drawable/new_button"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="50dp"/>
 
@@ -17,11 +17,11 @@
         android:layout_height="wrap_content"
         android:text="Ofertes:"
         android:textSize="30sp"
-        android:layout_alignTop="@+id/bids_delete_button"/>
+        android:layout_alignTop="@+id/bids_new_button"/>
 
     <ListView
         android:id="@+id/listViewBids"
-        android:layout_below="@id/bids_delete_button"
+        android:layout_below="@id/bids_new_button"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
