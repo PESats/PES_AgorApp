@@ -60,6 +60,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private Location locationBotiga;
     private Dialog dialogForm;
     List<Trophy> trophies = new ArrayList<>();
+    private ArrayList<Integer> idTrophies;
 
     public ProfileFragment() {}
 
@@ -147,15 +148,37 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         final int user_id = Integer.valueOf(prefs.getId());
         final String active_token = prefs.getActiveToken();
 
+        idTrophies = new ArrayList<>();
+
         AgorAppApiManager
                 .getService()
-                .getTrophies(user_id, active_token)
+                .getUserTrophies(user_id, user_id, active_token)
                 .enqueue(new retrofit2.Callback<ArrayList<Trophy>>() {
                     @Override
                     public void onResponse(Call<ArrayList<Trophy>> call, Response<ArrayList<Trophy>> response) {
-                        trophies = response.body();
-                        adapter.addAll(trophies);
-                        //adapter.notifyDataSetChanged();
+                        for (Trophy trophy: response.body()) {
+                            System.out.println(trophy.getId());
+                            idTrophies.add(trophy.getId());
+                        }
+                        AgorAppApiManager
+                                .getService()
+                                .getTrophies(user_id, active_token)
+                                .enqueue(new retrofit2.Callback<ArrayList<Trophy>>() {
+                                    @Override
+                                    public void onResponse(Call<ArrayList<Trophy>> call, Response<ArrayList<Trophy>> response) {
+                                        trophies = response.body();
+                                        for (Trophy trophy: trophies) {
+                                            trophy.setUnlocked(idTrophies.contains(trophy.getId()));
+                                        }
+                                        adapter.addAll(trophies);
+                                        //adapter.notifyDataSetChanged();
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<ArrayList<Trophy>> call, Throwable t) {
+                                        new DialogServerKO(getActivity()).show();
+                                    }
+                                });
                     }
 
                     @Override
