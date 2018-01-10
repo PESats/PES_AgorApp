@@ -441,12 +441,12 @@ public class MainActivity
         TextView tvDiscount = (TextView) dialogCoupon.findViewById(R.id.coupon_text_discount);
         TextView tvPrice = (TextView) dialogCoupon.findViewById(R.id.coupon_text_price);
 
-        tvBotiga.setText(String.valueOf(coupon.getShopId()));
+        tvBotiga.setText(String.valueOf(coupon.getBotiga().getName()));
 
-        String discount = String.valueOf(coupon.getDiscount()) + "%";
+        String discount = "Descompte: " + String.valueOf(coupon.getDiscount()) + "%";
         tvDiscount.setText(discount);
 
-        String price = String.valueOf(coupon.getPrice()) + " AgoraCoins";
+        String price = "Preu: " + String.valueOf(coupon.getPrice()) + " AgoraCoins";
         tvPrice.setText(price);
 
         //Delete
