@@ -107,13 +107,15 @@ public class ChatListFragment extends Fragment {
                     public void onResponse(Call<ArrayList<Bid>> call, Response<ArrayList<Bid>> response) {
                         bids = response.body();
                         for (Bid bid : bids) {
-                            Chat chat = new Chat();
-                            chat.setUser(bid.getUser());
-                            chat.setLastMessage(ObjectsHelper.getFakeMessage());
-                            chat.setLastMessageDate(ObjectsHelper.getFakeDate());
-                            chat.setBid(bid);
+                            if (!bid.getAnunci().getStatus().equals("completed")) {
+                                Chat chat = new Chat();
+                                chat.setUser(bid.getUser());
+                                chat.setLastMessage(ObjectsHelper.getFakeMessage());
+                                chat.setLastMessageDate(ObjectsHelper.getFakeDate());
+                                chat.setBid(bid);
 
-                            chats.add(chat);
+                                chats.add(chat);
+                            }
                         }
                         adapter.notifyDataSetChanged();
                     }
@@ -133,13 +135,15 @@ public class ChatListFragment extends Fragment {
                     public void onResponse(Call<ArrayList<Bid>> call, Response<ArrayList<Bid>> response) {
                         bids = response.body();
                         for (Bid bid : bids) {
-                            Chat chat = new Chat();
-                            chat.setUser(bid.getUser());
-                            chat.setLastMessage(ObjectsHelper.getFakeMessage());
-                            chat.setLastMessageDate(ObjectsHelper.getFakeDate());
-                            chat.setBid(bid);
+                            if (!bid.getAnunci().getStatus().equals("completed")) {
+                                Chat chat = new Chat();
+                                chat.setUser(bid.getUser());
+                                chat.setLastMessage(ObjectsHelper.getFakeMessage());
+                                chat.setLastMessageDate(ObjectsHelper.getFakeDate());
+                                chat.setBid(bid);
 
-                            chats.add(chat);
+                                chats.add(chat);
+                            }
                         }
                         adapter.notifyDataSetChanged();
                     }
