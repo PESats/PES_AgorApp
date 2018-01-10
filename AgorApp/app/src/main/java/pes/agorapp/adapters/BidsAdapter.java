@@ -2,6 +2,11 @@ package pes.agorapp.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +18,11 @@ import com.google.gson.JsonObject;
 
 import java.util.List;
 
+import pes.agorapp.JSONObjects.Announcement;
 import pes.agorapp.JSONObjects.Bid;
 import pes.agorapp.R;
 import pes.agorapp.customComponents.DialogServerKO;
+import pes.agorapp.fragments.SwapAnnouncementBid;
 import pes.agorapp.globals.PreferencesAgorApp;
 import pes.agorapp.network.AgorAppApiManager;
 import retrofit2.Call;
@@ -27,15 +34,15 @@ import retrofit2.Response;
 
 public class BidsAdapter extends ArrayAdapter<Bid> {
 
-    private int idAnnouncement;
+    private Announcement announcement;
     private int idCreador;
     private boolean accepted;
     private PreferencesAgorApp prefs;
     private Context context;
 
-    public BidsAdapter(Context context, List<Bid> bids, int idAnnouncemt, int idCreador) {
+    public BidsAdapter(Context context, List<Bid> bids, Announcement announcemt, int idCreador) {
         super(context, 0, bids);
-        this.idAnnouncement = idAnnouncemt;
+        this.announcement = announcemt;
         this.idCreador = idCreador;
         accepted = false;
         this.context = context;
@@ -67,11 +74,19 @@ public class BidsAdapter extends ArrayAdapter<Bid> {
                 json.addProperty("active_token", prefs.getActiveToken());
                 AgorAppApiManager
                         .getService()
-                        .acceptBid(Integer.valueOf(bid.getUser().getId()), idAnnouncement, json)
+                        .acceptBid(Integer.valueOf(bid.getUser().getId()), announcement.getId(), json)
                         .enqueue(new retrofit2.Callback<Bid>() {
                             @Override
                             public void onResponse(Call<Bid> call, Response<Bid> response) {
-                                System.out.println(response);
+                                Fragment frg = ((FragmentActivity)context).getSupportFragmentManager().findFragmentByTag("swap");
+                                final FragmentTransaction ft = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
+                                ft.remove(frg).commit();
+                                SwapAnnouncementBid swapAnnouncementBidFragment = new SwapAnnouncementBid();
+                                FragmentTransaction fragmentTransaction = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
+                                fragmentTransaction.replace(R.id.fragment_container, swapAnnouncementBidFragment, "swap");
+                                fragmentTransaction.addToBackStack(null);
+                                fragmentTransaction.commit();
+                                swapAnnouncementBidFragment.setAnnouncement(announcement);
                             }
 
                             @Override
@@ -92,11 +107,14 @@ public class BidsAdapter extends ArrayAdapter<Bid> {
                 json.addProperty("active_token", prefs.getActiveToken());
                 AgorAppApiManager
                         .getService()
-                        .payBid(Integer.valueOf(bid.getUser().getId()), idAnnouncement, json)
+                        .payBid(Integer.valueOf(bid.getUser().getId()), announcement.getId(), json)
                         .enqueue(new retrofit2.Callback<Bid>() {
                             @Override
                             public void onResponse(Call<Bid> call, Response<Bid> response) {
-                                //System.out.println(response);
+                                Intent intent = ((Activity) context).getIntent();
+                                ((Activity) context).finish();
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                context.startActivity(intent);
                             }
 
                             @Override

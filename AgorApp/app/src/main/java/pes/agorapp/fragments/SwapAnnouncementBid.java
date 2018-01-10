@@ -66,6 +66,9 @@ public class SwapAnnouncementBid extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        if (getArguments() != null) {
+            int idAnunci = getArguments().getInt("id");
+        }
     }
 
     @Override
