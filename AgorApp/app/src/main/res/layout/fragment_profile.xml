@@ -231,10 +231,16 @@
                         android:layout_marginRight="20dp"
                         android:id="@+id/profile_btn_logout"
                         android:text="@string/profile_logout"
+                        android:textColor="@color/tw__solid_white"
                         android:enabled="true"
                         android:layout_weight="1.2"
-                        android:layout_width="match_parent"
-                        android:layout_marginTop="20dp"/>
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="40dp"
+                        android:layout_marginBottom="30dp"
+                        android:background="@color/secondaryLightColor"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:layout_gravity="center"/>
 
                 </LinearLayout>
             </RelativeLayout>

@@ -34,6 +34,7 @@ public class TrophiesAdapter extends ArrayAdapter<Trophy> {
 
         ImageView icon_trophie = (ImageView) convertView.findViewById(R.id.trophy_iconimage);
         if (trophy.getUnlocked()) icon_trophie.setColorFilter(getContext().getResources().getColor(R.color.secondaryColor));
+        else icon_trophie.setColorFilter(getContext().getResources().getColor(R.color.greyAgorapp));
         // Lookup view for data population
         TextView title = (TextView) convertView.findViewById(R.id.trophy_title);
         // Populate the data into the template view using the data object1

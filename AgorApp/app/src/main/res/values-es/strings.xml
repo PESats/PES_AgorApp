@@ -109,6 +109,8 @@
     <string name="couponBuyDialogTitle">Descuento</string>
     <string name="yes">Si</string>
     <string name="no">No</string>
+    <string name="unlockedTrophy">DESBLOQUEADO</string>
+    <string name="notUnlockedTrophy">PENDIENTE</string>
 
 
 </resources>

@@ -552,11 +552,21 @@ public class MainActivity
 
         TextView title = (TextView) dialogTrophy.findViewById(R.id.trophy_title);
         TextView description = (TextView) dialogTrophy.findViewById(R.id.trophy_description);
+        TextView unlocked = (TextView) dialogTrophy.findViewById(R.id.trophy_unlocked);
 
         title.setText(String.valueOf(trophy.getTitle()));
 
         String desc = String.valueOf(trophy.getDescription());
         description.setText(desc);
+
+        if (trophy.getUnlocked()) {
+            unlocked.setText(getString(R.string.unlockedTrophy));
+            unlocked.setTextColor(getColor(R.color.primaryColor));
+        }
+        else {
+            unlocked.setText(getString(R.string.notUnlockedTrophy));
+            unlocked.setTextColor(getColor(R.color.tw__composer_red));
+        }
 
     }
 
