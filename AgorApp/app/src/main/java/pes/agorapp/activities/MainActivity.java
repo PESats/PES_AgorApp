@@ -53,6 +53,7 @@ import pes.agorapp.fragments.ChatListFragment;
 import pes.agorapp.fragments.CouponListFragment;
 import pes.agorapp.fragments.MapFragment;
 import pes.agorapp.fragments.MarketplaceFragment;
+import pes.agorapp.fragments.MyAnnouncementsListFragment;
 import pes.agorapp.fragments.ProfileFragment;
 import pes.agorapp.fragments.SwapAnnouncementBid;
 import pes.agorapp.globals.PreferencesAgorApp;
@@ -66,6 +67,7 @@ public class MainActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         AnnouncementFragment.OnFragmentInteractionListener,
         AnnouncementListFragment.OnFragmentInteractionListener,
+        MyAnnouncementsListFragment.OnFragmentInteractionListener,
         MapFragment.OnFragmentInteractionListener,
         ChatListFragment.OnFragmentInteractionListener,
         MarketplaceFragment.OnFragmentInteractionListener,
@@ -214,7 +216,6 @@ public class MainActivity
             fragmentTransaction.replace(R.id.fragment_container, chatListFragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
-//            chatListFragment.setSettings();
         } else if (id == R.id.nav_marketplace) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -226,7 +227,15 @@ public class MainActivity
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         } else if (id == R.id.nav_settings) {
-            //printProfile();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+            MyAnnouncementsListFragment listFragment = new MyAnnouncementsListFragment();
+            listFragment.setArguments(getIntent().getExtras());
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, listFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
         } else if (id == R.id.nav_logout) {
             close_session();
         }

@@ -4,11 +4,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.app.Fragment;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -17,27 +17,27 @@ import java.util.List;
 
 import pes.agorapp.JSONObjects.Announcement;
 import pes.agorapp.R;
+import pes.agorapp.adapters.AnnouncementsAdapter;
 import pes.agorapp.customComponents.DialogServerKO;
 import pes.agorapp.globals.PreferencesAgorApp;
-import pes.agorapp.adapters.AnnouncementsAdapter;
 import pes.agorapp.network.AgorAppApiManager;
 import retrofit2.Call;
 import retrofit2.Response;
 
 
-public class AnnouncementListFragment extends Fragment {
+public class MyAnnouncementsListFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     List<Announcement> announcements = new ArrayList<>();
     private PreferencesAgorApp prefs;
 
 
-    public AnnouncementListFragment() {
+    public MyAnnouncementsListFragment() {
         // Required empty public constructor
     }
 
-    public static AnnouncementListFragment newInstance(String param1, String param2) {
-        AnnouncementListFragment fragment = new AnnouncementListFragment();
+    public static MyAnnouncementsListFragment newInstance(String param1, String param2) {
+        MyAnnouncementsListFragment fragment = new MyAnnouncementsListFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -121,10 +121,10 @@ public class AnnouncementListFragment extends Fragment {
                     public void onResponse(Call<ArrayList<Announcement>> call, Response<ArrayList<Announcement>> response) {
                         adapter.clear();
                         for (Announcement anunci : response.body()) {
-                            if (!anunci.getStatus().equals("completed"))
+                            if (!anunci.getStatus().equals("completed") && String.valueOf(anunci.getUser_id()).equals(prefs.getId()))
                                 announcements.add(anunci);
                         }
-                        adapter.notifyDataSetChanged();
+                        adapter.notifyDataSetInvalidated();
                     }
 
                     @Override
