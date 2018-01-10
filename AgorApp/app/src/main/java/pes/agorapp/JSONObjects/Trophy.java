@@ -9,6 +9,8 @@ public class Trophy {
     private String name;
     private String description;
 
+    private Boolean unlocked;
+
     public Trophy() {}
 
     public Trophy(int id, String name, String description) {
@@ -28,4 +30,12 @@ public class Trophy {
     public String getDescription() { return description; }
 
     public void setDescription(String description) { this.description = description; }
+
+    public Boolean getUnlocked() {
+        return unlocked;
+    }
+
+    public void setUnlocked(Boolean unlocked) {
+        this.unlocked = unlocked;
+    }
 }

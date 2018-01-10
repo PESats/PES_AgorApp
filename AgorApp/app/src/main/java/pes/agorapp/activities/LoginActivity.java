@@ -296,7 +296,7 @@ public class LoginActivity extends AppCompatActivity
                         url_image_profile = "www.imatgedummy.com";
                     }
 
-                    Toast.makeText(getApplicationContext(), url_image_profile, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), url_image_profile, Toast.LENGTH_LONG).show();
 
                     createUserDB(acct.getDisplayName(), url_image_profile, "Google");
                     signOutGoogle();

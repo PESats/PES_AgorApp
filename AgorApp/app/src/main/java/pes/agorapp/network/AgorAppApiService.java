@@ -230,6 +230,7 @@ public interface AgorAppApiService {
             @Query("user_id") int user_id,
             @Query("active_token") String active_token
     );
+
     @POST("/users/{id}/bids")
     Call<Bid> newBid(
             @Path("id") int id,
