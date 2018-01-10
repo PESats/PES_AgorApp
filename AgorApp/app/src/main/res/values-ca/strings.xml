@@ -125,10 +125,8 @@
     <string name="form_new_comment_title">Nou comentari</string>
     <string name="form_new_comment_text">Escriu el teu comentari aquí</string>
     <string name="form_new_comment_button_accept">Comentar</string>
-
-
-
-
+    <string name="unlockedTrophy">DESBLOQUEJAT</string>
+    <string name="notUnlockedTrophy">PENDENT</string>
 
 
 </resources>

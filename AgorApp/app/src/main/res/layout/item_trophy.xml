@@ -19,6 +19,9 @@
         android:layout_height="wrap_content"
         android:text="mec mec"
         android:layout_below="@id/trophy_iconimage"
-        android:gravity="center"/>
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:layout_alignStart="@+id/trophy_iconimage"
+        android:layout_alignEnd="@+id/trophy_iconimage" />
 
 </RelativeLayout>

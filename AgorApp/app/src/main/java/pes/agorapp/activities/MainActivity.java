@@ -1,6 +1,7 @@
 package pes.agorapp.activities;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,6 +19,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,6 +53,7 @@ import pes.agorapp.fragments.ChatListFragment;
 import pes.agorapp.fragments.CouponListFragment;
 import pes.agorapp.fragments.MapFragment;
 import pes.agorapp.fragments.MarketplaceFragment;
+import pes.agorapp.fragments.MyAnnouncementsListFragment;
 import pes.agorapp.fragments.ProfileFragment;
 import pes.agorapp.fragments.SwapAnnouncementBid;
 import pes.agorapp.globals.PreferencesAgorApp;
@@ -64,6 +67,7 @@ public class MainActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         AnnouncementFragment.OnFragmentInteractionListener,
         AnnouncementListFragment.OnFragmentInteractionListener,
+        MyAnnouncementsListFragment.OnFragmentInteractionListener,
         MapFragment.OnFragmentInteractionListener,
         ChatListFragment.OnFragmentInteractionListener,
         MarketplaceFragment.OnFragmentInteractionListener,
@@ -212,7 +216,6 @@ public class MainActivity
             fragmentTransaction.replace(R.id.fragment_container, chatListFragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
-//            chatListFragment.setSettings();
         } else if (id == R.id.nav_marketplace) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -224,14 +227,63 @@ public class MainActivity
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         } else if (id == R.id.nav_settings) {
-            //printProfile();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+            MyAnnouncementsListFragment listFragment = new MyAnnouncementsListFragment();
+            listFragment.setArguments(getIntent().getExtras());
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, listFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
         } else if (id == R.id.nav_logout) {
-            //printProfile();
+            close_session();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void close_session() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.close_session)
+                .setMessage(R.string.close_session_subtitle)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        JsonObject jsonUser = new JsonObject();
+                        jsonUser.addProperty("id", prefs.getId());
+                        jsonUser.addProperty("active_token", prefs.getActiveToken());
+
+                        AgorAppApiManager
+                                .getService()
+                                .logoutUser(jsonUser)
+                                .enqueue(new retrofit2.Callback<UserAgorApp>() {
+                                    @Override
+                                    public void onResponse(Call<UserAgorApp> call, Response<UserAgorApp> response) {
+                                        Log.i("codi resposta", String.valueOf(response.code()));
+
+                                        prefs.deleteSession(); //Al fer logout, s'elimina la informació interna de l'app
+
+                                        Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //Elimina totes less activities obertes
+                                        startActivity(i);
+
+                                        //Toast.makeText(getActivity().getApplicationContext(), "LOGOUT correcte, token refrescat", Toast.LENGTH_LONG).show();
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<UserAgorApp> call, Throwable t) {
+                                        //Toast.makeText(getActivity().getApplicationContext(), "FAIL al logout", Toast.LENGTH_LONG).show();
+                                        new DialogServerKO(MainActivity.this).show();
+                                    }
+                                });
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show();
     }
 
     @Override
@@ -441,12 +493,12 @@ public class MainActivity
         TextView tvDiscount = (TextView) dialogCoupon.findViewById(R.id.coupon_text_discount);
         TextView tvPrice = (TextView) dialogCoupon.findViewById(R.id.coupon_text_price);
 
-        tvBotiga.setText(String.valueOf(coupon.getShopId()));
+        tvBotiga.setText(String.valueOf(coupon.getBotiga().getName()));
 
-        String discount = String.valueOf(coupon.getDiscount()) + "%";
+        String discount = "Descompte: " + String.valueOf(coupon.getDiscount()) + "%";
         tvDiscount.setText(discount);
 
-        String price = String.valueOf(coupon.getPrice()) + " AgoraCoins";
+        String price = "Preu: " + String.valueOf(coupon.getPrice()) + " AgoraCoins";
         tvPrice.setText(price);
 
         //Delete
@@ -552,11 +604,21 @@ public class MainActivity
 
         TextView title = (TextView) dialogTrophy.findViewById(R.id.trophy_title);
         TextView description = (TextView) dialogTrophy.findViewById(R.id.trophy_description);
+        TextView unlocked = (TextView) dialogTrophy.findViewById(R.id.trophy_unlocked);
 
         title.setText(String.valueOf(trophy.getTitle()));
 
         String desc = String.valueOf(trophy.getDescription());
         description.setText(desc);
+
+        if (trophy.getUnlocked()) {
+            unlocked.setText(getString(R.string.unlockedTrophy));
+            unlocked.setTextColor(getColor(R.color.primaryColor));
+        }
+        else {
+            unlocked.setText(getString(R.string.notUnlockedTrophy));
+            unlocked.setTextColor(getColor(R.color.tw__composer_red));
+        }
 
     }
 
