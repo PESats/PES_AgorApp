@@ -10,6 +10,7 @@ public class Bid {
     private UserAgorApp user;
     private Announcement anunci;
     private int id;
+    private String owner_name;
 
     public Bid(int amount, boolean accepted, UserAgorApp user, Announcement anunci, int id) {
         this.amount = amount;
@@ -57,5 +58,13 @@ public class Bid {
 
     public void setAnunci(Announcement anunci) {
         this.anunci = anunci;
+    }
+
+    public String getOwner_name() {
+        return owner_name;
+    }
+
+    public void setOwner_name(String owner_name) {
+        this.owner_name = owner_name;
     }
 }

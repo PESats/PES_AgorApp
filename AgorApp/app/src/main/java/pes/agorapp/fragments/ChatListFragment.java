@@ -141,6 +141,7 @@ public class ChatListFragment extends Fragment {
                                 chat.setLastMessage(ObjectsHelper.getFakeMessage());
                                 chat.setLastMessageDate(ObjectsHelper.getFakeDate());
                                 chat.setBid(bid);
+                                chat.setOwnerName(bid.getOwner_name());
 
                                 chats.add(chat);
                             }
