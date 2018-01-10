@@ -170,6 +170,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
                                 }
                             });
                         }
+                        System.out.println("ID " + prefs.getId() + " TOKEN " + prefs.getActiveToken());
                     }
 
                     @Override
@@ -181,7 +182,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
     }
 
     public void setMarkers() {
-        //TODO: Fer cirda api i pintar marker per cada un
         AgorAppApiManager
                 .getService()
                 .getAnnouncements(Integer.valueOf(prefs.getId()), prefs.getActiveToken())
@@ -191,7 +191,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
                         anuncis = response.body();
                         mMap.clear();
                         for (Announcement anunci : anuncis) {
-                            buildMarker(anunci);
+                            if (!anunci.getStatus().equals("completed"))
+                                buildMarker(anunci);
                         }
                         setShopMarkers();
                     }

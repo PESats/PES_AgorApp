@@ -120,7 +120,12 @@ public class AnnouncementListFragment extends Fragment {
                     @Override
                     public void onResponse(Call<ArrayList<Announcement>> call, Response<ArrayList<Announcement>> response) {
 
-                        announcements = response.body();
+
+
+                        for (Announcement anunci : response.body()) {
+                            if (!anunci.getStatus().equals("completed"))
+                                announcements.add(anunci);
+                        }
                         adapter.addAll(announcements);
                         Log.d("this is my array", "arr: " + response.body().toString());
 

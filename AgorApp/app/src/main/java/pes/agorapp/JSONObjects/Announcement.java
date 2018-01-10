@@ -20,6 +20,7 @@ public class Announcement {
     private float longitude;
     private int reward;
     private int user_id;
+    private String status;
     private Date created_at;
     private UserAgorApp user;
 
@@ -29,7 +30,7 @@ public class Announcement {
     public Announcement() {}
 
     public Announcement(String title, String text, float latitude, float longitude, int reward,
-                        int user_id, Date created_at, UserAgorApp userAgorApp) {
+                        int user_id, Date created_at, UserAgorApp userAgorApp, String status) {
         this.title = title;
         this.description = text;
         this.latitude = latitude;
@@ -38,6 +39,7 @@ public class Announcement {
         this.user_id = user_id;
         this.created_at = created_at;
         this.userAgorApp = userAgorApp;
+        this.status = status;
     }
 
     @Override
@@ -67,6 +69,14 @@ public class Announcement {
 
     public String getTitle() {
         return title;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
     }
 
     public void setTitle(String title) {
@@ -128,4 +138,5 @@ public class Announcement {
     public void setUser(UserAgorApp user) {
         this.user = user;
     }
+
 }

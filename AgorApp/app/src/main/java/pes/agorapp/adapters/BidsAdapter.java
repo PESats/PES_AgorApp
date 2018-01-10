@@ -96,7 +96,7 @@ public class BidsAdapter extends ArrayAdapter<Bid> {
                         .enqueue(new retrofit2.Callback<Bid>() {
                             @Override
                             public void onResponse(Call<Bid> call, Response<Bid> response) {
-                                System.out.println(response);
+                                //System.out.println(response);
                             }
 
                             @Override
@@ -114,8 +114,8 @@ public class BidsAdapter extends ArrayAdapter<Bid> {
             payBtn.setVisibility(View.INVISIBLE);
         }
         if (!String.valueOf(idCreador).equals(prefs.getId())) {
-            //acceptBtn.setVisibility(View.INVISIBLE);
-            //payBtn.setVisibility(View.INVISIBLE);
+            acceptBtn.setVisibility(View.INVISIBLE);
+            payBtn.setVisibility(View.INVISIBLE);
         }
 
         // Return the completed view to render on screen

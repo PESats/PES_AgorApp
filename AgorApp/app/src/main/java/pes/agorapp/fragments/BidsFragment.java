@@ -113,6 +113,8 @@ public class BidsFragment extends Fragment {
                 infateNewBid();
             }
         });
+        if(announcement.getStatus().equals("closed"))
+            newBid.setVisibility(View.INVISIBLE);
     }
 
     private void infateNewBid() {
@@ -139,7 +141,7 @@ public class BidsFragment extends Fragment {
                 request.addProperty("active_token", prefs.getActiveToken());
 
 
-                System.out.println("LLAMADA " + request);
+                //System.out.println("LLAMADA " + request);
 
                 AgorAppApiManager
                         .getService()

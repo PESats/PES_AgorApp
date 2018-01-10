@@ -25,7 +25,7 @@ public class ObjectsHelper {
         //(String title, String text, float latitude, float longitude, int reward, int user_id, Date created_at)
         Announcement anAnnouncement = new Announcement("Pintar habitacio",
                 "Necessito ajuda per pintar la meva habitacio, es la meva primera vegada!!!",
-                (float) 41.190368, (float) 2.814508, 50, 1, new Date(), null);
+                (float) 41.190368, (float) 2.814508, 50, 1, new Date(), null, "open");
         return anAnnouncement;
     }
 
@@ -34,15 +34,15 @@ public class ObjectsHelper {
 
         announcements.add(new Announcement("Pintar habitacio",
                 "No se pintar una habitació, soc lerdo",
-                (float) 41.490368, (float) 2.314508, 50, 1, new Date(), null));
+                (float) 41.490368, (float) 2.314508, 50, 1, new Date(), null, "open"));
 
         announcements.add(new Announcement("Regar plantes",
                 "La meva mare m'ha deixat unes plantes i s'estan martxitan :'(",
-                (float) 41.590368, (float) 2.614508, 50, 1, new Date(), null));
+                (float) 41.590368, (float) 2.614508, 50, 1, new Date(), null, "closed"));
 
         announcements.add(new Announcement("Rentar plats",
                 "Se m'ha trencat el rentaplats",
-                (float) 41.890368, (float) 2.114508, 50, 1, new Date(), null));
+                (float) 41.890368, (float) 2.114508, 50, 1, new Date(), null, "complete"));
         return announcements;
     }
 
