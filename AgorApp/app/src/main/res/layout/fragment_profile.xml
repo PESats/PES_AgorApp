@@ -223,7 +223,7 @@
                         android:layout_height="wrap_content"
                         android:numColumns="3"
                         android:verticalSpacing="10dp"
-                        android:horizontalSpacing="10dp"/>
+                        android:horizontalSpacing="10dp" />
 
                     <Button
                         android:layout_height="50dp"

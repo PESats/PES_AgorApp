@@ -375,8 +375,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     public void onClick (View v){
         switch (v.getId()) {
             case R.id.profile_btn_logout:
-                //close_session();
-                prova();
+                close_session();
+                //prova();
                 break;
         }
     }
