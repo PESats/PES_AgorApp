@@ -82,7 +82,7 @@ public class BidsFragment extends Fragment {
     }
 
     private void inflateBids() {
-        final BidsAdapter adapter = new BidsAdapter(getActivity(), bids, idAnunci, Integer.valueOf(announcement.getUser().getId()));
+        final BidsAdapter adapter = new BidsAdapter(getActivity(), bids, announcement, Integer.valueOf(announcement.getUser().getId()));
         final ListView listView = (ListView) mView.findViewById(R.id.listViewBids);
         listView.setAdapter(adapter);
         AgorAppApiManager
