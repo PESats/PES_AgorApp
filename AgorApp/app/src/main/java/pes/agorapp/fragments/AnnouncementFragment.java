@@ -252,6 +252,9 @@ public class AnnouncementFragment extends Fragment {
         final TextView author = (TextView) mView.findViewById(R.id.announcement_author);
         author.setText(String.valueOf(this.announcement.getUser().getName()));
 
+        final TextView price = (TextView) mView.findViewById(R.id.announcement_price);
+        price.setText(String.valueOf(String.valueOf(this.announcement.getReward()) + " AgoraPoints"));
+
         //buttons
         Button buttonDelete = (Button) mView.findViewById(R.id.announcement_delete);
         buttonDelete.setOnClickListener(new View.OnClickListener() {

@@ -10,8 +10,10 @@
         android:id="@+id/item_bid_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Hola"
-        android:textSize="20sp" />
+        android:textColor="@color/primaryDarkColor"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:text="Hola" />
 
     <TextView
         android:id="@+id/item_separator"
@@ -27,11 +29,11 @@
         android:id="@+id/item_bid_coins"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_toRightOf="@id/item_separator"
+        android:textColor="@color/secondaryColor"
         android:textSize="20sp"
-        android:textStyle="bold"
-        tools:text="200 coins"
-        android:layout_gravity="center"/>
+        tools:text="200 coins" />
 
     <TextView
         android:id="@+id/item_separator2"
