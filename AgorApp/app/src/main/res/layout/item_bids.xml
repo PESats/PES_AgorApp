@@ -48,8 +48,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/item_separator2"
-        android:textColor="@color/primaryColor"
         android:text="Aceptar" />
+
     <Button
         android:id="@+id/item_bid_button_pay"
         android:layout_width="wrap_content"

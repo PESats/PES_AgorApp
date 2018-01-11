@@ -257,8 +257,6 @@ public class AnnouncementFragment extends Fragment {
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(AnnouncementsAdapter.super.getContext(), "Esborrar: " + announcement.getId(), Toast.LENGTH_LONG).show();
-
                 popUpDeleteAnnouncement(announcement.getId());
 
             }});
@@ -266,7 +264,7 @@ public class AnnouncementFragment extends Fragment {
             buttonDelete.setVisibility(View.INVISIBLE);
         }
         // Create the adapter to convert the array to views
-        final CommentsAdapter adapter = new CommentsAdapter(getActivity(), comments);
+        final CommentsAdapter adapter = new CommentsAdapter(getActivity(), comments, announcement);
         // Attach the adapter to a ListView
         final ListView listView = (ListView) mView.findViewById(R.id.comments_list);
         listView.setAdapter(adapter);
@@ -307,10 +305,10 @@ public class AnnouncementFragment extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                 AgorAppApiManager
                         .getService()
-                        .deleteCoupon(announcementId, Integer.valueOf(prefs.getId()), prefs.getActiveToken())
-                        .enqueue(new retrofit2.Callback<Coupon>() {
+                        .deleteAnnouncement(announcementId, Integer.valueOf(prefs.getId()), prefs.getActiveToken())
+                        .enqueue(new retrofit2.Callback<Announcement>() {
                             @Override
-                            public void onResponse(Call<Coupon> call, Response<Coupon> response) {
+                            public void onResponse(Call<Announcement> call, Response<Announcement> response) {
                                 //dialogCoupon.dismiss();
 
                                 final android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(getActivity()).create();
@@ -331,7 +329,7 @@ public class AnnouncementFragment extends Fragment {
                             }
 
                             @Override
-                            public void onFailure(Call<Coupon> call, Throwable t) {
+                            public void onFailure(Call<Announcement> call, Throwable t) {
                                 System.out.println("Something went wrong!");
                             }
                         });

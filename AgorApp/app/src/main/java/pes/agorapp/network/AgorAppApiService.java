@@ -110,17 +110,21 @@ public interface AgorAppApiService {
             @Query("active_token") String active_token
     );
 
-    @PUT("comments/{id}")
+    @PUT("anuncis/{idA}/comentaris/{idC}")
     Call<Comment> editComment(
-            @Path("id") int id,
-            @Body JsonObject user
+            @Path("idA") int idA,
+            @Path("idC") int idC,
+            @Body JsonObject json
     );
 
-    @DELETE("comments/{id}")
+    @DELETE("anuncis/{idA}/comentaris/{idC}")
     Call<Comment> deleteComment(
-            @Path("id") int id,
-            @Body JsonObject user
+            @Path("idA") int idA,
+            @Path("idC") int idC,
+            @Query("user_id") int user_id,
+            @Query("active_token") String active_token
     );
+
 
     /* BOTIGUES */
 

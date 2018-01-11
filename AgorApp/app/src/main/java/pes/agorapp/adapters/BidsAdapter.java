@@ -163,14 +163,16 @@ public class BidsAdapter extends ArrayAdapter<Bid> {
                         });
             }
         });
+
+
         if(accepted) {
-            acceptBtn.setVisibility(View.INVISIBLE);
+            acceptBtn.setVisibility(View.GONE);
         } else {
-            payBtn.setVisibility(View.INVISIBLE);
+            payBtn.setVisibility(View.GONE);
         }
         if (!String.valueOf(idCreador).equals(prefs.getId())) {
-            acceptBtn.setVisibility(View.INVISIBLE);
-            payBtn.setVisibility(View.INVISIBLE);
+            acceptBtn.setVisibility(View.GONE);
+            payBtn.setVisibility(View.GONE);
         }
 
         // Return the completed view to render on screen
