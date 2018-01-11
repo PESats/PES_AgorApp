@@ -113,6 +113,7 @@ public class ChatListFragment extends Fragment {
                                 chat.setLastMessage(ObjectsHelper.getFakeMessage());
                                 chat.setLastMessageDate(ObjectsHelper.getFakeDate());
                                 chat.setBid(bid);
+                                chat.setUseOwnerName(false);
 
                                 chats.add(chat);
                             }
@@ -142,6 +143,7 @@ public class ChatListFragment extends Fragment {
                                 chat.setLastMessageDate(ObjectsHelper.getFakeDate());
                                 chat.setBid(bid);
                                 chat.setOwnerName(bid.getOwner_name());
+                                chat.setUseOwnerName(true);
 
                                 chats.add(chat);
                             }

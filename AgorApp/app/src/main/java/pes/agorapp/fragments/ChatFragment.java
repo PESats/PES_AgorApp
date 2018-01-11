@@ -118,9 +118,9 @@ public class ChatFragment extends Fragment {
                     messageText.setText(model.getMessageText());
                     messageUser.setText(model.getMessageUser());
 
-                    v.setBackgroundResource(Objects.equals(model.getMessageUser(), prefs.getUserName()) ? R.drawable.border : R.drawable.border_green);
+                    v.setBackgroundResource(Objects.equals(model.getMessageUser(), prefs.getUserName()) ? R.drawable.border_green : R.drawable.border);
                     // Format the date before showing it
-                    messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)",
+                    messageTime.setText(DateFormat.format("dd/MM (HH:mm:ss)",
                             model.getMessageTime()));
             }
         };

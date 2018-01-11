@@ -165,12 +165,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                                 .enqueue(new retrofit2.Callback<ArrayList<Trophy>>() {
                                     @Override
                                     public void onResponse(Call<ArrayList<Trophy>> call, Response<ArrayList<Trophy>> response) {
+                                        adapter.clear();
                                         trophies = response.body();
                                         for (Trophy trophy: trophies) {
                                             trophy.setUnlocked(idTrophies.contains(trophy.getId()));
+                                            adapter.add(trophy);
                                         }
-                                        adapter.addAll(trophies);
-                                        //adapter.notifyDataSetChanged();
+                                        adapter.notifyDataSetChanged();
                                     }
 
                                     @Override

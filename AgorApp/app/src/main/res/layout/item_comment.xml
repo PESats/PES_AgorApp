@@ -45,7 +45,7 @@
     <Button
         android:textColor="@color/tw__solid_white"
         android:text="Esborrar"
-        android:background="@color/tw__composer_red"
+        android:background="@color/danger_agorap"
         android:id="@+id/comment_delete"
         android:layout_width="wrap_content"
         android:layout_height="25dp"

@@ -13,6 +13,7 @@ public class Chat {
     private Date lastMessageDate;
     private Bid bid;
     private String ownerName;
+    private boolean useOwnerName;
 
     public Chat() { }
 
@@ -24,6 +25,10 @@ public class Chat {
 
     public Bid getBid() {
         return bid;
+    }
+
+    public boolean getUseOwnerName() {
+        return useOwnerName;
     }
 
     public void setBid(Bid bid) {
@@ -64,5 +69,13 @@ public class Chat {
 
     public void setOwnerName(String ownerName) {
         this.ownerName = ownerName;
+    }
+
+    public boolean isUseOwnerName() {
+        return useOwnerName;
+    }
+
+    public void setUseOwnerName(boolean useOwnerName) {
+        this.useOwnerName = useOwnerName;
     }
 }

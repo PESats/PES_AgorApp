@@ -66,8 +66,10 @@
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="30dp"
-            android:background="@color/secondaryColor"
+            android:layout_below="@+id/announcement_title"
+            android:layout_marginEnd="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/danger_agorap"
             android:text="@string/announcement_delete_button"
             android:textColor="@color/tw__solid_white" />
 
@@ -117,8 +119,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_below="@id/comments_list"
+            android:layout_below="@id/comments_separator"
             android:layout_marginEnd="5dp"
+            android:layout_marginTop="5dp"
             android:background="@color/secondaryColor"
             android:text="@string/announcement_comment_button"
             android:textColor="@color/tw__solid_white"
