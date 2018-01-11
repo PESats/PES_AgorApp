@@ -127,4 +127,7 @@
     <string name="form_new_comment_button_accept">Comentar</string>
     <string name="unlockedTrophy">DESBLOQUEJAT</string>
     <string name="notUnlockedTrophy">PENDENT</string>
+    <string name="announcement_text_comment_title">Comentaris:</string>
+    <string name="share_twitter_announcement">Compartir anunci</string>
+
 </resources>
