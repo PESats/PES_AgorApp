@@ -168,10 +168,10 @@ public class BidsAdapter extends ArrayAdapter<Bid> {
         } else {
             payBtn.setVisibility(View.INVISIBLE);
         }
-        /*if (!String.valueOf(idCreador).equals(prefs.getId())) {
+        if (!String.valueOf(idCreador).equals(prefs.getId())) {
             acceptBtn.setVisibility(View.INVISIBLE);
             payBtn.setVisibility(View.INVISIBLE);
-        }*/
+        }
 
         // Return the completed view to render on screen
         return convertView;
