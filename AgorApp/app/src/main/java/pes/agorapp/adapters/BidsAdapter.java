@@ -165,7 +165,7 @@ public class BidsAdapter extends ArrayAdapter<Bid> {
         });
 
 
-        if(accepted) {
+        if(bid.isAccepted()) {
             acceptBtn.setVisibility(View.GONE);
         } else {
             payBtn.setVisibility(View.GONE);
