@@ -1,6 +1,7 @@
 package pes.agorapp.adapters;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.gson.JsonObject;
@@ -111,10 +113,45 @@ public class BidsAdapter extends ArrayAdapter<Bid> {
                         .enqueue(new retrofit2.Callback<Bid>() {
                             @Override
                             public void onResponse(Call<Bid> call, Response<Bid> response) {
-                                Intent intent = ((Activity) context).getIntent();
-                                ((Activity) context).finish();
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                context.startActivity(intent);
+                                final Dialog dialog = new Dialog(context);
+
+                                dialog.setContentView(R.layout.form_valorate);
+                                dialog.show();
+
+                                final RatingBar ratingBar = (RatingBar) dialog.findViewById(R.id.form_valorate_rating);
+                                Button accept = (Button) dialog.findViewById(R.id.form_valorate_button);
+                                accept.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        JsonObject json = new JsonObject();
+                                        JsonObject evaluation = new JsonObject();
+                                        int num = (int) ratingBar.getRating();
+                                        evaluation.addProperty("score", num);
+                                        evaluation.addProperty("anunci_id", announcement.getId());
+                                        json.add("evaluation", evaluation);
+                                        json.addProperty("user_id", Integer.valueOf(prefs.getId()));
+                                        json.addProperty("active_token", prefs.getActiveToken());
+                                        AgorAppApiManager
+                                                .getService()
+                                                .rate(Integer.valueOf(bid.getUser().getId()), json)
+                                                .enqueue(new retrofit2.Callback<Object>() {
+                                                    @Override
+                                                    public void onResponse(Call<Object> call, Response<Object> response) {
+                                                        Intent intent = ((Activity) context).getIntent();
+                                                        ((Activity) context).finish();
+                                                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                                        context.startActivity(intent);
+                                                    }
+
+                                                    @Override
+                                                    public void onFailure(Call<Object> call, Throwable t) {
+                                                        System.out.println("Something went wrong!");
+                                                        Activity activity = (Activity) context;
+                                                        new DialogServerKO(activity).show();
+                                                    }
+                                                });
+                                    }
+                                });
                             }
 
                             @Override
@@ -131,10 +168,10 @@ public class BidsAdapter extends ArrayAdapter<Bid> {
         } else {
             payBtn.setVisibility(View.INVISIBLE);
         }
-        if (!String.valueOf(idCreador).equals(prefs.getId())) {
+        /*if (!String.valueOf(idCreador).equals(prefs.getId())) {
             acceptBtn.setVisibility(View.INVISIBLE);
             payBtn.setVisibility(View.INVISIBLE);
-        }
+        }*/
 
         // Return the completed view to render on screen
         return convertView;

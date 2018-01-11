@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingPrefix"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="pes.agorapp.fragments.AnnouncementFragment">
@@ -17,42 +18,56 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
+            android:background="@color/primaryLightColor"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:gravity="center"
+            fontPath="fonts/Montserrat-Regular.ttf"
             android:textSize="24sp"
             android:textStyle="bold"
             android:text="Help!" />
+        <TextView
+            android:id="@+id/author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/announcement_title"
+            android:textSize="18sp"
+            android:text="Autor:"
+            fontPath="fonts/Lato-Regular.ttf"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
             android:id="@+id/announcement_author"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/announcement_title"
-            android:gravity="center"
+            android:layout_below="@+id/author"
             android:textSize="18sp"
-            android:text="Don Alfonso" />
+            android:textStyle="bold"
+            fontPath="fonts/Lato-Regular.ttf"
+            android:text="Don Alfonso"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+        <TextView
+            android:id="@+id/announcement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/announcement_author"
+            android:textSize="18sp"
+            android:text="Anuncio:"
+            fontPath="fonts/Lato-Regular.ttf"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
             android:id="@+id/announcement_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/announcement_author"
-            android:gravity="center"
-            android:text="Ayuudame con la casa" />
+            android:textStyle="bold"
+            android:layout_below="@+id/announcement"
+            android:textSize="18sp"
+            android:text="Ayuudame con la casa"
+            fontPath="fonts/Lato-Regular.ttf"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <Button
-            android:drawableLeft="@drawable/tw__composer_logo_white"
-            android:paddingLeft="25dp"
-            android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:textColor="@color/tw__solid_white"
-            android:layout_below="@+id/announcement_text"
-            android:id="@+id/btn_share_twitter"
-            android:layout_alignParentRight="true"
-            android:enabled="true"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="1dp"
-            android:backgroundTint="@color/tw__blue_default" />
+
 
         <Button
             android:textColor="@color/tw__solid_white"
@@ -62,29 +77,42 @@
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:layout_marginTop="30dp"
-            android:layout_alignParentEnd="true" />
-        <Button
-            android:id="@+id/new_comment_announcement"
-            android:layout_below="@id/announcement_text"
             android:layout_alignParentEnd="true"
-            android:layout_height="wrap_content"
+            />
+
+        <LinearLayout
+            android:id="@+id/buttonsContainer"
             android:layout_width="wrap_content"
-            android:text="@string/announcement_comment_button" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/announcement_text"
+            android:gravity="right">
+            <Button
+                android:id="@+id/new_comment_announcement"
+                android:layout_alignParentEnd="true"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/announcement_comment_button" />
 
-    </RelativeLayout>
-
-    <android.support.percent.PercentRelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            <Button
+                android:drawableLeft="@drawable/tw__composer_logo_white"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:textColor="@color/tw__solid_white"
+                android:id="@+id/btn_share_twitter"
+                android:enabled="true"
+                android:layout_width="wrap_content"
+                android:backgroundTint="@color/tw__blue_default"/>
+        </LinearLayout>
 
         <ListView
             android:listSelector="@android:color/transparent"
+            android:layout_below="@id/buttonsContainer"
             android:id="@+id/comments_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="170dp"
-            app:layout_widthPercent="100%"
-            />
+            tools:ignore="NotSibling" />
 
-    </android.support.percent.PercentRelativeLayout>
+
+    </RelativeLayout>
 </RelativeLayout>

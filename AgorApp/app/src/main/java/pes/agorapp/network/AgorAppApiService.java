@@ -251,5 +251,11 @@ public interface AgorAppApiService {
             @Body JsonObject json
     );
 
+    @POST("users/{id}/evaluations")
+    Call<Object> rate(
+            @Path("id") int id,
+            @Body JsonObject json
+    );
+
 
 }
