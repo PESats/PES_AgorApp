@@ -1,4 +1,4 @@
-<resources>
+<resources tools:ignore="ExtraTranslation" xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">AgorApp</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -127,6 +127,4 @@
     <string name="form_new_comment_button_accept">Comentar</string>
     <string name="unlockedTrophy">DESBLOQUEJAT</string>
     <string name="notUnlockedTrophy">PENDENT</string>
-
-
 </resources>

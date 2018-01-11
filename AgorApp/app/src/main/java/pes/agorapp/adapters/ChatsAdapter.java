@@ -35,7 +35,7 @@ public class ChatsAdapter extends ArrayAdapter<Chat> {
         TextView name = (TextView) convertView.findViewById(R.id.item_chat_name);
         TextView title = (TextView) convertView.findViewById(R.id.item_chat_announcement);
         // Populate the data into the template view using the data object
-        name.setText(chat.getUser().getName());
+        name.setText(chat.getOwnerName());
         title.setText(chat.getBid().getAnunci().getTitle());
         // Return the completed view to render on screen
         return convertView;

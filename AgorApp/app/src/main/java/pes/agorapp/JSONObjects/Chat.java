@@ -12,6 +12,7 @@ public class Chat {
     private String lastMessage;
     private Date lastMessageDate;
     private Bid bid;
+    private String ownerName;
 
     public Chat() { }
 
@@ -55,5 +56,13 @@ public class Chat {
 
     public String customHashCode() {
         return String.valueOf(user.getId().hashCode()) + String.valueOf(bid.getId());
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
     }
 }
