@@ -129,5 +129,15 @@
     <string name="notUnlockedTrophy">PENDENT</string>
     <string name="announcement_text_comment_title">Comentaris:</string>
     <string name="share_twitter_announcement">Compartir anunci</string>
+    <string name="my_own_announcement">Els meus anuncis</string>
+    <string name="exit">Sortir</string>
+
+    <string name="edit">Editar</string>
+    <string name="borrar">Esborrar</string>
+    <string name="anuncement">Anunci</string>
+    <string name="ofertas">Ofertes</string>
+    <string name="oferta">Oferta</string>
+    <string name="pay">Pagar</string>
+    <string name="accept">Aceptar</string>
 
 </resources>

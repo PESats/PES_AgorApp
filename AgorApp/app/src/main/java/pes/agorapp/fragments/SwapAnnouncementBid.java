@@ -53,8 +53,8 @@ public class SwapAnnouncementBid extends Fragment {
 
 
         Adapter adapter = new Adapter(getChildFragmentManager());
-        adapter.addFragment(new AnnouncementFragment(), "Anuncis", announcement);
-        adapter.addFragment(new BidsFragment(), "Ofertes", announcement);
+        adapter.addFragment(new AnnouncementFragment(), getResources().getString(R.string.anuncement), announcement);
+        adapter.addFragment(new BidsFragment(),  getResources().getString(R.string.ofertas), announcement);
         viewPager.setAdapter(adapter);
 
 

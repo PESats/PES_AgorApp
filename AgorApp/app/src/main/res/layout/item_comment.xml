@@ -34,7 +34,7 @@
 
     <Button
         android:textColor="@color/tw__solid_white"
-        android:text="Editar"
+        android:text="@string/edit"
         android:background="@color/com_facebook_blue"
         android:id="@+id/comment_edit"
         android:layout_width="wrap_content"
@@ -44,7 +44,7 @@
 
     <Button
         android:textColor="@color/tw__solid_white"
-        android:text="Esborrar"
+        android:text="@string/borrar"
         android:background="@color/danger_agorap"
         android:id="@+id/comment_delete"
         android:layout_width="wrap_content"

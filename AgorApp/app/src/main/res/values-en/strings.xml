@@ -112,5 +112,32 @@
     <string name="unlockedTrophy">UNLOCKED</string>
     <string name="notUnlockedTrophy">PENDING</string>
 
+    <!-- JONA -->
+
+    <string name="button_cancel">Cancel</string>
+
+    <string name="form_new_bid_title">New bid</string>
+    <string name="form_new_bid_text">Ammount of bid</string>
+    <string name="form_new_bid_button_accept">Bid</string>
+
+    <string name="form_valorate_title">Rate the work</string>
+    <string name="form_valorate_button_accept">Rate</string>
+
+    <string name="form_new_comment_title">New comment</string>
+    <string name="form_new_comment_text">Write your comment there</string>
+    <string name="form_new_comment_button_accept">Comment</string>
+    <string name="announcement_text_comment_title">Comments:</string>
+    <string name="share_twitter_announcement">Share announcement</string>
+    <string name="my_own_announcement">My own announcement</string>
+    <string name="exit">Exit</string>
+
+    <string name="edit">Edit</string>
+    <string name="borrar">Remove</string>
+    <string name="anuncement">Announcement</string>
+    <string name="ofertas">Bids</string>
+    <string name="oferta">Bid</string>
+    <string name="pay">Pay</string>
+    <string name="accept">Accept</string>
+
 
 </resources>

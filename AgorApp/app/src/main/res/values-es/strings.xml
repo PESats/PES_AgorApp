@@ -112,5 +112,33 @@
     <string name="unlockedTrophy">DESBLOQUEADO</string>
     <string name="notUnlockedTrophy">PENDIENTE</string>
 
+    <!-- JONA -->
+
+    <string name="button_cancel">Cancelar</string>
+
+    <string name="form_new_bid_title">Nueva puja</string>
+    <string name="form_new_bid_text">Cantidad a pujar</string>
+    <string name="form_new_bid_button_accept">Pujar</string>
+
+    <string name="form_valorate_title">Valorar el trabajo hecho</string>
+    <string name="form_valorate_button_accept">Valorar</string>
+
+    <string name="form_new_comment_title">Nuevo comentario</string>
+    <string name="form_new_comment_text">Escribe tu comentario aquí</string>
+    <string name="form_new_comment_button_accept">Comentar</string>
+    <string name="announcement_text_comment_title">Comentarios:</string>
+    <string name="share_twitter_announcement">Compartir anuncio</string>
+    <string name="my_own_announcement">Mis anuncis</string>
+    <string name="exit">Salir</string>
+
+    <string name="edit">Editar</string>
+    <string name="borrar">Borrar</string>
+    <string name="anuncement">Anuncio</string>
+    <string name="ofertas">Ofertas</string>
+    <string name="oferta">Oferta</string>
+    <string name="pay">Pagar</string>
+    <string name="accept">Aceptar</string>
+
+
 
 </resources>
