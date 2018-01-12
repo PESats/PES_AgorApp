@@ -20,6 +20,7 @@ import android.util.Log;
 import com.google.gson.JsonObject;
 
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -136,6 +137,9 @@ public class MarketplaceFragment extends Fragment implements View.OnClickListene
             view.findViewById(R.id.btn_marketplace_publish).setVisibility(View.GONE);
             view.findViewById(R.id.text_marketplace_publish).setVisibility(View.GONE);
             view.findViewById(R.id.merchantHeader).setVisibility(View.GONE);
+        } else {
+            TextView shop = (TextView) view.findViewById(R.id.text_marketplace_publish);
+            shop.setText("Com a comerciant verificat, pots publicar cupons per a la teva botiga " + prefs.getShopName());
         }
 
         updateCoinsAndRating();

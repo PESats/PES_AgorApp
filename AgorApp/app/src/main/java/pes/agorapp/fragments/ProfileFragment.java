@@ -251,6 +251,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                             profileTypeTextView.setText(userType);
 
                             updateCoinsAndRating();
+
+                            Button verifyButton = (Button) view.findViewById(R.id.profile_btn_verify);
+                            verifyButton.setVisibility(View.GONE);
+                            //TextView userTypeAux = (TextView) view.findViewById(R.id.profile_verified);
+                            profileTypeTextView.setVisibility(View.VISIBLE);
                         }
 
                         @Override

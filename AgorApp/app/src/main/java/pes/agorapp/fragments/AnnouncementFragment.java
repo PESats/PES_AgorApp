@@ -3,6 +3,7 @@ package pes.agorapp.fragments;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ScaleDrawable;
 import android.os.Bundle;
@@ -329,6 +330,10 @@ public class AnnouncementFragment extends Fragment {
 
                                 getActivity().getSupportFragmentManager().popBackStack();
                                 //getActivity().onBackPressed();
+
+                                Intent intent = new Intent(getActivity(), MainActivity.class);
+                                startActivity(intent);
+
                             }
 
                             @Override
